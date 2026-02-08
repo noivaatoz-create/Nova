@@ -21,6 +21,7 @@ export interface IStorage {
   getOrderById(id: number): Promise<Order | undefined>;
   createOrder(order: InsertOrder): Promise<Order>;
   updateOrder(id: number, data: Partial<InsertOrder>): Promise<Order | undefined>;
+  deleteAllOrders(): Promise<void>;
 
   getReviews(): Promise<Review[]>;
   createReview(review: InsertReview): Promise<Review>;
@@ -78,6 +79,10 @@ export class DatabaseStorage implements IStorage {
   async updateOrder(id: number, data: Partial<InsertOrder>): Promise<Order | undefined> {
     const [updated] = await db.update(orders).set(data).where(eq(orders.id, id)).returning();
     return updated;
+  }
+
+  async deleteAllOrders(): Promise<void> {
+    await db.delete(orders);
   }
 
   async getReviews(): Promise<Review[]> {

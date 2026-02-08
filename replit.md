@@ -15,9 +15,9 @@ client/src/
   App.tsx              - Main router with customer/admin layouts
   lib/cart-store.ts    - Zustand cart state with localStorage persistence
   components/
-    navigation.tsx     - Sticky header with cart badge + mobile menu
+    navigation.tsx     - Sticky header with cart badge + mobile menu (settings-driven logo, nav links)
     cart-drawer.tsx     - Slide-out cart with quantity controls (uses settings API for thresholds)
-    footer.tsx         - Footer with newsletter signup + links (wired to /api/subscribers)
+    footer.tsx         - Footer with newsletter signup + links (settings-driven sections)
   pages/
     home.tsx           - Hero, value props, featured products, comparison, reviews, CTA
     shop.tsx           - Product grid with search + category filters
@@ -28,10 +28,10 @@ client/src/
     faq.tsx            - Categorized FAQ with accordions
     reviews.tsx        - All reviews with rating distribution
     admin/
-      dashboard.tsx    - KPIs, sales chart, low stock alerts, recent orders + shared AdminSidebar/AdminHeader
-      products.tsx     - Full CRUD with features, specs, whatsInBox, images editors
+      dashboard.tsx    - KPIs with date filtering, real chart, reset data + shared AdminSidebar/AdminHeader
+      products.tsx     - Full CRUD with delete confirmation, features, specs, whatsInBox, images editors
       orders.tsx       - Order list with status management + detail modal
-      settings.tsx     - Site settings: Payment, Store, Contact config
+      settings.tsx     - Site settings: Payment, Store, Contact, Header/Footer config
 
 server/
   db.ts               - Neon database connection
@@ -49,8 +49,12 @@ shared/
 - Payment methods (Stripe/PayPal/COD) configurable from admin settings - UI only, no real payment integration
 - Tax rate, shipping threshold, flat rate all configurable via admin settings
 - Contact info (email, phone, address) configurable via admin settings
+- Header/footer fully customizable: logo text, icon, size, nav link visibility, footer section toggles, copyright
 - All product images generated and stored in client/public/images/
 - Product form supports editing all fields: features[], specs{}, whatsInBox[], images[], compareAtPrice, isActive
+- Product delete requires confirmation dialog
+- Dashboard revenue filterable by week/month/year/all with real chart data
+- Revenue data can be reset to $0 via "Reset Data" button (deletes all orders)
 
 ## Database Tables
 - products: name, slug, description, price, compareAtPrice, category, badge, specs (jsonb), features, whatsInBox, images, stock, isActive
@@ -66,10 +70,14 @@ shared/
 - paypalEnabled, paypalEmail
 - codEnabled
 - supportEmail, supportPhone, storeAddress
+- logoText, showLogoIcon, logoSize (small/default/large)
+- showNavShop, showNavAbout, showNavFaq, showNavContact, showNavReviews
+- showFooterNewsletter, showFooterSocial, showFooterLinks
+- copyrightText
 
 ## API Routes
 - GET/POST /api/products, GET /api/products/:slug, PATCH/DELETE /api/products/:id
-- GET/POST /api/orders, PATCH /api/orders/:id
+- GET/POST/DELETE /api/orders, PATCH /api/orders/:id
 - GET/POST /api/reviews
 - POST /api/subscribers
 - GET/PATCH /api/settings

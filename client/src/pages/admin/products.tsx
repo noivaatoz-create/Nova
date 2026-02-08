@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Plus, Edit, Trash2, Package, X, List, Image, Box, Wrench, ToggleLeft, ToggleRight } from "lucide-react";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 const inputClass = "w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)]";
 
@@ -24,6 +25,7 @@ export default function AdminProducts() {
     images: [] as string[],
   });
   const [specEntries, setSpecEntries] = useState<{key: string, value: string}[]>([]);
+  const [deleteProductId, setDeleteProductId] = useState<number | null>(null);
 
   const saveMutation = useMutation({
     mutationFn: async (data: any) => {
@@ -175,7 +177,7 @@ export default function AdminProducts() {
                           <button onClick={() => openEdit(product)} className="p-1.5 rounded-md hover:bg-[hsl(218,35%,17%)] text-[hsl(215,30%,65%)] hover:text-white transition-colors" data-testid={`button-edit-${product.id}`}>
                             <Edit className="h-4 w-4" />
                           </button>
-                          <button onClick={() => deleteMutation.mutate(product.id)} className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,30%,65%)] hover:text-red-400 transition-colors" data-testid={`button-delete-${product.id}`}>
+                          <button onClick={() => setDeleteProductId(product.id)} className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,30%,65%)] hover:text-red-400 transition-colors" data-testid={`button-delete-${product.id}`}>
                             <Trash2 className="h-4 w-4" />
                           </button>
                         </div>
@@ -482,6 +484,34 @@ export default function AdminProducts() {
             </form>
           </DialogContent>
         </Dialog>
+
+        <AlertDialog open={deleteProductId !== null} onOpenChange={(open) => { if (!open) setDeleteProductId(null); }}>
+          <AlertDialogContent className="bg-[hsl(220,40%,7%)] border-[hsl(218,35%,17%)] text-white" data-testid="dialog-delete-confirm">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete Product?</AlertDialogTitle>
+              <AlertDialogDescription className="text-[hsl(215,30%,65%)]">
+                This action cannot be undone. The product will be permanently removed.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="border-[hsl(218,35%,17%)] text-[hsl(215,30%,65%)] hover:text-white hover:bg-[hsl(218,35%,17%)]/50" data-testid="button-cancel-delete">
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction 
+                className="bg-red-600 hover:bg-red-700 text-white"
+                onClick={() => {
+                  if (deleteProductId !== null) {
+                    deleteMutation.mutate(deleteProductId);
+                    setDeleteProductId(null);
+                  }
+                }}
+                data-testid="button-confirm-delete"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </main>
     </div>
   );

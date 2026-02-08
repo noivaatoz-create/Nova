@@ -114,5 +114,10 @@ export async function registerRoutes(
     res.json(settingsObj);
   });
 
+  app.delete("/api/orders", async (_req, res) => {
+    await storage.deleteAllOrders();
+    res.status(204).send();
+  });
+
   return httpServer;
 }

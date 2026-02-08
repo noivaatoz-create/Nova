@@ -1,7 +1,20 @@
-import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Link, useLocation } from "wouter";
 import type { Product, Order } from "@shared/schema";
-import { LayoutDashboard, Package, ShoppingCart, Settings, LogOut, Droplets, Bell, HelpCircle, Search, TrendingUp, TrendingDown, AlertTriangle } from "lucide-react";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+import { LayoutDashboard, Package, ShoppingCart, Settings, LogOut, Droplets, Bell, HelpCircle, Search, AlertTriangle, Calendar, Trash2, RefreshCw } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 function AdminSidebar({ active }: { active: string }) {
   const navItems = [
@@ -38,11 +51,6 @@ function AdminSidebar({ active }: { active: string }) {
               >
                 <item.icon className="h-5 w-5" />
                 <span>{item.label}</span>
-                {item.badge && (
-                  <span className="ml-auto bg-[hsl(220,91%,55%)]/20 text-[hsl(220,91%,55%)] text-[10px] font-bold px-1.5 py-0.5 rounded-md">
-                    {item.badge}
-                  </span>
-                )}
               </Link>
             ))}
           </nav>
@@ -100,20 +108,93 @@ export { AdminSidebar, AdminHeader };
 export default function AdminDashboard() {
   const { data: products } = useQuery<Product[]>({ queryKey: ["/api/products"] });
   const { data: orders } = useQuery<Order[]>({ queryKey: ["/api/orders"] });
+  const { toast } = useToast();
 
-  const totalRevenue = orders?.reduce((sum, o) => sum + parseFloat(o.total), 0) || 0;
-  const totalOrders = orders?.length || 0;
+  const [period, setPeriod] = useState<"week" | "month" | "year" | "all">("all");
+  const [showResetDialog, setShowResetDialog] = useState(false);
+
+  const now = new Date();
+  const filteredOrders = orders?.filter(o => {
+    if (period === "all") return true;
+    if (!o.createdAt) return false;
+    const date = new Date(o.createdAt);
+    if (period === "week") {
+      const weekAgo = new Date(now);
+      weekAgo.setDate(weekAgo.getDate() - 7);
+      return date >= weekAgo;
+    }
+    if (period === "month") {
+      const monthAgo = new Date(now);
+      monthAgo.setMonth(monthAgo.getMonth() - 1);
+      return date >= monthAgo;
+    }
+    if (period === "year") {
+      const yearAgo = new Date(now);
+      yearAgo.setFullYear(yearAgo.getFullYear() - 1);
+      return date >= yearAgo;
+    }
+    return true;
+  }) || [];
+
+  const totalRevenue = filteredOrders.reduce((sum, o) => sum + parseFloat(o.total), 0);
+  const totalOrders = filteredOrders.length;
   const avgOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
   const lowStockProducts = products?.filter((p) => p.stock < 20) || [];
 
+  const chartData = (() => {
+    if (filteredOrders.length === 0) return [];
+    const buckets: Record<string, number> = {};
+
+    const useMonthly = period === "year" || period === "all";
+
+    filteredOrders.forEach(o => {
+      if (!o.createdAt) return;
+      const d = new Date(o.createdAt);
+      const key = useMonthly
+        ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
+        : `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      buckets[key] = (buckets[key] || 0) + parseFloat(o.total);
+    });
+
+    return Object.entries(buckets)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([date, revenue]) => ({ date, revenue }));
+  })();
+
+  const chartSvg = (() => {
+    if (chartData.length === 0) return { path: "", area: "" };
+    const maxRevenue = Math.max(...chartData.map(d => d.revenue), 1);
+    const width = 800;
+    const height = 250;
+    const padding = 20;
+    const points = chartData.map((d, i) => ({
+      x: chartData.length === 1 ? width / 2 : (i / (chartData.length - 1)) * (width - padding * 2) + padding,
+      y: height - padding - ((d.revenue / maxRevenue) * (height - padding * 2)),
+    }));
+
+    const pathStr = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ');
+    const areaStr = `${pathStr} L${points[points.length - 1].x},${height} L${points[0].x},${height} Z`;
+
+    return { path: pathStr, area: areaStr };
+  })();
+
+  const resetMutation = useMutation({
+    mutationFn: () => apiRequest("DELETE", "/api/orders"),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/orders"] });
+      toast({ title: "Revenue Reset", description: "All order data has been cleared." });
+      setShowResetDialog(false);
+    },
+  });
+
   const kpis = [
-    { label: "Total Revenue", value: `$${totalRevenue.toLocaleString("en-US", { minimumFractionDigits: 0 })}`, change: "+12%", up: true, icon: "payments" },
-    { label: "Orders", value: totalOrders.toLocaleString(), change: "+5%", up: true, icon: "shopping_bag" },
-    { label: "Avg. Order Value", value: `$${avgOrderValue.toFixed(2)}`, change: "-2%", up: false, icon: "price_check" },
-    { label: "Conversion Rate", value: "3.2%", change: "+0.4%", up: true, icon: "ads_click" },
+    { label: "Total Revenue", value: `$${totalRevenue.toLocaleString("en-US", { minimumFractionDigits: 2 })}`, icon: "payments" },
+    { label: "Orders", value: totalOrders.toLocaleString(), icon: "shopping_bag" },
+    { label: "Avg. Order Value", value: `$${avgOrderValue.toFixed(2)}`, icon: "price_check" },
+    { label: "Products", value: String(products?.length || 0), icon: "ads_click" },
   ];
 
-  const recentOrders = orders?.slice(0, 5) || [];
+  const recentOrders = filteredOrders.slice(0, 5);
 
   return (
     <div className="flex h-screen w-full bg-[hsl(220,50%,4%)] overflow-hidden">
@@ -121,19 +202,39 @@ export default function AdminDashboard() {
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <AdminHeader title="Dashboard Overview" />
         <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-2 flex-wrap">
+              {(["week", "month", "year", "all"] as const).map(p => (
+                <button
+                  key={p}
+                  onClick={() => setPeriod(p)}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                    period === p
+                      ? "bg-[hsl(220,91%,55%)] text-white"
+                      : "border border-[hsl(218,35%,17%)] text-[hsl(215,30%,65%)] hover:text-white hover:border-[hsl(220,91%,55%)]/50"
+                  }`}
+                  data-testid={`button-period-${p}`}
+                >
+                  {p === "week" ? "This Week" : p === "month" ? "This Month" : p === "year" ? "This Year" : "All Time"}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => setShowResetDialog(true)}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-red-500/30 text-red-400 text-xs font-medium hover:bg-red-500/10 transition-all"
+              data-testid="button-reset-revenue"
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+              Reset Data
+            </button>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {kpis.map((kpi, i) => (
               <div key={i} className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-5 hover:border-[hsl(220,91%,55%)]/50 transition-colors group relative overflow-visible" data-testid={`kpi-${i}`}>
                 <div className="flex flex-col gap-1 relative z-10">
                   <p className="text-[hsl(215,30%,65%)] text-sm font-medium">{kpi.label}</p>
                   <h3 className="text-white text-2xl font-bold tracking-tight">{kpi.value}</h3>
-                  <div className="flex items-center gap-1.5 mt-2">
-                    <span className={`${kpi.up ? "bg-emerald-500/10 text-emerald-400" : "bg-rose-500/10 text-rose-400"} text-xs font-semibold px-2 py-0.5 rounded flex items-center gap-1`}>
-                      {kpi.up ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-                      {kpi.change}
-                    </span>
-                    <span className="text-[hsl(218,25%,40%)] text-xs">vs last month</span>
-                  </div>
                 </div>
               </div>
             ))}
@@ -144,11 +245,10 @@ export default function AdminDashboard() {
               <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                 <div>
                   <h3 className="text-white text-base font-semibold">Sales Performance</h3>
-                  <p className="text-[hsl(218,25%,40%)] text-xs mt-1">Daily revenue over the last 30 days</p>
+                  <p className="text-[hsl(218,25%,40%)] text-xs mt-1">
+                    {period === "week" ? "Daily revenue this week" : period === "month" ? "Daily revenue this month" : period === "year" ? "Monthly revenue this year" : "All time revenue"}
+                  </p>
                 </div>
-                <button className="flex items-center gap-1 px-3 py-1.5 rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] text-[hsl(215,30%,65%)] text-xs hover:text-white hover:border-[hsl(220,91%,55%)]/50 transition-all" data-testid="button-chart-period">
-                  Last 30 Days
-                </button>
               </div>
               <div className="flex-1 relative min-h-[250px] w-full">
                 <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 800 250">
@@ -162,8 +262,20 @@ export default function AdminDashboard() {
                   <line stroke="hsl(218,35%,17%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="100" y2="100" />
                   <line stroke="hsl(218,35%,17%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="150" y2="150" />
                   <line stroke="hsl(218,35%,17%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="200" y2="200" />
-                  <path d="M0,200 C50,180 100,210 150,160 C200,110 250,140 300,120 C350,100 400,110 450,80 C500,50 550,90 600,60 C650,30 700,70 750,40 L800,20 L800,250 L0,250 Z" fill="url(#chartGradient)" />
-                  <path d="M0,200 C50,180 100,210 150,160 C200,110 250,140 300,120 C350,100 400,110 450,80 C500,50 550,90 600,60 C650,30 700,70 750,40 L800,20" fill="none" stroke="hsl(220,91%,55%)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
+                  {chartData.length > 0 ? (
+                    <>
+                      <path d={chartSvg.area} fill="url(#chartGradient)" />
+                      <path d={chartSvg.path} fill="none" stroke="hsl(220,91%,55%)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
+                      {chartData.map((d, i) => {
+                        const maxR = Math.max(...chartData.map(x => x.revenue), 1);
+                        const x = chartData.length === 1 ? 400 : (i / (chartData.length - 1)) * 760 + 20;
+                        const y = 230 - ((d.revenue / maxR) * 210);
+                        return <circle key={i} cx={x} cy={y} r="4" fill="hsl(220,91%,55%)" />;
+                      })}
+                    </>
+                  ) : (
+                    <text x="400" y="130" textAnchor="middle" fill="hsl(215,30%,65%)" fontSize="14">No data for selected period</text>
+                  )}
                 </svg>
               </div>
             </div>
@@ -253,6 +365,27 @@ export default function AdminDashboard() {
           </div>
         </div>
       </main>
+
+      <AlertDialog open={showResetDialog} onOpenChange={setShowResetDialog}>
+        <AlertDialogContent className="bg-[hsl(220,40%,7%)] border-[hsl(218,35%,17%)] text-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Reset All Revenue Data?</AlertDialogTitle>
+            <AlertDialogDescription className="text-[hsl(215,30%,65%)]">
+              This will permanently delete all orders. Revenue will reset to $0.00. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-[hsl(218,35%,17%)] text-[hsl(215,30%,65%)]" data-testid="button-cancel-reset">Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => resetMutation.mutate()}
+              className="bg-red-600 hover:bg-red-700 text-white"
+              data-testid="button-confirm-reset"
+            >
+              Reset All Data
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

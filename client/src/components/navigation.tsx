@@ -1,6 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { ShoppingCart, Menu, X, Droplets, Search } from "lucide-react";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useCartStore } from "@/lib/cart-store";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -10,21 +11,27 @@ export function Navigation() {
   const [location] = useLocation();
   const { setIsOpen, getItemCount } = useCartStore();
   const itemCount = getItemCount();
+  const { data: settings } = useQuery<Record<string, string>>({ queryKey: ["/api/settings"] });
 
-  const navLinks = [
-    { href: "/shop", label: "Shop" },
-    { href: "/about", label: "About" },
-    { href: "/faq", label: "FAQ" },
-    { href: "/contact", label: "Contact" },
-    { href: "/reviews", label: "Reviews" },
+  const allLinks = [
+    { href: "/shop", label: "Shop", key: "showNavShop" },
+    { href: "/about", label: "About", key: "showNavAbout" },
+    { href: "/faq", label: "FAQ", key: "showNavFaq" },
+    { href: "/contact", label: "Contact", key: "showNavContact" },
+    { href: "/reviews", label: "Reviews", key: "showNavReviews" },
   ];
+  const navLinks = allLinks.filter(l => settings?.[l.key] !== "false");
+
+  const logoText = settings?.logoText || "NOVAATOZ";
+  const logoTextSize = settings?.logoSize === "small" ? "text-lg" : settings?.logoSize === "large" ? "text-2xl" : "text-xl";
+  const logoIconSize = settings?.logoSize === "small" ? "h-5 w-5" : settings?.logoSize === "large" ? "h-9 w-9" : "h-7 w-7";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[hsl(220,40%,7%)]/80 backdrop-blur-xl" data-testid="nav-header">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2" data-testid="link-home">
-          <Droplets className="h-7 w-7 text-[hsl(220,91%,55%)]" />
-          <span className="text-xl font-bold tracking-tight text-white">NOVAATOZ</span>
+          {settings?.showLogoIcon !== "false" && <Droplets className={`${logoIconSize} text-[hsl(220,91%,55%)]`} />}
+          <span className={`${logoTextSize} font-bold tracking-tight text-white`}>{logoText}</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
@@ -76,8 +83,8 @@ export function Navigation() {
             <SheetContent side="right" className="bg-[hsl(220,40%,7%)] border-[hsl(218,35%,17%)] w-[280px]">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2 text-white">
-                  <Droplets className="h-5 w-5 text-[hsl(220,91%,55%)]" />
-                  NOVAATOZ
+                  {settings?.showLogoIcon !== "false" && <Droplets className="h-5 w-5 text-[hsl(220,91%,55%)]" />}
+                  {logoText}
                 </SheetTitle>
               </SheetHeader>
               <nav className="flex flex-col gap-4 mt-8">

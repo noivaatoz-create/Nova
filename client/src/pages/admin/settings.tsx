@@ -3,7 +3,7 @@ import { AdminSidebar, AdminHeader } from "./dashboard";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
-import { Save, CreditCard, Store, Mail } from "lucide-react";
+import { Save, CreditCard, Store, Mail, Layout, Eye, EyeOff, Type } from "lucide-react";
 import { SiStripe, SiPaypal } from "react-icons/si";
 
 interface SettingsForm {
@@ -22,6 +22,18 @@ interface SettingsForm {
   supportEmail: string;
   supportPhone: string;
   storeAddress: string;
+  logoText: string;
+  showLogoIcon: string;
+  logoSize: string;
+  showNavShop: string;
+  showNavAbout: string;
+  showNavFaq: string;
+  showNavContact: string;
+  showNavReviews: string;
+  showFooterNewsletter: string;
+  showFooterSocial: string;
+  showFooterLinks: string;
+  copyrightText: string;
 }
 
 const defaultForm: SettingsForm = {
@@ -40,6 +52,18 @@ const defaultForm: SettingsForm = {
   supportEmail: "",
   supportPhone: "",
   storeAddress: "",
+  logoText: "NOVAATOZ",
+  showLogoIcon: "true",
+  logoSize: "default",
+  showNavShop: "true",
+  showNavAbout: "true",
+  showNavFaq: "true",
+  showNavContact: "true",
+  showNavReviews: "true",
+  showFooterNewsletter: "true",
+  showFooterSocial: "true",
+  showFooterLinks: "true",
+  copyrightText: "",
 };
 
 function Toggle({ value, onToggle, testId }: { value: string; onToggle: () => void; testId: string }) {
@@ -102,6 +126,18 @@ export default function AdminSettings() {
         supportEmail: settings.supportEmail || "",
         supportPhone: settings.supportPhone || "",
         storeAddress: settings.storeAddress || "",
+        logoText: settings.logoText || "NOVAATOZ",
+        showLogoIcon: settings.showLogoIcon || "true",
+        logoSize: settings.logoSize || "default",
+        showNavShop: settings.showNavShop || "true",
+        showNavAbout: settings.showNavAbout || "true",
+        showNavFaq: settings.showNavFaq || "true",
+        showNavContact: settings.showNavContact || "true",
+        showNavReviews: settings.showNavReviews || "true",
+        showFooterNewsletter: settings.showFooterNewsletter || "true",
+        showFooterSocial: settings.showFooterSocial || "true",
+        showFooterLinks: settings.showFooterLinks || "true",
+        copyrightText: settings.copyrightText || "",
       });
     }
   }, [settings]);
@@ -138,6 +174,23 @@ export default function AdminSettings() {
       freeShippingThreshold: form.freeShippingThreshold,
       shippingFlatRate: form.shippingFlatRate,
       orderPrefix: form.orderPrefix,
+    });
+  };
+
+  const saveAppearance = () => {
+    saveMutation.mutate({
+      logoText: form.logoText,
+      showLogoIcon: form.showLogoIcon,
+      logoSize: form.logoSize,
+      showNavShop: form.showNavShop,
+      showNavAbout: form.showNavAbout,
+      showNavFaq: form.showNavFaq,
+      showNavContact: form.showNavContact,
+      showNavReviews: form.showNavReviews,
+      showFooterNewsletter: form.showFooterNewsletter,
+      showFooterSocial: form.showFooterSocial,
+      showFooterLinks: form.showFooterLinks,
+      copyrightText: form.copyrightText,
     });
   };
 
@@ -411,6 +464,122 @@ export default function AdminSettings() {
                       placeholder="123 Main St, City, State, ZIP"
                       data-testid="input-store-address"
                     />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-6" data-testid="card-appearance-settings">
+                <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
+                  <div className="flex items-center gap-3">
+                    <Layout className="h-5 w-5 text-[hsl(220,91%,55%)]" />
+                    <h3 className="text-white text-base font-semibold">Header & Footer</h3>
+                  </div>
+                  <button
+                    onClick={saveAppearance}
+                    disabled={saveMutation.isPending}
+                    className="flex items-center gap-2 rounded-md bg-[hsl(220,91%,55%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(220,91%,45%)] transition-colors disabled:opacity-50"
+                    data-testid="button-save-appearance"
+                  >
+                    <Save className="h-4 w-4" />
+                    {saveMutation.isPending ? "Saving..." : "Save"}
+                  </button>
+                </div>
+
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-white text-sm font-medium mb-3 flex items-center gap-2">
+                      <Type className="h-4 w-4 text-[hsl(220,91%,55%)]" />
+                      Logo
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <label className={labelClass}>Logo Text</label>
+                        <input
+                          type="text"
+                          value={form.logoText}
+                          onChange={(e) => setForm({ ...form, logoText: e.target.value })}
+                          className={inputClass}
+                          placeholder="NOVAATOZ"
+                          data-testid="input-logo-text"
+                        />
+                      </div>
+                      <div>
+                        <label className={labelClass}>Logo Size</label>
+                        <select
+                          value={form.logoSize}
+                          onChange={(e) => setForm({ ...form, logoSize: e.target.value })}
+                          className={inputClass}
+                          data-testid="select-logo-size"
+                        >
+                          <option value="small">Small</option>
+                          <option value="default">Default</option>
+                          <option value="large">Large</option>
+                        </select>
+                      </div>
+                      <div className="flex items-end gap-3 pb-0.5">
+                        <div className="flex items-center gap-3">
+                          <label className="text-sm font-medium text-[hsl(215,30%,65%)]">Show Logo Icon</label>
+                          <Toggle
+                            value={form.showLogoIcon}
+                            onToggle={() => setForm({ ...form, showLogoIcon: form.showLogoIcon === "true" ? "false" : "true" })}
+                            testId="toggle-logo-icon"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-white text-sm font-medium mb-3">Navigation Links</h4>
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                      {[
+                        { key: "showNavShop", label: "Shop" },
+                        { key: "showNavAbout", label: "About" },
+                        { key: "showNavFaq", label: "FAQ" },
+                        { key: "showNavContact", label: "Contact" },
+                        { key: "showNavReviews", label: "Reviews" },
+                      ].map(nav => (
+                        <div key={nav.key} className="flex items-center justify-between gap-2 p-3 rounded-md bg-[hsl(220,40%,7%)] border border-[hsl(218,35%,17%)]">
+                          <span className="text-white text-sm">{nav.label}</span>
+                          <Toggle
+                            value={(form as any)[nav.key]}
+                            onToggle={() => setForm({ ...form, [nav.key]: (form as any)[nav.key] === "true" ? "false" : "true" })}
+                            testId={`toggle-nav-${nav.label.toLowerCase()}`}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-white text-sm font-medium mb-3">Footer Sections</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                      {[
+                        { key: "showFooterNewsletter", label: "Newsletter" },
+                        { key: "showFooterSocial", label: "Social Links" },
+                        { key: "showFooterLinks", label: "Footer Links" },
+                      ].map(sec => (
+                        <div key={sec.key} className="flex items-center justify-between gap-2 p-3 rounded-md bg-[hsl(220,40%,7%)] border border-[hsl(218,35%,17%)]">
+                          <span className="text-white text-sm">{sec.label}</span>
+                          <Toggle
+                            value={(form as any)[sec.key]}
+                            onToggle={() => setForm({ ...form, [sec.key]: (form as any)[sec.key] === "true" ? "false" : "true" })}
+                            testId={`toggle-footer-${sec.label.toLowerCase().replace(/\s/g, '-')}`}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    <div>
+                      <label className={labelClass}>Copyright Text</label>
+                      <input
+                        type="text"
+                        value={form.copyrightText}
+                        onChange={(e) => setForm({ ...form, copyrightText: e.target.value })}
+                        className={inputClass}
+                        placeholder="© 2025 Novaatoz Inc. All rights reserved."
+                        data-testid="input-copyright-text"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
