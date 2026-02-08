@@ -18,6 +18,7 @@ import ReviewsPage from "@/pages/reviews";
 import AdminDashboard from "@/pages/admin/dashboard";
 import AdminProducts from "@/pages/admin/products";
 import AdminOrders from "@/pages/admin/orders";
+import AdminSettings from "@/pages/admin/settings";
 
 function CustomerLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -60,6 +61,7 @@ function Router() {
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/products" component={AdminProducts} />
       <Route path="/admin/orders" component={AdminOrders} />
+      <Route path="/admin/settings" component={AdminSettings} />
       <Route>
         {() => <CustomerLayout><NotFound /></CustomerLayout>}
       </Route>

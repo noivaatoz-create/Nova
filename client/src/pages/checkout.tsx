@@ -1,17 +1,20 @@
 import { useCartStore } from "@/lib/cart-store";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import { Lock, CreditCard, ArrowLeft, Truck, ShieldCheck } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Lock, CreditCard, ArrowLeft, Truck, ShieldCheck, Banknote } from "lucide-react";
 import { SiStripe, SiPaypal } from "react-icons/si";
 
 export default function CheckoutPage() {
   const { items, getTotal, clearCart, getItemCount } = useCartStore();
   const [, navigate] = useLocation();
   const { toast } = useToast();
-  const [paymentMethod, setPaymentMethod] = useState<"stripe" | "paypal">("stripe");
+  const [paymentMethod, setPaymentMethod] = useState<"stripe" | "paypal" | "cod">("stripe");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { data: settings } = useQuery<Record<string, string>>({ queryKey: ["/api/settings"] });
 
   const [form, setForm] = useState({
     name: "",
@@ -24,9 +27,28 @@ export default function CheckoutPage() {
   });
 
   const total = getTotal();
-  const shipping = total >= 75 ? 0 : 9.99;
-  const tax = total * 0.08;
+  const taxRate = parseFloat(settings?.taxRate || "0.08");
+  const freeShippingThreshold = parseFloat(settings?.freeShippingThreshold || "75");
+  const shippingFlatRate = parseFloat(settings?.shippingFlatRate || "9.99");
+  const shipping = total >= freeShippingThreshold ? 0 : shippingFlatRate;
+  const tax = total * taxRate;
   const grandTotal = total + shipping + tax;
+
+  const stripeEnabled = settings?.stripeEnabled === "true";
+  const paypalEnabled = settings?.paypalEnabled === "true";
+  const codEnabled = settings?.codEnabled === "true";
+  const noMethodsConfigured = !stripeEnabled && !paypalEnabled && !codEnabled;
+  const showStripe = noMethodsConfigured || stripeEnabled;
+  const showPaypal = noMethodsConfigured || paypalEnabled;
+  const showCod = codEnabled;
+
+  useEffect(() => {
+    if (settings) {
+      if (showStripe) setPaymentMethod("stripe");
+      else if (showPaypal) setPaymentMethod("paypal");
+      else if (showCod) setPaymentMethod("cod");
+    }
+  }, [settings, showStripe, showPaypal, showCod]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -140,32 +162,51 @@ export default function CheckoutPage() {
                   Payment Method
                 </h2>
                 <div className="grid grid-cols-2 gap-4">
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod("stripe")}
-                    className={`flex items-center justify-center gap-3 p-4 rounded-md border transition-colors ${
-                      paymentMethod === "stripe"
-                        ? "border-[hsl(220,91%,55%)] bg-[hsl(220,91%,55%)]/10"
-                        : "border-[hsl(218,35%,17%)] hover:border-[hsl(220,91%,55%)]/50"
-                    }`}
-                    data-testid="button-payment-stripe"
-                  >
-                    <SiStripe className="h-6 w-6 text-[#635BFF]" />
-                    <span className="text-white font-medium">Stripe</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod("paypal")}
-                    className={`flex items-center justify-center gap-3 p-4 rounded-md border transition-colors ${
-                      paymentMethod === "paypal"
-                        ? "border-[hsl(220,91%,55%)] bg-[hsl(220,91%,55%)]/10"
-                        : "border-[hsl(218,35%,17%)] hover:border-[hsl(220,91%,55%)]/50"
-                    }`}
-                    data-testid="button-payment-paypal"
-                  >
-                    <SiPaypal className="h-6 w-6 text-[#00457C]" />
-                    <span className="text-white font-medium">PayPal</span>
-                  </button>
+                  {showStripe && (
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod("stripe")}
+                      className={`flex items-center justify-center gap-3 p-4 rounded-md border transition-colors ${
+                        paymentMethod === "stripe"
+                          ? "border-[hsl(220,91%,55%)] bg-[hsl(220,91%,55%)]/10"
+                          : "border-[hsl(218,35%,17%)] hover:border-[hsl(220,91%,55%)]/50"
+                      }`}
+                      data-testid="button-payment-stripe"
+                    >
+                      <SiStripe className="h-6 w-6 text-[#635BFF]" />
+                      <span className="text-white font-medium">Stripe</span>
+                    </button>
+                  )}
+                  {showPaypal && (
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod("paypal")}
+                      className={`flex items-center justify-center gap-3 p-4 rounded-md border transition-colors ${
+                        paymentMethod === "paypal"
+                          ? "border-[hsl(220,91%,55%)] bg-[hsl(220,91%,55%)]/10"
+                          : "border-[hsl(218,35%,17%)] hover:border-[hsl(220,91%,55%)]/50"
+                      }`}
+                      data-testid="button-payment-paypal"
+                    >
+                      <SiPaypal className="h-6 w-6 text-[#00457C]" />
+                      <span className="text-white font-medium">PayPal</span>
+                    </button>
+                  )}
+                  {showCod && (
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod("cod")}
+                      className={`flex items-center justify-center gap-3 p-4 rounded-md border transition-colors ${
+                        paymentMethod === "cod"
+                          ? "border-[hsl(220,91%,55%)] bg-[hsl(220,91%,55%)]/10"
+                          : "border-[hsl(218,35%,17%)] hover:border-[hsl(220,91%,55%)]/50"
+                      }`}
+                      data-testid="button-payment-cod"
+                    >
+                      <Banknote className="h-6 w-6 text-emerald-400" />
+                      <span className="text-white font-medium">Cash on Delivery</span>
+                    </button>
+                  )}
                 </div>
                 <p className="text-[hsl(215,30%,65%)] text-xs mt-4 flex items-center gap-1">
                   <Lock className="h-3 w-3" />
@@ -220,7 +261,7 @@ export default function CheckoutPage() {
                 </button>
                 <div className="flex items-center justify-center gap-2 mt-4 text-xs text-[hsl(215,30%,65%)]">
                   <ShieldCheck className="h-4 w-4" />
-                  Secure checkout powered by {paymentMethod === "stripe" ? "Stripe" : "PayPal"}
+                  Secure checkout powered by {paymentMethod === "stripe" ? "Stripe" : paymentMethod === "paypal" ? "PayPal" : "Cash on Delivery"}
                 </div>
               </div>
             </div>

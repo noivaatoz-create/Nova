@@ -90,5 +90,29 @@ export async function registerRoutes(
     }
   });
 
+  app.get("/api/settings", async (_req, res) => {
+    const settings = await storage.getSettings();
+    const settingsObj: Record<string, string> = {};
+    for (const s of settings) {
+      settingsObj[s.key] = s.value;
+    }
+    res.json(settingsObj);
+  });
+
+  app.patch("/api/settings", async (req, res) => {
+    const updates = req.body as Record<string, string>;
+    for (const [key, value] of Object.entries(updates)) {
+      if (typeof key === "string" && typeof value === "string") {
+        await storage.upsertSetting(key, value);
+      }
+    }
+    const settings = await storage.getSettings();
+    const settingsObj: Record<string, string> = {};
+    for (const s of settings) {
+      settingsObj[s.key] = s.value;
+    }
+    res.json(settingsObj);
+  });
+
   return httpServer;
 }

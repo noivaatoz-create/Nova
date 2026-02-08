@@ -16,51 +16,63 @@ client/src/
   lib/cart-store.ts    - Zustand cart state with localStorage persistence
   components/
     navigation.tsx     - Sticky header with cart badge + mobile menu
-    cart-drawer.tsx     - Slide-out cart with quantity controls
-    footer.tsx         - Footer with newsletter signup + links
+    cart-drawer.tsx     - Slide-out cart with quantity controls (uses settings API for thresholds)
+    footer.tsx         - Footer with newsletter signup + links (wired to /api/subscribers)
   pages/
     home.tsx           - Hero, value props, featured products, comparison, reviews, CTA
     shop.tsx           - Product grid with search + category filters
     product-detail.tsx - Full product page with specs, FAQ, reviews
-    checkout.tsx       - Shipping form + payment method selection (UI only)
+    checkout.tsx       - Shipping form + dynamic payment methods from settings
     about.tsx          - Company story, stats, mission, values
-    contact.tsx        - Contact form + company info
+    contact.tsx        - Contact form + company info from settings
     faq.tsx            - Categorized FAQ with accordions
     reviews.tsx        - All reviews with rating distribution
     admin/
-      dashboard.tsx    - KPIs, sales chart, low stock alerts, recent orders
-      products.tsx     - CRUD product management with dialog form
+      dashboard.tsx    - KPIs, sales chart, low stock alerts, recent orders + shared AdminSidebar/AdminHeader
+      products.tsx     - Full CRUD with features, specs, whatsInBox, images editors
       orders.tsx       - Order list with status management + detail modal
+      settings.tsx     - Site settings: Payment, Store, Contact config
 
 server/
   db.ts               - Neon database connection
-  storage.ts          - Database CRUD operations interface
+  storage.ts          - Database CRUD operations interface (products, orders, reviews, subscribers, settings)
   routes.ts           - REST API endpoints
   seed.ts             - Database seeding script
 
 shared/
-  schema.ts           - Drizzle schema: products, cart_items, orders, reviews, subscribers
+  schema.ts           - Drizzle schema: products, cart_items, orders, reviews, subscribers, site_settings
 ```
 
 ## Key Decisions
 - Cart state managed client-side with Zustand + localStorage persistence
 - No authentication implemented - admin panel is open access
-- Payment integration is UI-only (Stripe/PayPal selection without API keys)
-- Free shipping threshold: $75
-- Tax rate: 8%
+- Payment methods (Stripe/PayPal/COD) configurable from admin settings - UI only, no real payment integration
+- Tax rate, shipping threshold, flat rate all configurable via admin settings
+- Contact info (email, phone, address) configurable via admin settings
 - All product images generated and stored in client/public/images/
+- Product form supports editing all fields: features[], specs{}, whatsInBox[], images[], compareAtPrice, isActive
 
 ## Database Tables
-- products: name, slug, description, price, category, badge, specs (jsonb), features, stock
+- products: name, slug, description, price, compareAtPrice, category, badge, specs (jsonb), features, whatsInBox, images, stock, isActive
 - orders: orderNumber, customer info, items (jsonb), totals, status, payment provider
 - reviews: productId, customerName, rating, title, body, verified
 - subscribers: email
+- site_settings: key (unique), value - stores all configurable settings
+
+## Site Settings Keys
+- storeName, currency, orderPrefix
+- taxRate (decimal, e.g. "0.08"), freeShippingThreshold, shippingFlatRate
+- stripeEnabled, stripePublicKey, stripeSecretKey
+- paypalEnabled, paypalEmail
+- codEnabled
+- supportEmail, supportPhone, storeAddress
 
 ## API Routes
 - GET/POST /api/products, GET /api/products/:slug, PATCH/DELETE /api/products/:id
 - GET/POST /api/orders, PATCH /api/orders/:id
 - GET/POST /api/reviews
 - POST /api/subscribers
+- GET/PATCH /api/settings
 
 ## Product Categories
 - Best Sellers, Portable, Family, Accessories

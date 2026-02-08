@@ -3,9 +3,11 @@ import { AdminSidebar, AdminHeader } from "./dashboard";
 import type { Product } from "@shared/schema";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Edit, Trash2, Package } from "lucide-react";
+import { Plus, Edit, Trash2, Package, X, List, Image, Box, Wrench, ToggleLeft, ToggleRight } from "lucide-react";
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+
+const inputClass = "w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)]";
 
 export default function AdminProducts() {
   const { data: products, isLoading } = useQuery<Product[]>({ queryKey: ["/api/products"] });
@@ -13,8 +15,15 @@ export default function AdminProducts() {
   const [editProduct, setEditProduct] = useState<Product | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({
-    name: "", slug: "", shortDescription: "", longDescription: "", price: "", category: "Best Sellers", badge: "", image: "", stock: "100",
+    name: "", slug: "", shortDescription: "", longDescription: "",
+    price: "", compareAtPrice: "", category: "Best Sellers", badge: "",
+    image: "", stock: "100", isActive: true,
+    features: [] as string[],
+    specs: {} as Record<string, string>,
+    whatsInBox: [] as string[],
+    images: [] as string[],
   });
+  const [specEntries, setSpecEntries] = useState<{key: string, value: string}[]>([]);
 
   const saveMutation = useMutation({
     mutationFn: async (data: any) => {
@@ -44,15 +53,30 @@ export default function AdminProducts() {
   });
 
   const resetForm = () => {
-    setForm({ name: "", slug: "", shortDescription: "", longDescription: "", price: "", category: "Best Sellers", badge: "", image: "", stock: "100" });
+    setForm({
+      name: "", slug: "", shortDescription: "", longDescription: "",
+      price: "", compareAtPrice: "", category: "Best Sellers", badge: "",
+      image: "", stock: "100", isActive: true,
+      features: [], specs: {}, whatsInBox: [], images: [],
+    });
+    setSpecEntries([]);
   };
 
   const openEdit = (p: Product) => {
     setEditProduct(p);
     setForm({
-      name: p.name, slug: p.slug, shortDescription: p.shortDescription, longDescription: p.longDescription,
-      price: p.price, category: p.category, badge: p.badge || "", image: p.image, stock: String(p.stock),
+      name: p.name, slug: p.slug,
+      shortDescription: p.shortDescription, longDescription: p.longDescription,
+      price: p.price, compareAtPrice: p.compareAtPrice || "",
+      category: p.category, badge: p.badge || "",
+      image: p.image, stock: String(p.stock),
+      isActive: p.isActive,
+      features: p.features || [],
+      specs: p.specs || {},
+      whatsInBox: p.whatsInBox || [],
+      images: p.images || [],
     });
+    setSpecEntries(Object.entries(p.specs || {}).map(([key, value]) => ({ key, value })));
     setShowForm(true);
   };
 
@@ -60,13 +84,23 @@ export default function AdminProducts() {
     e.preventDefault();
     const stockNum = parseInt(form.stock);
     if (isNaN(stockNum) || stockNum < 0) return;
+    const slug = form.slug || form.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
     saveMutation.mutate({
-      ...form,
-      stock: stockNum,
+      name: form.name,
+      slug,
+      shortDescription: form.shortDescription,
+      longDescription: form.longDescription,
+      price: form.price,
+      compareAtPrice: form.compareAtPrice || null,
+      category: form.category,
       badge: form.badge || null,
-      images: [],
-      features: [],
-      whatsInBox: [],
+      image: form.image,
+      stock: stockNum,
+      isActive: form.isActive,
+      features: form.features.filter(f => f.trim()),
+      specs: Object.fromEntries(specEntries.filter(e => e.key.trim()).map(e => [e.key, e.value])),
+      whatsInBox: form.whatsInBox.filter(w => w.trim()),
+      images: form.images.filter(i => i.trim()),
     });
   };
 
@@ -78,7 +112,7 @@ export default function AdminProducts() {
         <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
           <div className="flex items-center justify-between gap-4 flex-wrap">
             <div>
-              <h3 className="text-white text-lg font-semibold">{products?.length || 0} Products</h3>
+              <h3 className="text-white text-lg font-semibold" data-testid="text-product-count">{products?.length || 0} Products</h3>
             </div>
             <button
               onClick={() => { resetForm(); setEditProduct(null); setShowForm(true); }}
@@ -118,7 +152,14 @@ export default function AdminProducts() {
                         </div>
                       </td>
                       <td className="p-4 text-[hsl(215,30%,65%)] text-sm">{product.category}</td>
-                      <td className="p-4 text-white text-sm font-medium">${product.price}</td>
+                      <td className="p-4">
+                        <div className="flex flex-col">
+                          <span className="text-white text-sm font-medium">${product.price}</span>
+                          {product.compareAtPrice && (
+                            <span className="text-[hsl(215,30%,65%)] text-xs line-through" data-testid={`text-compare-price-${product.id}`}>${product.compareAtPrice}</span>
+                          )}
+                        </div>
+                      </td>
                       <td className="p-4">
                         <span className={`text-sm font-medium ${product.stock < 20 ? "text-amber-400" : "text-emerald-400"}`}>
                           {product.stock}
@@ -148,43 +189,73 @@ export default function AdminProducts() {
         </div>
 
         <Dialog open={showForm} onOpenChange={setShowForm}>
-          <DialogContent className="bg-[hsl(220,40%,7%)] border-[hsl(218,35%,17%)] text-white max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogContent className="bg-[hsl(220,40%,7%)] border-[hsl(218,35%,17%)] text-white max-w-3xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>{editProduct ? "Edit Product" : "Add Product"}</DialogTitle>
+              <DialogTitle data-testid="text-dialog-title">{editProduct ? "Edit Product" : "Add Product"}</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
+
+              <div className="flex items-center gap-2 pb-2">
+                <Package className="h-4 w-4 text-[hsl(220,91%,55%)]" />
+                <h3 className="text-sm font-semibold text-white">Basic Info</h3>
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-white mb-1">Name</label>
                   <input type="text" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)]" data-testid="input-product-name" />
+                    className={inputClass} data-testid="input-product-name" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-white mb-1">Slug</label>
-                  <input type="text" required value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })}
-                    className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)]" data-testid="input-product-slug" />
+                  <input type="text" value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })}
+                    placeholder="Auto-generated from name if empty"
+                    className={inputClass} data-testid="input-product-slug" />
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-white mb-1">Short Description</label>
                 <input type="text" required value={form.shortDescription} onChange={(e) => setForm({ ...form, shortDescription: e.target.value })}
-                  className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)]" data-testid="input-product-short-desc" />
+                  className={inputClass} data-testid="input-product-short-desc" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-white mb-1">Long Description</label>
                 <textarea required value={form.longDescription} onChange={(e) => setForm({ ...form, longDescription: e.target.value })} rows={3}
-                  className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] resize-none" data-testid="input-product-long-desc" />
+                  className={`${inputClass} resize-none`} data-testid="input-product-long-desc" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-white mb-1">Main Image URL</label>
+                <input type="text" required value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })}
+                  className={inputClass} data-testid="input-product-image" />
+                {form.image && (
+                  <div className="mt-2 h-20 w-20 rounded-md overflow-hidden bg-[hsl(218,35%,17%)]" data-testid="preview-main-image">
+                    <img src={form.image} alt="Preview" className="h-full w-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                  </div>
+                )}
               </div>
               <div className="grid grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-white mb-1">Price</label>
                   <input type="text" required value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })}
-                    className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)]" data-testid="input-product-price" />
+                    className={inputClass} data-testid="input-product-price" />
                 </div>
+                <div>
+                  <label className="block text-sm font-medium text-white mb-1">Compare At Price</label>
+                  <input type="text" value={form.compareAtPrice} onChange={(e) => setForm({ ...form, compareAtPrice: e.target.value })}
+                    placeholder="Optional original price"
+                    className={inputClass} data-testid="input-product-compare-price" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-white mb-1">Stock</label>
+                  <input type="number" required value={form.stock} onChange={(e) => setForm({ ...form, stock: e.target.value })}
+                    className={inputClass} data-testid="input-product-stock" />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-white mb-1">Category</label>
                   <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}
-                    className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)]" data-testid="select-product-category">
+                    className={inputClass} data-testid="select-product-category">
                     <option value="Best Sellers">Best Sellers</option>
                     <option value="Portable">Portable</option>
                     <option value="Family">Family</option>
@@ -192,24 +263,211 @@ export default function AdminProducts() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-white mb-1">Stock</label>
-                  <input type="number" required value={form.stock} onChange={(e) => setForm({ ...form, stock: e.target.value })}
-                    className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)]" data-testid="input-product-stock" />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-white mb-1">Image URL</label>
-                  <input type="text" required value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })}
-                    className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)]" data-testid="input-product-image" />
-                </div>
-                <div>
                   <label className="block text-sm font-medium text-white mb-1">Badge</label>
                   <input type="text" value={form.badge} onChange={(e) => setForm({ ...form, badge: e.target.value })}
-                    className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)]" placeholder="e.g. Flagship, Best Seller" data-testid="input-product-badge" />
+                    className={inputClass} placeholder="e.g. Flagship, Best Seller" data-testid="input-product-badge" />
                 </div>
               </div>
-              <div className="flex gap-3 pt-4">
+              <div className="flex items-center justify-between py-2">
+                <label className="text-sm font-medium text-white">Active</label>
+                <button
+                  type="button"
+                  onClick={() => setForm({ ...form, isActive: !form.isActive })}
+                  className="flex items-center gap-2 text-sm"
+                  data-testid="button-toggle-active"
+                >
+                  {form.isActive ? (
+                    <ToggleRight className="h-7 w-7 text-[hsl(220,91%,55%)]" />
+                  ) : (
+                    <ToggleLeft className="h-7 w-7 text-[hsl(215,30%,65%)]" />
+                  )}
+                  <span className={form.isActive ? "text-emerald-400 font-medium" : "text-[hsl(215,30%,65%)]"}>
+                    {form.isActive ? "Active" : "Inactive"}
+                  </span>
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,35%,17%)]">
+                <List className="h-4 w-4 text-[hsl(220,91%,55%)]" />
+                <h3 className="text-sm font-semibold text-white">Features</h3>
+              </div>
+              <div className="space-y-2">
+                {form.features.map((feature, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <input
+                      value={feature}
+                      onChange={(e) => {
+                        const updated = [...form.features];
+                        updated[i] = e.target.value;
+                        setForm({ ...form, features: updated });
+                      }}
+                      className={`flex-1 ${inputClass}`}
+                      placeholder="e.g. IPX7 waterproof"
+                      data-testid={`input-feature-${i}`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const updated = form.features.filter((_, idx) => idx !== i);
+                        setForm({ ...form, features: updated });
+                      }}
+                      className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,30%,65%)] hover:text-red-400"
+                      data-testid={`button-remove-feature-${i}`}
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => setForm({ ...form, features: [...form.features, ""] })}
+                  className="flex items-center gap-1 text-[hsl(220,91%,55%)] text-sm hover:text-[hsl(220,91%,65%)]"
+                  data-testid="button-add-feature"
+                >
+                  <Plus className="h-4 w-4" /> Add Feature
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,35%,17%)]">
+                <Wrench className="h-4 w-4 text-[hsl(220,91%,55%)]" />
+                <h3 className="text-sm font-semibold text-white">Specs</h3>
+              </div>
+              <div className="space-y-2">
+                {specEntries.map((entry, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <input
+                      value={entry.key}
+                      onChange={(e) => {
+                        const updated = [...specEntries];
+                        updated[i] = { ...updated[i], key: e.target.value };
+                        setSpecEntries(updated);
+                      }}
+                      className={`flex-1 ${inputClass}`}
+                      placeholder="Spec Name"
+                      data-testid={`input-spec-key-${i}`}
+                    />
+                    <input
+                      value={entry.value}
+                      onChange={(e) => {
+                        const updated = [...specEntries];
+                        updated[i] = { ...updated[i], value: e.target.value };
+                        setSpecEntries(updated);
+                      }}
+                      className={`flex-1 ${inputClass}`}
+                      placeholder="Value"
+                      data-testid={`input-spec-value-${i}`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const updated = specEntries.filter((_, idx) => idx !== i);
+                        setSpecEntries(updated);
+                      }}
+                      className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,30%,65%)] hover:text-red-400"
+                      data-testid={`button-remove-spec-${i}`}
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => setSpecEntries([...specEntries, { key: "", value: "" }])}
+                  className="flex items-center gap-1 text-[hsl(220,91%,55%)] text-sm hover:text-[hsl(220,91%,65%)]"
+                  data-testid="button-add-spec"
+                >
+                  <Plus className="h-4 w-4" /> Add Spec
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,35%,17%)]">
+                <Box className="h-4 w-4 text-[hsl(220,91%,55%)]" />
+                <h3 className="text-sm font-semibold text-white">What's in the Box</h3>
+              </div>
+              <div className="space-y-2">
+                {form.whatsInBox.map((item, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <input
+                      value={item}
+                      onChange={(e) => {
+                        const updated = [...form.whatsInBox];
+                        updated[i] = e.target.value;
+                        setForm({ ...form, whatsInBox: updated });
+                      }}
+                      className={`flex-1 ${inputClass}`}
+                      placeholder="e.g. 1x Water Flosser Unit"
+                      data-testid={`input-whatsInBox-${i}`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const updated = form.whatsInBox.filter((_, idx) => idx !== i);
+                        setForm({ ...form, whatsInBox: updated });
+                      }}
+                      className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,30%,65%)] hover:text-red-400"
+                      data-testid={`button-remove-whatsInBox-${i}`}
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => setForm({ ...form, whatsInBox: [...form.whatsInBox, ""] })}
+                  className="flex items-center gap-1 text-[hsl(220,91%,55%)] text-sm hover:text-[hsl(220,91%,65%)]"
+                  data-testid="button-add-whatsInBox"
+                >
+                  <Plus className="h-4 w-4" /> Add Item
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,35%,17%)]">
+                <Image className="h-4 w-4 text-[hsl(220,91%,55%)]" />
+                <h3 className="text-sm font-semibold text-white">Additional Images</h3>
+              </div>
+              <div className="space-y-2">
+                {form.images.map((imgUrl, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <input
+                      value={imgUrl}
+                      onChange={(e) => {
+                        const updated = [...form.images];
+                        updated[i] = e.target.value;
+                        setForm({ ...form, images: updated });
+                      }}
+                      className={`flex-1 ${inputClass}`}
+                      placeholder="https://example.com/image.png"
+                      data-testid={`input-image-${i}`}
+                    />
+                    {imgUrl && (
+                      <div className="h-9 w-9 rounded-md overflow-hidden bg-[hsl(218,35%,17%)] flex-shrink-0" data-testid={`preview-image-${i}`}>
+                        <img src={imgUrl} alt="Preview" className="h-full w-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const updated = form.images.filter((_, idx) => idx !== i);
+                        setForm({ ...form, images: updated });
+                      }}
+                      className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,30%,65%)] hover:text-red-400"
+                      data-testid={`button-remove-image-${i}`}
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => setForm({ ...form, images: [...form.images, ""] })}
+                  className="flex items-center gap-1 text-[hsl(220,91%,55%)] text-sm hover:text-[hsl(220,91%,65%)]"
+                  data-testid="button-add-image"
+                >
+                  <Plus className="h-4 w-4" /> Add Image URL
+                </button>
+              </div>
+
+              <div className="flex gap-3 pt-4 border-t border-[hsl(218,35%,17%)]">
                 <button type="submit" disabled={saveMutation.isPending}
                   className="flex-1 rounded-md bg-[hsl(220,91%,55%)] py-2.5 text-sm font-bold text-white hover:bg-[hsl(220,91%,45%)] disabled:opacity-50 transition-colors"
                   data-testid="button-save-product">

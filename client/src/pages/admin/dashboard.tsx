@@ -8,6 +8,7 @@ function AdminSidebar({ active }: { active: string }) {
     { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
     { href: "/admin/products", icon: Package, label: "Products" },
     { href: "/admin/orders", icon: ShoppingCart, label: "Orders" },
+    { href: "/admin/settings", icon: Settings, label: "Settings" },
   ];
 
   return (

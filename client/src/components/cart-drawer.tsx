@@ -1,14 +1,17 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/lib/cart-store";
+import { useQuery } from "@tanstack/react-query";
 import { Minus, Plus, X, ShoppingBag, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 
 export function CartDrawer() {
   const { items, isOpen, setIsOpen, removeItem, updateQuantity, getTotal, getItemCount } = useCartStore();
+  const { data: settings } = useQuery<Record<string, string>>({ queryKey: ["/api/settings"] });
   const total = getTotal();
   const itemCount = getItemCount();
-  const freeShippingThreshold = 75;
+  const freeShippingThreshold = parseFloat(settings?.freeShippingThreshold || "75");
+  const shippingFlatRate = parseFloat(settings?.shippingFlatRate || "9.99");
   const remaining = freeShippingThreshold - total;
 
   return (
@@ -107,14 +110,14 @@ export function CartDrawer() {
                   {total >= freeShippingThreshold ? (
                     <span className="text-emerald-400">Free</span>
                   ) : (
-                    "$9.99"
+                    `$${shippingFlatRate.toFixed(2)}`
                   )}
                 </span>
               </div>
               <div className="flex justify-between text-base pt-2 border-t border-[hsl(218,35%,17%)]">
                 <span className="text-white font-bold">Total</span>
                 <span className="text-white font-bold" data-testid="text-cart-total">
-                  ${(total + (total >= freeShippingThreshold ? 0 : 9.99)).toFixed(2)}
+                  ${(total + (total >= freeShippingThreshold ? 0 : shippingFlatRate)).toFixed(2)}
                 </span>
               </div>
               <Link href="/checkout" onClick={() => setIsOpen(false)}>

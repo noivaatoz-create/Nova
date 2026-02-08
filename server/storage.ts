@@ -1,11 +1,12 @@
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 import {
-  products, orders, reviews, subscribers,
+  products, orders, reviews, subscribers, siteSettings,
   type Product, type InsertProduct,
   type Order, type InsertOrder,
   type Review, type InsertReview,
   type Subscriber, type InsertSubscriber,
+  type SiteSetting, type InsertSiteSetting,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -25,6 +26,10 @@ export interface IStorage {
   createReview(review: InsertReview): Promise<Review>;
 
   createSubscriber(subscriber: InsertSubscriber): Promise<Subscriber>;
+
+  getSettings(): Promise<SiteSetting[]>;
+  getSetting(key: string): Promise<SiteSetting | undefined>;
+  upsertSetting(key: string, value: string): Promise<SiteSetting>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -86,6 +91,25 @@ export class DatabaseStorage implements IStorage {
 
   async createSubscriber(subscriber: InsertSubscriber): Promise<Subscriber> {
     const [created] = await db.insert(subscribers).values(subscriber).returning();
+    return created;
+  }
+
+  async getSettings(): Promise<SiteSetting[]> {
+    return db.select().from(siteSettings);
+  }
+
+  async getSetting(key: string): Promise<SiteSetting | undefined> {
+    const [setting] = await db.select().from(siteSettings).where(eq(siteSettings.key, key));
+    return setting;
+  }
+
+  async upsertSetting(key: string, value: string): Promise<SiteSetting> {
+    const existing = await this.getSetting(key);
+    if (existing) {
+      const [updated] = await db.update(siteSettings).set({ value }).where(eq(siteSettings.key, key)).returning();
+      return updated;
+    }
+    const [created] = await db.insert(siteSettings).values({ key, value }).returning();
     return created;
   }
 }

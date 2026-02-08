@@ -1,9 +1,11 @@
 import { Mail, MapPin, Phone, Clock } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ContactPage() {
   const { toast } = useToast();
+  const { data: settings } = useQuery<Record<string, string>>({ queryKey: ["/api/settings"] });
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -86,9 +88,9 @@ export default function ContactPage() {
 
           <div className="space-y-8">
             {[
-              { icon: Mail, title: "Email", value: "support@novaatoz.com", sub: "We reply within 24 hours" },
-              { icon: Phone, title: "Phone", value: "+1 (888) 555-0123", sub: "Mon-Fri, 9am-5pm PST" },
-              { icon: MapPin, title: "Office", value: "San Francisco, CA", sub: "United States" },
+              { icon: Mail, title: "Email", value: settings?.supportEmail || "support@novaatoz.com", sub: "We reply within 24 hours" },
+              { icon: Phone, title: "Phone", value: settings?.supportPhone || "+1 (800) 555-0199", sub: "Mon-Fri, 9am-5pm PST" },
+              { icon: MapPin, title: "Office", value: settings?.storeAddress || "123 Innovation Drive, San Francisco, CA 94105", sub: "United States" },
               { icon: Clock, title: "Hours", value: "Mon-Fri 9am-5pm", sub: "Pacific Standard Time" },
             ].map((item, i) => (
               <div key={i} className="flex gap-4" data-testid={`contact-info-${i}`}>
