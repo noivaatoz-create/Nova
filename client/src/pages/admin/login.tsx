@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { Droplets, Lock, User, LogIn } from "lucide-react";
+import { Lock, User, LogIn } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -36,7 +36,7 @@ export default function AdminLogin() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Droplets className="h-8 w-8 text-[hsl(220,91%,55%)]" />
+            <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-10 w-10 object-contain brightness-0 invert" />
             <span className="text-2xl font-bold tracking-tight text-white">NOVAATOZ</span>
           </div>
           <p className="text-[hsl(215,30%,65%)] text-sm">Admin Panel Login</p>

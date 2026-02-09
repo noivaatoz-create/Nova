@@ -1,5 +1,4 @@
 import { Link } from "wouter";
-import { Droplets } from "lucide-react";
 import { SiX, SiInstagram, SiFacebook, SiYoutube } from "react-icons/si";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -37,7 +36,7 @@ export function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           <div>
             <div className="flex items-center gap-2 mb-6">
-              {settings?.showLogoIcon !== "false" && <Droplets className="h-7 w-7 text-[hsl(220,91%,55%)]" />}
+              {settings?.showLogoIcon !== "false" && <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-9 w-9 object-contain brightness-0 invert" />}
               <span className="text-xl font-bold tracking-tight text-white">{settings?.logoText || "NOVAATOZ"}</span>
             </div>
             <p className="text-[hsl(215,30%,65%)] max-w-md mb-8 leading-relaxed">

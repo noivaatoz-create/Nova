@@ -4,7 +4,7 @@ import { Link, useLocation } from "wouter";
 import type { Product, Order } from "@shared/schema";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { LayoutDashboard, Package, ShoppingCart, Settings, LogOut, Droplets, Bell, HelpCircle, Search, AlertTriangle, Calendar, Trash2, RefreshCw } from "lucide-react";
+import { LayoutDashboard, Package, ShoppingCart, Settings, LogOut, Bell, HelpCircle, Search, AlertTriangle, Calendar, Trash2, RefreshCw } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -37,7 +37,7 @@ function AdminSidebar({ active }: { active: string }) {
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3 px-2 py-2">
             <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[hsl(220,91%,55%)] to-violet-600 flex items-center justify-center shadow-[0_0_15px_rgba(37,106,244,0.3)]">
-              <Droplets className="h-5 w-5 text-white" />
+              <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-7 w-7 object-contain brightness-0 invert" />
             </div>
             <div className="flex flex-col">
               <h1 className="text-white text-base font-bold tracking-tight">Novaatoz</h1>

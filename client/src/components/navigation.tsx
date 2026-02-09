@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { ShoppingCart, Menu, X, Droplets, Search } from "lucide-react";
+import { ShoppingCart, Menu, X, Search } from "lucide-react";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useCartStore } from "@/lib/cart-store";
@@ -24,13 +24,13 @@ export function Navigation() {
 
   const logoText = settings?.logoText || "NOVAATOZ";
   const logoTextSize = settings?.logoSize === "small" ? "text-lg" : settings?.logoSize === "large" ? "text-2xl" : "text-xl";
-  const logoIconSize = settings?.logoSize === "small" ? "h-5 w-5" : settings?.logoSize === "large" ? "h-9 w-9" : "h-7 w-7";
+  const logoImgSize = settings?.logoSize === "small" ? "h-7 w-7" : settings?.logoSize === "large" ? "h-11 w-11" : "h-9 w-9";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[hsl(220,40%,7%)]/80 backdrop-blur-xl" data-testid="nav-header">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2" data-testid="link-home">
-          {settings?.showLogoIcon !== "false" && <Droplets className={`${logoIconSize} text-[hsl(220,91%,55%)]`} />}
+          {settings?.showLogoIcon !== "false" && <img src="/images/novaatoz-logo.png" alt="Novaatoz" className={`${logoImgSize} object-contain brightness-0 invert`} />}
           <span className={`${logoTextSize} font-bold tracking-tight text-white`}>{logoText}</span>
         </Link>
 
@@ -83,7 +83,7 @@ export function Navigation() {
             <SheetContent side="right" className="bg-[hsl(220,40%,7%)] border-[hsl(218,35%,17%)] w-[280px]">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2 text-white">
-                  {settings?.showLogoIcon !== "false" && <Droplets className="h-5 w-5 text-[hsl(220,91%,55%)]" />}
+                  {settings?.showLogoIcon !== "false" && <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-7 w-7 object-contain brightness-0 invert" />}
                   {logoText}
                 </SheetTitle>
               </SheetHeader>
