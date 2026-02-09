@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { SiX, SiInstagram, SiFacebook, SiYoutube } from "react-icons/si";
+import { SiX, SiInstagram, SiFacebook, SiYoutube, SiTiktok, SiLinkedin } from "react-icons/si";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
@@ -42,22 +42,43 @@ export function Footer() {
             <p className="text-[hsl(215,30%,65%)] max-w-md mb-8 leading-relaxed">
               Redefining the daily ritual. Novaatoz combines cutting-edge hydro-technology with minimalist design to bring dental-grade care into your home.
             </p>
-            {settings?.showFooterSocial !== "false" && (
-              <div className="flex gap-4">
-                <a href="#" className="text-[hsl(215,30%,65%)] hover:text-white transition-colors" data-testid="link-twitter">
-                  <SiX className="h-5 w-5" />
-                </a>
-                <a href="#" className="text-[hsl(215,30%,65%)] hover:text-white transition-colors" data-testid="link-instagram">
-                  <SiInstagram className="h-5 w-5" />
-                </a>
-                <a href="#" className="text-[hsl(215,30%,65%)] hover:text-white transition-colors" data-testid="link-facebook">
-                  <SiFacebook className="h-5 w-5" />
-                </a>
-                <a href="#" className="text-[hsl(215,30%,65%)] hover:text-white transition-colors" data-testid="link-youtube">
-                  <SiYoutube className="h-5 w-5" />
-                </a>
-              </div>
-            )}
+            {settings?.showFooterSocial !== "false" && (() => {
+              const hasAnySocialLinks = settings?.socialFacebook || settings?.socialInstagram || settings?.socialTwitter || settings?.socialYoutube || settings?.socialTiktok || settings?.socialLinkedin;
+              return (
+                <div className="flex gap-4">
+                  {(settings?.socialTwitter || !hasAnySocialLinks) && (
+                    <a href={settings?.socialTwitter || "#"} target="_blank" rel="noopener noreferrer" className="text-[hsl(215,30%,65%)] hover:text-white transition-colors" data-testid="link-twitter">
+                      <SiX className="h-5 w-5" />
+                    </a>
+                  )}
+                  {(settings?.socialInstagram || !hasAnySocialLinks) && (
+                    <a href={settings?.socialInstagram || "#"} target="_blank" rel="noopener noreferrer" className="text-[hsl(215,30%,65%)] hover:text-white transition-colors" data-testid="link-instagram">
+                      <SiInstagram className="h-5 w-5" />
+                    </a>
+                  )}
+                  {(settings?.socialFacebook || !hasAnySocialLinks) && (
+                    <a href={settings?.socialFacebook || "#"} target="_blank" rel="noopener noreferrer" className="text-[hsl(215,30%,65%)] hover:text-white transition-colors" data-testid="link-facebook">
+                      <SiFacebook className="h-5 w-5" />
+                    </a>
+                  )}
+                  {(settings?.socialYoutube || !hasAnySocialLinks) && (
+                    <a href={settings?.socialYoutube || "#"} target="_blank" rel="noopener noreferrer" className="text-[hsl(215,30%,65%)] hover:text-white transition-colors" data-testid="link-youtube">
+                      <SiYoutube className="h-5 w-5" />
+                    </a>
+                  )}
+                  {(settings?.socialTiktok || !hasAnySocialLinks) && (
+                    <a href={settings?.socialTiktok || "#"} target="_blank" rel="noopener noreferrer" className="text-[hsl(215,30%,65%)] hover:text-white transition-colors" data-testid="link-tiktok">
+                      <SiTiktok className="h-5 w-5" />
+                    </a>
+                  )}
+                  {(settings?.socialLinkedin || !hasAnySocialLinks) && (
+                    <a href={settings?.socialLinkedin || "#"} target="_blank" rel="noopener noreferrer" className="text-[hsl(215,30%,65%)] hover:text-white transition-colors" data-testid="link-linkedin">
+                      <SiLinkedin className="h-5 w-5" />
+                    </a>
+                  )}
+                </div>
+              );
+            })()}
           </div>
           {settings?.showFooterNewsletter !== "false" && (
             <div>

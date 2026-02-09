@@ -3,8 +3,8 @@ import { AdminSidebar, AdminHeader } from "./dashboard";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
-import { Save, CreditCard, Store, Mail, Layout, Eye, EyeOff, Type } from "lucide-react";
-import { SiStripe, SiPaypal } from "react-icons/si";
+import { Save, CreditCard, Store, Mail, Layout, Eye, EyeOff, Type, Share2 } from "lucide-react";
+import { SiStripe, SiPaypal, SiFacebook, SiInstagram, SiX, SiYoutube, SiTiktok, SiLinkedin } from "react-icons/si";
 
 interface SettingsForm {
   stripeEnabled: string;
@@ -34,6 +34,12 @@ interface SettingsForm {
   showFooterSocial: string;
   showFooterLinks: string;
   copyrightText: string;
+  socialFacebook: string;
+  socialInstagram: string;
+  socialTwitter: string;
+  socialYoutube: string;
+  socialTiktok: string;
+  socialLinkedin: string;
 }
 
 const defaultForm: SettingsForm = {
@@ -64,6 +70,12 @@ const defaultForm: SettingsForm = {
   showFooterSocial: "true",
   showFooterLinks: "true",
   copyrightText: "",
+  socialFacebook: "",
+  socialInstagram: "",
+  socialTwitter: "",
+  socialYoutube: "",
+  socialTiktok: "",
+  socialLinkedin: "",
 };
 
 function Toggle({ value, onToggle, testId }: { value: string; onToggle: () => void; testId: string }) {
@@ -138,6 +150,12 @@ export default function AdminSettings() {
         showFooterSocial: settings.showFooterSocial || "true",
         showFooterLinks: settings.showFooterLinks || "true",
         copyrightText: settings.copyrightText || "",
+        socialFacebook: settings.socialFacebook || "",
+        socialInstagram: settings.socialInstagram || "",
+        socialTwitter: settings.socialTwitter || "",
+        socialYoutube: settings.socialYoutube || "",
+        socialTiktok: settings.socialTiktok || "",
+        socialLinkedin: settings.socialLinkedin || "",
       });
     }
   }, [settings]);
@@ -191,6 +209,12 @@ export default function AdminSettings() {
       showFooterSocial: form.showFooterSocial,
       showFooterLinks: form.showFooterLinks,
       copyrightText: form.copyrightText,
+      socialFacebook: form.socialFacebook,
+      socialInstagram: form.socialInstagram,
+      socialTwitter: form.socialTwitter,
+      socialYoutube: form.socialYoutube,
+      socialTiktok: form.socialTiktok,
+      socialLinkedin: form.socialLinkedin,
     });
   };
 
@@ -579,6 +603,111 @@ export default function AdminSettings() {
                         placeholder="© 2025 Novaatoz Inc. All rights reserved."
                         data-testid="input-copyright-text"
                       />
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-white text-sm font-medium mb-3 flex items-center gap-2">
+                      <Share2 className="h-4 w-4 text-[hsl(38,92%,50%)]" />
+                      Social Media Links
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className={labelClass}>
+                          <span className="flex items-center gap-1.5">
+                            <SiFacebook className="h-3.5 w-3.5 text-[#1877F2]" />
+                            Facebook URL
+                          </span>
+                        </label>
+                        <input
+                          type="url"
+                          value={form.socialFacebook}
+                          onChange={(e) => setForm({ ...form, socialFacebook: e.target.value })}
+                          className={inputClass}
+                          placeholder="https://facebook.com/yourpage"
+                          data-testid="input-social-facebook"
+                        />
+                      </div>
+                      <div>
+                        <label className={labelClass}>
+                          <span className="flex items-center gap-1.5">
+                            <SiInstagram className="h-3.5 w-3.5 text-[#E4405F]" />
+                            Instagram URL
+                          </span>
+                        </label>
+                        <input
+                          type="url"
+                          value={form.socialInstagram}
+                          onChange={(e) => setForm({ ...form, socialInstagram: e.target.value })}
+                          className={inputClass}
+                          placeholder="https://instagram.com/yourhandle"
+                          data-testid="input-social-instagram"
+                        />
+                      </div>
+                      <div>
+                        <label className={labelClass}>
+                          <span className="flex items-center gap-1.5">
+                            <SiX className="h-3.5 w-3.5 text-white" />
+                            X / Twitter URL
+                          </span>
+                        </label>
+                        <input
+                          type="url"
+                          value={form.socialTwitter}
+                          onChange={(e) => setForm({ ...form, socialTwitter: e.target.value })}
+                          className={inputClass}
+                          placeholder="https://x.com/yourhandle"
+                          data-testid="input-social-twitter"
+                        />
+                      </div>
+                      <div>
+                        <label className={labelClass}>
+                          <span className="flex items-center gap-1.5">
+                            <SiYoutube className="h-3.5 w-3.5 text-[#FF0000]" />
+                            YouTube URL
+                          </span>
+                        </label>
+                        <input
+                          type="url"
+                          value={form.socialYoutube}
+                          onChange={(e) => setForm({ ...form, socialYoutube: e.target.value })}
+                          className={inputClass}
+                          placeholder="https://youtube.com/@yourchannel"
+                          data-testid="input-social-youtube"
+                        />
+                      </div>
+                      <div>
+                        <label className={labelClass}>
+                          <span className="flex items-center gap-1.5">
+                            <SiTiktok className="h-3.5 w-3.5 text-white" />
+                            TikTok URL
+                          </span>
+                        </label>
+                        <input
+                          type="url"
+                          value={form.socialTiktok}
+                          onChange={(e) => setForm({ ...form, socialTiktok: e.target.value })}
+                          className={inputClass}
+                          placeholder="https://tiktok.com/@yourhandle"
+                          data-testid="input-social-tiktok"
+                        />
+                      </div>
+                      <div>
+                        <label className={labelClass}>
+                          <span className="flex items-center gap-1.5">
+                            <SiLinkedin className="h-3.5 w-3.5 text-[#0A66C2]" />
+                            LinkedIn URL
+                          </span>
+                        </label>
+                        <input
+                          type="url"
+                          value={form.socialLinkedin}
+                          onChange={(e) => setForm({ ...form, socialLinkedin: e.target.value })}
+                          className={inputClass}
+                          placeholder="https://linkedin.com/company/yourcompany"
+                          data-testid="input-social-linkedin"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

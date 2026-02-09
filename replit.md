@@ -86,6 +86,7 @@ shared/
 - showNavShop, showNavAbout, showNavFaq, showNavContact, showNavReviews
 - showFooterNewsletter, showFooterSocial, showFooterLinks
 - copyrightText
+- socialFacebook, socialInstagram, socialTwitter, socialYoutube, socialTiktok, socialLinkedin
 
 ## API Routes
 - POST /api/admin/login, GET /api/admin/session, POST /api/admin/logout
