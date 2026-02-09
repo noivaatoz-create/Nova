@@ -21,22 +21,22 @@ export default function ShopPage() {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(220,20%,14%)]">
+    <div className="min-h-screen bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-10">
-          <h1 className="text-4xl font-bold text-white mb-4" data-testid="text-shop-title">Shop All Products</h1>
-          <p className="text-[hsl(215,20%,60%)] text-lg">Premium water flossers engineered for the modern bathroom.</p>
+          <h1 className="text-4xl font-bold text-foreground mb-4" data-testid="text-shop-title">Shop All Products</h1>
+          <p className="text-muted-foreground text-lg">Premium water flossers engineered for the modern bathroom.</p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(215,20%,60%)]" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search products..."
-              className="w-full rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] pl-10 pr-4 py-2.5 text-white placeholder-[hsl(215,20%,60%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
+              className="w-full rounded-md border border-border bg-card pl-10 pr-4 py-2.5 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring focus:border-primary text-sm"
               data-testid="input-search"
             />
           </div>
@@ -47,8 +47,8 @@ export default function ShopPage() {
                 onClick={() => setCategory(cat)}
                 className={`px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
                   category === cat
-                    ? "bg-[hsl(38,92%,50%)] text-white"
-                    : "bg-[hsl(220,18%,18%)] text-[hsl(215,20%,60%)] border border-[hsl(218,18%,25%)] hover:border-[hsl(38,92%,50%)]/50 hover:text-white"
+                    ? "bg-primary text-white"
+                    : "bg-card text-muted-foreground border border-border hover:border-primary/50 hover:text-foreground"
                 }`}
                 data-testid={`button-filter-${cat.toLowerCase().replace(/\s/g, "-")}`}
               >
@@ -61,23 +61,23 @@ export default function ShopPage() {
         {isLoading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] overflow-hidden">
-                <div className="aspect-[4/5] bg-[hsl(218,18%,25%)] animate-pulse" />
+              <div key={i} className="rounded-md border border-border bg-card overflow-hidden">
+                <div className="aspect-[4/5] bg-muted animate-pulse" />
                 <div className="p-5 space-y-3">
-                  <div className="h-4 bg-[hsl(218,18%,25%)] rounded animate-pulse w-2/3" />
-                  <div className="h-3 bg-[hsl(218,18%,25%)] rounded animate-pulse" />
+                  <div className="h-4 bg-muted rounded animate-pulse w-2/3" />
+                  <div className="h-3 bg-muted rounded animate-pulse" />
                 </div>
               </div>
             ))}
           </div>
         ) : (
           <>
-            <p className="text-[hsl(215,20%,60%)] text-sm mb-6" data-testid="text-product-count">
+            <p className="text-muted-foreground text-sm mb-6" data-testid="text-product-count">
               {filtered?.length || 0} product{(filtered?.length || 0) !== 1 ? "s" : ""} found
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filtered?.map((product) => (
-                <div key={product.id} className="flex flex-col overflow-hidden rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] shadow-sm transition-all hover:shadow-md hover:border-[hsl(38,92%,50%)]/30 group" data-testid={`card-product-${product.id}`}>
+                <div key={product.id} className="flex flex-col overflow-hidden rounded-md border border-border bg-card shadow-sm transition-all hover:shadow-md hover:border-primary/30 group" data-testid={`card-product-${product.id}`}>
                   <Link href={`/product/${product.slug}`}>
                     <div className="relative aspect-[4/5] w-full bg-gray-800 overflow-hidden cursor-pointer">
                       <img
@@ -87,7 +87,7 @@ export default function ShopPage() {
                       />
                       {product.badge && (
                         <div className={`absolute top-3 left-3 rounded-md px-2 py-1 text-xs font-bold text-white uppercase tracking-wider ${
-                          product.badge === "Flagship" ? "bg-[hsl(38,92%,50%)]" :
+                          product.badge === "Flagship" ? "bg-primary" :
                           product.badge === "Best Seller" ? "bg-emerald-500" :
                           product.badge === "Family" ? "bg-violet-500" :
                           "bg-amber-500"
@@ -99,25 +99,25 @@ export default function ShopPage() {
                   </Link>
                   <div className="flex flex-1 flex-col p-5">
                     <div className="flex justify-between items-start mb-2 gap-2 flex-wrap">
-                      <h3 className="text-lg font-bold text-white">{product.name}</h3>
+                      <h3 className="text-lg font-bold text-foreground">{product.name}</h3>
                       <div className="flex items-center gap-2">
                         {product.compareAtPrice && (
-                          <span className="text-[hsl(215,20%,60%)] text-sm line-through">${product.compareAtPrice}</span>
+                          <span className="text-muted-foreground text-sm line-through">${product.compareAtPrice}</span>
                         )}
-                        <span className="text-[hsl(38,92%,50%)] font-bold">${product.price}</span>
+                        <span className="text-primary font-bold">${product.price}</span>
                       </div>
                     </div>
-                    <p className="text-sm text-[hsl(215,20%,60%)] mb-3 flex-1">{product.shortDescription}</p>
-                    <p className="text-xs text-[hsl(215,20%,60%)]/70 mb-4">{product.category}</p>
+                    <p className="text-sm text-muted-foreground mb-3 flex-1">{product.shortDescription}</p>
+                    <p className="text-xs text-muted-foreground/70 mb-4">{product.category}</p>
                     <div className="flex gap-2">
                       <Link href={`/product/${product.slug}`} className="flex-1">
-                        <button className="w-full rounded-md bg-white/5 py-2 text-sm font-semibold text-white hover:bg-white/10 transition-colors border border-white/10" data-testid={`button-view-${product.slug}`}>
+                        <button className="w-full rounded-md bg-white/5 py-2 text-sm font-semibold text-foreground hover:bg-white/10 transition-colors border border-white/10" data-testid={`button-view-${product.slug}`}>
                           View Details
                         </button>
                       </Link>
                       <button
                         onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image })}
-                        className="rounded-md bg-[hsl(38,92%,50%)] py-2 px-4 text-sm font-semibold text-white hover:bg-[hsl(38,92%,40%)] transition-colors"
+                        className="rounded-md bg-primary py-2 px-4 text-sm font-semibold text-white transition-colors"
                         data-testid={`button-add-cart-${product.slug}`}
                       >
                         Add

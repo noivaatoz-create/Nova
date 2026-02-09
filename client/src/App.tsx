@@ -26,10 +26,11 @@ import AdminSettings from "@/pages/admin/settings";
 import AdminMessages from "@/pages/admin/messages";
 import AdminLogin from "@/pages/admin/login";
 import { AdminGuard } from "@/lib/admin-auth";
+import { ThemeProvider } from "@/components/theme-provider";
 
 function CustomerLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen flex flex-col bg-[hsl(220,20%,14%)]">
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Navigation />
       <CartDrawer />
       <main className="flex-1">{children}</main>
@@ -103,10 +104,12 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
+      <ThemeProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+        </TooltipProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

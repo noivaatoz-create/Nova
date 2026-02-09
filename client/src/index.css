@@ -38,6 +38,8 @@
   --destructive-foreground: 0 0% 98%;
   --input: 214 25% 75%;
   --ring: 38 92% 55%;
+  --section-alt: 210 20% 95%;
+  --section-alt-foreground: 217 33% 17%;
   --chart-1: 38 92% 35%;
   --chart-2: 25 85% 30%;
   --chart-3: 45 75% 35%;
@@ -122,6 +124,8 @@
   --destructive-foreground: 0 0% 98%;
   --input: 218 18% 30%;
   --ring: 38 92% 50%;
+  --section-alt: 220 18% 11%;
+  --section-alt-foreground: 210 20% 94%;
   --chart-1: 38 92% 55%;
   --chart-2: 25 85% 55%;
   --chart-3: 45 75% 50%;

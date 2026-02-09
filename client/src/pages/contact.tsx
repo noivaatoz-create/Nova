@@ -25,12 +25,12 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[hsl(220,20%,14%)]">
+    <div className="min-h-screen bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-[hsl(38,92%,50%)] text-sm font-bold tracking-widest uppercase mb-4">Get in Touch</p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6" data-testid="text-contact-title">Contact Us</h1>
-          <p className="text-[hsl(215,20%,60%)] text-lg">Have a question about our products or need support? We're here to help.</p>
+          <p className="text-primary text-sm font-bold tracking-widest uppercase mb-4">Get in Touch</p>
+          <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6" data-testid="text-contact-title">Contact Us</h1>
+          <p className="text-muted-foreground text-lg">Have a question about our products or need support? We're here to help.</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-12">
@@ -38,50 +38,50 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-white mb-2">Name</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">Name</label>
                   <input
                     type="text"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     required
-                    className="w-full rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] px-4 py-2.5 text-white placeholder-[hsl(215,20%,60%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
+                    className="w-full rounded-md border border-border bg-card px-4 py-2.5 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring focus:border-primary text-sm"
                     placeholder="Your name"
                     data-testid="input-contact-name"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-white mb-2">Email</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">Email</label>
                   <input
                     type="email"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     required
-                    className="w-full rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] px-4 py-2.5 text-white placeholder-[hsl(215,20%,60%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
+                    className="w-full rounded-md border border-border bg-card px-4 py-2.5 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring focus:border-primary text-sm"
                     placeholder="you@example.com"
                     data-testid="input-contact-email"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-white mb-2">Subject</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Subject</label>
                 <input
                   type="text"
                   value={form.subject}
                   onChange={(e) => setForm({ ...form, subject: e.target.value })}
                   required
-                  className="w-full rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] px-4 py-2.5 text-white placeholder-[hsl(215,20%,60%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
+                  className="w-full rounded-md border border-border bg-card px-4 py-2.5 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring focus:border-primary text-sm"
                   placeholder="How can we help?"
                   data-testid="input-contact-subject"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-white mb-2">Message</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Message</label>
                 <textarea
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   required
                   rows={6}
-                  className="w-full rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] px-4 py-2.5 text-white placeholder-[hsl(215,20%,60%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm resize-none"
+                  className="w-full rounded-md border border-border bg-card px-4 py-2.5 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring focus:border-primary text-sm resize-none"
                   placeholder="Tell us more..."
                   data-testid="input-contact-message"
                 />
@@ -89,7 +89,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="rounded-md bg-[hsl(38,92%,50%)] px-8 py-3 text-sm font-bold text-white transition-all hover:bg-[hsl(38,92%,40%)] hover:shadow-[0_0_20px_rgba(217,169,12,0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="rounded-md bg-primary px-8 py-3 text-sm font-bold text-foreground transition-all hover:shadow-[0_0_20px_rgba(217,169,12,0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
                 data-testid="button-send-message"
               >
                 {isSubmitting ? "Sending..." : "Send Message"}
@@ -105,13 +105,13 @@ export default function ContactPage() {
               { icon: Clock, title: "Hours", value: "Mon-Fri 9am-5pm", sub: "Pacific Standard Time" },
             ].map((item, i) => (
               <div key={i} className="flex gap-4" data-testid={`contact-info-${i}`}>
-                <div className="h-12 w-12 rounded-md bg-[hsl(38,92%,50%)]/10 flex items-center justify-center flex-shrink-0">
-                  <item.icon className="h-5 w-5 text-[hsl(38,92%,50%)]" />
+                <div className="h-12 w-12 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <item.icon className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-white font-semibold">{item.title}</p>
-                  <p className="text-[hsl(215,20%,60%)] text-sm">{item.value}</p>
-                  <p className="text-[hsl(215,20%,60%)]/60 text-xs mt-0.5">{item.sub}</p>
+                  <p className="text-foreground font-semibold">{item.title}</p>
+                  <p className="text-muted-foreground text-sm">{item.value}</p>
+                  <p className="text-muted-foreground/60 text-xs mt-0.5">{item.sub}</p>
                 </div>
               </div>
             ))}

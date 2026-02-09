@@ -52,6 +52,10 @@ export default {
           border: "var(--destructive-border)",
         },
         ring: "hsl(var(--ring) / <alpha-value>)",
+        "section-alt": {
+          DEFAULT: "hsl(var(--section-alt) / <alpha-value>)",
+          foreground: "hsl(var(--section-alt-foreground) / <alpha-value>)",
+        },
         chart: {
           "1": "hsl(var(--chart-1) / <alpha-value>)",
           "2": "hsl(var(--chart-2) / <alpha-value>)",
