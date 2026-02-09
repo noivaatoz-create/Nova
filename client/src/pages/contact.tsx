@@ -2,16 +2,26 @@ import { Mail, MapPin, Phone, Clock } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 
 export default function ContactPage() {
   const { toast } = useToast();
   const { data: settings } = useQuery<Record<string, string>>({ queryKey: ["/api/settings"] });
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({ title: "Message Sent!", description: "We'll get back to you within 24 hours." });
-    setForm({ name: "", email: "", subject: "", message: "" });
+    setIsSubmitting(true);
+    try {
+      await apiRequest("POST", "/api/contact", form);
+      toast({ title: "Message Sent!", description: "We'll get back to you within 24 hours." });
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch {
+      toast({ title: "Error", description: "Failed to send message. Please try again.", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -78,10 +88,11 @@ export default function ContactPage() {
               </div>
               <button
                 type="submit"
-                className="rounded-md bg-[hsl(220,91%,55%)] px-8 py-3 text-sm font-bold text-white transition-all hover:bg-[hsl(220,91%,45%)] hover:shadow-[0_0_20px_rgba(37,106,244,0.4)]"
+                disabled={isSubmitting}
+                className="rounded-md bg-[hsl(220,91%,55%)] px-8 py-3 text-sm font-bold text-white transition-all hover:bg-[hsl(220,91%,45%)] hover:shadow-[0_0_20px_rgba(37,106,244,0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
                 data-testid="button-send-message"
               >
-                Send Message
+                {isSubmitting ? "Sending..." : "Send Message"}
               </button>
             </form>
           </div>
