@@ -3,10 +3,11 @@ import { AdminSidebar, AdminHeader } from "./dashboard";
 import type { Product } from "@shared/schema";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Edit, Trash2, Package, X, List, Image, Box, Wrench, ToggleLeft, ToggleRight } from "lucide-react";
-import { useState } from "react";
+import { Plus, Edit, Trash2, Package, X, List, Image, Box, Wrench, ToggleLeft, ToggleRight, Upload, Link } from "lucide-react";
+import { useState, useRef, useCallback } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
 const inputClass = "w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)]";
 
@@ -26,6 +27,30 @@ export default function AdminProducts() {
   });
   const [specEntries, setSpecEntries] = useState<{key: string, value: string}[]>([]);
   const [deleteProductId, setDeleteProductId] = useState<number | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadingIdx, setUploadingIdx] = useState<number | null>(null);
+  const mainImageRef = useRef<HTMLInputElement>(null);
+  const additionalImageRefs = useRef<Map<number, HTMLInputElement>>(new Map());
+  const setAdditionalImageRef = useCallback((index: number, el: HTMLInputElement | null) => {
+    if (el) {
+      additionalImageRefs.current.set(index, el);
+    } else {
+      additionalImageRefs.current.delete(index);
+    }
+  }, []);
+
+  const handleImageUpload = async (file: File, onSuccess: (url: string) => void) => {
+    const formData = new FormData();
+    formData.append("image", file);
+    try {
+      const res = await fetch("/api/upload", { method: "POST", body: formData, credentials: "include" });
+      if (!res.ok) throw new Error("Upload failed");
+      const data = await res.json();
+      onSuccess(data.url);
+    } catch {
+      toast({ title: "Upload Failed", description: "Could not upload image. Try again.", variant: "destructive" });
+    }
+  };
 
   const saveMutation = useMutation({
     mutationFn: async (data: any) => {
@@ -226,9 +251,36 @@ export default function AdminProducts() {
                   className={`${inputClass} resize-none`} data-testid="input-product-long-desc" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-white mb-1">Main Image URL</label>
-                <input type="text" required value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })}
-                  className={inputClass} data-testid="input-product-image" />
+                <label className="block text-sm font-medium text-white mb-1">Main Image</label>
+                <div className="flex items-center gap-2">
+                  <div className="relative flex-1">
+                    <Link className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(215,30%,65%)]" />
+                    <input type="text" value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })}
+                      placeholder="Paste image URL here"
+                      className={`${inputClass} pl-9`} data-testid="input-product-image" />
+                  </div>
+                  <span className="text-[hsl(215,30%,65%)] text-xs">or</span>
+                  <input type="file" ref={mainImageRef} accept="image/*" className="hidden" data-testid="file-main-image"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      setUploading(true);
+                      try {
+                        await handleImageUpload(file, (url) => setForm(prev => ({ ...prev, image: url })));
+                      } finally {
+                        setUploading(false);
+                        e.target.value = "";
+                      }
+                    }} />
+                  <Button type="button" variant="outline" size="sm" disabled={uploading}
+                    onClick={() => mainImageRef.current?.click()}
+                    className="bg-[hsl(220,40%,7%)] text-[hsl(215,30%,65%)]"
+                    data-testid="button-upload-main-image"
+                  >
+                    <Upload className="h-4 w-4" />
+                    {uploading ? "Uploading..." : "Upload"}
+                  </Button>
+                </div>
                 {form.image && (
                   <div className="mt-2 h-20 w-20 rounded-md overflow-hidden bg-[hsl(218,35%,17%)]" data-testid="preview-main-image">
                     <img src={form.image} alt="Preview" className="h-full w-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
@@ -438,9 +490,35 @@ export default function AdminProducts() {
                         setForm({ ...form, images: updated });
                       }}
                       className={`flex-1 ${inputClass}`}
-                      placeholder="https://example.com/image.png"
+                      placeholder="Paste URL or upload"
                       data-testid={`input-image-${i}`}
                     />
+                    <input type="file" accept="image/*" className="hidden" data-testid={`file-image-${i}`}
+                      ref={(el) => setAdditionalImageRef(i, el)}
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        setUploadingIdx(i);
+                        try {
+                          await handleImageUpload(file, (url) => {
+                            setForm(prev => {
+                              const updated = [...prev.images];
+                              updated[i] = url;
+                              return { ...prev, images: updated };
+                            });
+                          });
+                        } finally {
+                          setUploadingIdx(null);
+                          e.target.value = "";
+                        }
+                      }} />
+                    <Button type="button" variant="outline" size="icon" disabled={uploadingIdx === i}
+                      onClick={() => additionalImageRefs.current.get(i)?.click()}
+                      className="bg-[hsl(220,40%,7%)] text-[hsl(215,30%,65%)]"
+                      data-testid={`button-upload-image-${i}`}
+                    >
+                      <Upload className="h-4 w-4" />
+                    </Button>
                     {imgUrl && (
                       <div className="h-9 w-9 rounded-md overflow-hidden bg-[hsl(218,35%,17%)] flex-shrink-0" data-testid={`preview-image-${i}`}>
                         <img src={imgUrl} alt="Preview" className="h-full w-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
@@ -465,7 +543,7 @@ export default function AdminProducts() {
                   className="flex items-center gap-1 text-[hsl(220,91%,55%)] text-sm hover:text-[hsl(220,91%,65%)]"
                   data-testid="button-add-image"
                 >
-                  <Plus className="h-4 w-4" /> Add Image URL
+                  <Plus className="h-4 w-4" /> Add Image
                 </button>
               </div>
 
