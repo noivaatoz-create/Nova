@@ -19,6 +19,8 @@ import AdminDashboard from "@/pages/admin/dashboard";
 import AdminProducts from "@/pages/admin/products";
 import AdminOrders from "@/pages/admin/orders";
 import AdminSettings from "@/pages/admin/settings";
+import AdminLogin from "@/pages/admin/login";
+import { AdminGuard } from "@/lib/admin-auth";
 
 function CustomerLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -58,10 +60,19 @@ function Router() {
       <Route path="/reviews">
         {() => <CustomerLayout><ReviewsPage /></CustomerLayout>}
       </Route>
-      <Route path="/admin" component={AdminDashboard} />
-      <Route path="/admin/products" component={AdminProducts} />
-      <Route path="/admin/orders" component={AdminOrders} />
-      <Route path="/admin/settings" component={AdminSettings} />
+      <Route path="/admin/login" component={AdminLogin} />
+      <Route path="/admin">
+        {() => <AdminGuard><AdminDashboard /></AdminGuard>}
+      </Route>
+      <Route path="/admin/products">
+        {() => <AdminGuard><AdminProducts /></AdminGuard>}
+      </Route>
+      <Route path="/admin/orders">
+        {() => <AdminGuard><AdminOrders /></AdminGuard>}
+      </Route>
+      <Route path="/admin/settings">
+        {() => <AdminGuard><AdminSettings /></AdminGuard>}
+      </Route>
       <Route>
         {() => <CustomerLayout><NotFound /></CustomerLayout>}
       </Route>

@@ -17,6 +17,13 @@ import {
 } from "@/components/ui/alert-dialog";
 
 function AdminSidebar({ active }: { active: string }) {
+  const [, setLocation] = useLocation();
+  const handleLogout = async () => {
+    await apiRequest("POST", "/api/admin/logout");
+    queryClient.invalidateQueries({ queryKey: ["/api/admin/session"] });
+    setLocation("/admin/login");
+  };
+
   const navItems = [
     { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
     { href: "/admin/products", icon: Package, label: "Products" },
@@ -55,17 +62,15 @@ function AdminSidebar({ active }: { active: string }) {
             ))}
           </nav>
         </div>
-        <div className="flex flex-col gap-2 border-t border-[hsl(218,35%,17%)] pt-4">
-          <div className="flex items-center gap-3 px-3 py-3 rounded-md bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)]">
-            <div className="h-8 w-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xs font-bold text-white">JD</div>
-            <div className="flex flex-col overflow-hidden">
-              <span className="text-white text-xs font-semibold truncate">Jane Doe</span>
-              <span className="text-[hsl(215,30%,65%)] text-[10px] truncate">Admin</span>
-            </div>
-            <Link href="/" className="ml-auto text-[hsl(215,30%,65%)] hover:text-white" data-testid="button-admin-logout">
-              <LogOut className="h-4 w-4" />
-            </Link>
-          </div>
+        <div className="p-3 border-t border-[hsl(218,35%,17%)]">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-sm text-[hsl(215,30%,65%)] hover:text-white hover:bg-white/5 transition-colors"
+            data-testid="button-admin-logout"
+          >
+            <LogOut className="h-4 w-4" />
+            Logout
+          </button>
         </div>
       </div>
     </aside>

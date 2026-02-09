@@ -4,10 +4,62 @@ import { storage } from "./storage";
 import { insertProductSchema, insertOrderSchema, insertReviewSchema, insertSubscriberSchema } from "@shared/schema";
 import { randomUUID } from "crypto";
 
+function requireAdmin(req: any, res: any, next: any) {
+  if (req.session?.isAdmin) {
+    next();
+  } else {
+    res.status(401).json({ error: "Unauthorized" });
+  }
+}
+
+const loginAttempts = new Map<string, { count: number; lastAttempt: number }>();
+
+function loginRateLimit(req: any, res: any, next: any) {
+  const ip = req.ip || req.connection.remoteAddress || "unknown";
+  const now = Date.now();
+  const record = loginAttempts.get(ip);
+  if (record) {
+    if (now - record.lastAttempt > 15 * 60 * 1000) {
+      loginAttempts.delete(ip);
+    } else if (record.count >= 5) {
+      return res.status(429).json({ error: "Too many login attempts. Try again in 15 minutes." });
+    }
+  }
+  next();
+}
+
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+
+  app.post("/api/admin/login", loginRateLimit, (req, res) => {
+    const { username, password } = req.body;
+    const adminUser = process.env.ADMIN_USERNAME || "admin";
+    const adminPass = process.env.ADMIN_PASSWORD || "admin123";
+    if (username === adminUser && password === adminPass) {
+      loginAttempts.delete(req.ip || req.connection.remoteAddress || "unknown");
+      req.session.isAdmin = true;
+      res.json({ success: true });
+    } else {
+      const ip = req.ip || req.connection.remoteAddress || "unknown";
+      const record = loginAttempts.get(ip) || { count: 0, lastAttempt: 0 };
+      record.count += 1;
+      record.lastAttempt = Date.now();
+      loginAttempts.set(ip, record);
+      res.status(401).json({ error: "Invalid credentials" });
+    }
+  });
+
+  app.get("/api/admin/session", (req, res) => {
+    res.json({ isAdmin: req.session.isAdmin === true });
+  });
+
+  app.post("/api/admin/logout", (req, res) => {
+    req.session.destroy(() => {
+      res.json({ success: true });
+    });
+  });
 
   app.get("/api/products", async (_req, res) => {
     const products = await storage.getProducts();
@@ -20,14 +72,14 @@ export async function registerRoutes(
     res.json(product);
   });
 
-  app.post("/api/products", async (req, res) => {
+  app.post("/api/products", requireAdmin, async (req, res) => {
     const parsed = insertProductSchema.safeParse(req.body);
     if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
     const product = await storage.createProduct(parsed.data);
     res.status(201).json(product);
   });
 
-  app.patch("/api/products/:id", async (req, res) => {
+  app.patch("/api/products/:id", requireAdmin, async (req, res) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
     const product = await storage.updateProduct(id, req.body);
@@ -35,14 +87,14 @@ export async function registerRoutes(
     res.json(product);
   });
 
-  app.delete("/api/products/:id", async (req, res) => {
+  app.delete("/api/products/:id", requireAdmin, async (req, res) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
     await storage.deleteProduct(id);
     res.status(204).send();
   });
 
-  app.get("/api/orders", async (_req, res) => {
+  app.get("/api/orders", requireAdmin, async (_req, res) => {
     const orders = await storage.getOrders();
     res.json(orders);
   });
@@ -56,7 +108,7 @@ export async function registerRoutes(
     res.status(201).json(order);
   });
 
-  app.patch("/api/orders/:id", async (req, res) => {
+  app.patch("/api/orders/:id", requireAdmin, async (req, res) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
     const order = await storage.updateOrder(id, req.body);
@@ -99,7 +151,7 @@ export async function registerRoutes(
     res.json(settingsObj);
   });
 
-  app.patch("/api/settings", async (req, res) => {
+  app.patch("/api/settings", requireAdmin, async (req, res) => {
     const updates = req.body as Record<string, string>;
     for (const [key, value] of Object.entries(updates)) {
       if (typeof key === "string" && typeof value === "string") {
@@ -114,7 +166,7 @@ export async function registerRoutes(
     res.json(settingsObj);
   });
 
-  app.delete("/api/orders", async (_req, res) => {
+  app.delete("/api/orders", requireAdmin, async (_req, res) => {
     await storage.deleteAllOrders();
     res.status(204).send();
   });

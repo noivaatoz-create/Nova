@@ -122,8 +122,11 @@ export function Footer() {
           </div>
         )}
 
-        <div className="border-t border-[hsl(218,35%,17%)] mt-12 pt-8 text-center md:text-left">
+        <div className="border-t border-[hsl(218,35%,17%)] mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-2">
           <p className="text-xs text-[hsl(215,30%,65%)]">{settings?.copyrightText || "\u00A9 2025 Novaatoz Inc. All rights reserved."}</p>
+          <Link href="/admin/login" className="text-xs text-[hsl(215,30%,45%)] hover:text-[hsl(220,91%,55%)] transition-colors" data-testid="link-admin">
+            Admin
+          </Link>
         </div>
       </div>
     </footer>

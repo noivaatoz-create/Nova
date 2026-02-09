@@ -28,10 +28,13 @@ client/src/
     faq.tsx            - Categorized FAQ with accordions
     reviews.tsx        - All reviews with rating distribution
     admin/
+      login.tsx        - Admin login page with username/password form
       dashboard.tsx    - KPIs with date filtering, real chart, reset data + shared AdminSidebar/AdminHeader
       products.tsx     - Full CRUD with delete confirmation, features, specs, whatsInBox, images editors
       orders.tsx       - Order list with status management + detail modal
       settings.tsx     - Site settings: Payment, Store, Contact, Header/Footer config
+  lib/
+    admin-auth.tsx     - AdminGuard component for protecting admin routes
 
 server/
   db.ts               - Neon database connection
@@ -45,7 +48,10 @@ shared/
 
 ## Key Decisions
 - Cart state managed client-side with Zustand + localStorage persistence
-- No authentication implemented - admin panel is open access
+- Admin panel protected with session-based login (username/password via ADMIN_USERNAME/ADMIN_PASSWORD env vars, default: admin/admin123)
+- Admin auth uses express-session with rate-limited login (5 attempts per 15 min)
+- Protected admin routes: POST/PATCH/DELETE products, GET/PATCH/DELETE orders, PATCH settings
+- Footer includes subtle "Admin" link to /admin/login
 - Payment methods (Stripe/PayPal/COD) configurable from admin settings - UI only, no real payment integration
 - Tax rate, shipping threshold, flat rate all configurable via admin settings
 - Contact info (email, phone, address) configurable via admin settings
@@ -76,6 +82,7 @@ shared/
 - copyrightText
 
 ## API Routes
+- POST /api/admin/login, GET /api/admin/session, POST /api/admin/logout
 - GET/POST /api/products, GET /api/products/:slug, PATCH/DELETE /api/products/:id
 - GET/POST/DELETE /api/orders, PATCH /api/orders/:id
 - GET/POST /api/reviews
