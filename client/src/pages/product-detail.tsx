@@ -19,14 +19,14 @@ export default function ProductDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[hsl(220,40%,7%)]">
+      <div className="min-h-screen bg-[hsl(220,20%,14%)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid lg:grid-cols-2 gap-12">
-            <div className="aspect-square bg-[hsl(218,35%,17%)] rounded-md animate-pulse" />
+            <div className="aspect-square bg-[hsl(218,18%,25%)] rounded-md animate-pulse" />
             <div className="space-y-4">
-              <div className="h-8 bg-[hsl(218,35%,17%)] rounded animate-pulse w-2/3" />
-              <div className="h-4 bg-[hsl(218,35%,17%)] rounded animate-pulse" />
-              <div className="h-4 bg-[hsl(218,35%,17%)] rounded animate-pulse w-1/2" />
+              <div className="h-8 bg-[hsl(218,18%,25%)] rounded animate-pulse w-2/3" />
+              <div className="h-4 bg-[hsl(218,18%,25%)] rounded animate-pulse" />
+              <div className="h-4 bg-[hsl(218,18%,25%)] rounded animate-pulse w-1/2" />
             </div>
           </div>
         </div>
@@ -36,7 +36,7 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-[hsl(220,40%,7%)] flex items-center justify-center">
+      <div className="min-h-screen bg-[hsl(220,20%,14%)] flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-white mb-4">Product Not Found</h1>
           <Link href="/shop">
@@ -74,9 +74,9 @@ export default function ProductDetailPage() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-[hsl(220,40%,7%)]">
+    <div className="min-h-screen bg-[hsl(220,20%,14%)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-        <nav className="flex items-center gap-2 text-sm text-[hsl(215,30%,65%)] mb-8" data-testid="breadcrumb">
+        <nav className="flex items-center gap-2 text-sm text-[hsl(215,20%,60%)] mb-8" data-testid="breadcrumb">
           <Link href="/" className="hover:text-white transition-colors">Home</Link>
           <span>/</span>
           <Link href="/shop" className="hover:text-white transition-colors">Shop</Link>
@@ -86,7 +86,7 @@ export default function ProductDetailPage() {
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           <div className="relative">
-            <div className="aspect-square rounded-2xl overflow-hidden bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)]">
+            <div className="aspect-square rounded-2xl overflow-hidden bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)]">
               <img
                 alt={product.name}
                 className="h-full w-full object-cover"
@@ -115,22 +115,22 @@ export default function ProductDetailPage() {
                 <div className="flex items-center gap-2 mb-4">
                   <div className="flex gap-0.5">
                     {Array.from({ length: 5 }).map((_, i) => (
-                      <svg key={i} className={`h-4 w-4 ${i < Math.round(avgRating) ? "text-amber-400" : "text-[hsl(218,35%,17%)]"}`} fill="currentColor" viewBox="0 0 20 20">
+                      <svg key={i} className={`h-4 w-4 ${i < Math.round(avgRating) ? "text-amber-400" : "text-[hsl(218,18%,25%)]"}`} fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                       </svg>
                     ))}
                   </div>
-                  <span className="text-[hsl(215,30%,65%)] text-sm">({productReviews.length} reviews)</span>
+                  <span className="text-[hsl(215,20%,60%)] text-sm">({productReviews.length} reviews)</span>
                 </div>
               )}
 
               <div className="flex items-baseline gap-3 mb-4">
                 <span className="text-3xl font-bold text-white" data-testid="text-product-price">${product.price}</span>
                 {product.compareAtPrice && (
-                  <span className="text-lg text-[hsl(215,30%,65%)] line-through">${product.compareAtPrice}</span>
+                  <span className="text-lg text-[hsl(215,20%,60%)] line-through">${product.compareAtPrice}</span>
                 )}
               </div>
-              <p className="text-[hsl(215,30%,65%)] leading-relaxed" data-testid="text-product-description">{product.longDescription}</p>
+              <p className="text-[hsl(215,20%,60%)] leading-relaxed" data-testid="text-product-description">{product.longDescription}</p>
             </div>
 
             {features.length > 0 && (
@@ -138,19 +138,19 @@ export default function ProductDetailPage() {
                 {features.map((f, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-[hsl(215,30%,65%)] text-sm">{f}</span>
+                    <span className="text-[hsl(215,20%,60%)] text-sm">{f}</span>
                   </div>
                 ))}
               </div>
             )}
 
-            <div className="border-t border-b border-[hsl(218,35%,17%)] py-6">
+            <div className="border-t border-b border-[hsl(218,18%,25%)] py-6">
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-white font-medium text-sm">Quantity:</span>
-                <div className="flex items-center gap-3 border border-[hsl(218,35%,17%)] rounded-md">
+                <div className="flex items-center gap-3 border border-[hsl(218,18%,25%)] rounded-md">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="p-2.5 text-[hsl(215,30%,65%)] hover:text-white"
+                    className="p-2.5 text-[hsl(215,20%,60%)] hover:text-white"
                     data-testid="button-decrease-qty"
                   >
                     <Minus className="h-4 w-4" />
@@ -158,13 +158,13 @@ export default function ProductDetailPage() {
                   <span className="text-white font-medium min-w-[24px] text-center" data-testid="text-quantity">{quantity}</span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="p-2.5 text-[hsl(215,30%,65%)] hover:text-white"
+                    className="p-2.5 text-[hsl(215,20%,60%)] hover:text-white"
                     data-testid="button-increase-qty"
                   >
                     <Plus className="h-4 w-4" />
                   </button>
                 </div>
-                <span className="text-[hsl(215,30%,65%)] text-sm">{product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}</span>
+                <span className="text-[hsl(215,20%,60%)] text-sm">{product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}</span>
               </div>
 
               <button
@@ -177,7 +177,7 @@ export default function ProductDetailPage() {
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
-              <div className="flex items-center justify-center gap-6 text-xs font-medium text-[hsl(215,30%,65%)] mt-4">
+              <div className="flex items-center justify-center gap-6 text-xs font-medium text-[hsl(215,20%,60%)] mt-4">
                 <div className="flex items-center gap-1.5">
                   <Truck className="h-4 w-4 text-emerald-500" />
                   Free 2-Day Shipping
@@ -199,12 +199,12 @@ export default function ProductDetailPage() {
                 {Object.entries(specs).map(([key, value]) => {
                   const Icon = specIcons[key] || Shield;
                   return (
-                    <div key={key} className="bg-[hsl(220,38%,10%)] p-6 rounded-md border border-[hsl(218,35%,17%)] flex flex-col gap-4 group hover:border-[hsl(38,92%,50%)]/50 transition-colors" data-testid={`spec-${key.toLowerCase().replace(/\s/g, "-")}`}>
+                    <div key={key} className="bg-[hsl(220,18%,18%)] p-6 rounded-md border border-[hsl(218,18%,25%)] flex flex-col gap-4 group hover:border-[hsl(38,92%,50%)]/50 transition-colors" data-testid={`spec-${key.toLowerCase().replace(/\s/g, "-")}`}>
                       <div className="h-12 w-12 rounded-md bg-[hsl(38,92%,50%)]/10 text-[hsl(38,92%,50%)] flex items-center justify-center">
                         <Icon className="h-6 w-6" />
                       </div>
                       <div>
-                        <p className="text-[hsl(215,30%,65%)] uppercase text-xs font-bold tracking-wider mb-1">{key}</p>
+                        <p className="text-[hsl(215,20%,60%)] uppercase text-xs font-bold tracking-wider mb-1">{key}</p>
                         <p className="text-xl font-bold text-white group-hover:text-[hsl(38,92%,50%)] transition-colors">{value}</p>
                       </div>
                     </div>
@@ -220,7 +220,7 @@ export default function ProductDetailPage() {
                 <h3 className="text-2xl font-bold text-white mb-6" data-testid="text-whats-in-box">What's in the Box</h3>
                 <ul className="space-y-4">
                   {whatsInBox.map((item, i) => (
-                    <li key={i} className="flex items-center gap-4 p-4 rounded-md bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)]">
+                    <li key={i} className="flex items-center gap-4 p-4 rounded-md bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)]">
                       <CheckCircle className="h-5 w-5 text-[hsl(38,92%,50%)] flex-shrink-0" />
                       <span className="font-medium text-white">{item}</span>
                     </li>
@@ -228,7 +228,7 @@ export default function ProductDetailPage() {
                 </ul>
               </div>
               <div className="w-full md:w-1/2 relative">
-                <div className="relative z-10 aspect-square bg-[hsl(220,38%,10%)] rounded-2xl overflow-hidden border border-[hsl(218,35%,17%)]">
+                <div className="relative z-10 aspect-square bg-[hsl(220,18%,18%)] rounded-2xl overflow-hidden border border-[hsl(218,18%,25%)]">
                   <img
                     alt="What's in the box"
                     className="w-full h-full object-cover"
@@ -242,35 +242,35 @@ export default function ProductDetailPage() {
           <section className="max-w-3xl mx-auto w-full">
             <h3 className="text-2xl font-bold text-white mb-8 text-center" data-testid="text-faq-title">Frequently Asked Questions</h3>
             <Accordion type="single" collapsible className="space-y-4">
-              <AccordionItem value="nozzle" className="bg-[hsl(220,38%,10%)] rounded-md border border-[hsl(218,35%,17%)] px-6">
+              <AccordionItem value="nozzle" className="bg-[hsl(220,18%,18%)] rounded-md border border-[hsl(218,18%,25%)] px-6">
                 <AccordionTrigger className="text-white text-base font-medium hover:no-underline" data-testid="accordion-nozzle">
                   How often should I change the nozzle?
                 </AccordionTrigger>
-                <AccordionContent className="text-[hsl(215,30%,65%)]">
+                <AccordionContent className="text-[hsl(215,20%,60%)]">
                   We recommend replacing the nozzle every 3 months for optimal hygiene and performance. The JetClean Pro comes with 4 nozzles, providing a year's supply out of the box.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="sensitive" className="bg-[hsl(220,38%,10%)] rounded-md border border-[hsl(218,35%,17%)] px-6">
+              <AccordionItem value="sensitive" className="bg-[hsl(220,18%,18%)] rounded-md border border-[hsl(218,18%,25%)] px-6">
                 <AccordionTrigger className="text-white text-base font-medium hover:no-underline" data-testid="accordion-sensitive">
                   Is it safe for sensitive gums?
                 </AccordionTrigger>
-                <AccordionContent className="text-[hsl(215,30%,65%)]">
+                <AccordionContent className="text-[hsl(215,20%,60%)]">
                   Absolutely. The device features a 'Soft' mode specifically designed for sensitive gums or first-time users. You can gradually increase intensity as your gums become healthier.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="mouthwash" className="bg-[hsl(220,38%,10%)] rounded-md border border-[hsl(218,35%,17%)] px-6">
+              <AccordionItem value="mouthwash" className="bg-[hsl(220,18%,18%)] rounded-md border border-[hsl(218,18%,25%)] px-6">
                 <AccordionTrigger className="text-white text-base font-medium hover:no-underline" data-testid="accordion-mouthwash">
                   Can I use mouthwash in the reservoir?
                 </AccordionTrigger>
-                <AccordionContent className="text-[hsl(215,30%,65%)]">
+                <AccordionContent className="text-[hsl(215,20%,60%)]">
                   Yes, you can add a small amount of mouthwash mixed with water to the reservoir for an extra fresh feeling. We recommend a 1:1 ratio of mouthwash to water.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="warranty" className="bg-[hsl(220,38%,10%)] rounded-md border border-[hsl(218,35%,17%)] px-6">
+              <AccordionItem value="warranty" className="bg-[hsl(220,18%,18%)] rounded-md border border-[hsl(218,18%,25%)] px-6">
                 <AccordionTrigger className="text-white text-base font-medium hover:no-underline" data-testid="accordion-warranty">
                   What does the warranty cover?
                 </AccordionTrigger>
-                <AccordionContent className="text-[hsl(215,30%,65%)]">
+                <AccordionContent className="text-[hsl(215,20%,60%)]">
                   All Novaatoz devices come with a 2-year limited warranty covering manufacturing defects and motor issues. This does not cover physical damage from drops or misuse.
                 </AccordionContent>
               </AccordionItem>
@@ -282,16 +282,16 @@ export default function ProductDetailPage() {
               <h3 className="text-2xl font-bold text-white mb-8" data-testid="text-reviews-title">Customer Reviews</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {productReviews.map((review) => (
-                  <div key={review.id} className="rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] p-6" data-testid={`review-${review.id}`}>
+                  <div key={review.id} className="rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] p-6" data-testid={`review-${review.id}`}>
                     <div className="flex gap-1 mb-3">
                       {Array.from({ length: 5 }).map((_, i) => (
-                        <svg key={i} className={`h-4 w-4 ${i < review.rating ? "text-amber-400" : "text-[hsl(218,35%,17%)]"}`} fill="currentColor" viewBox="0 0 20 20">
+                        <svg key={i} className={`h-4 w-4 ${i < review.rating ? "text-amber-400" : "text-[hsl(218,18%,25%)]"}`} fill="currentColor" viewBox="0 0 20 20">
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
                       ))}
                     </div>
                     <h4 className="text-white font-semibold mb-2">{review.title}</h4>
-                    <p className="text-[hsl(215,30%,65%)] text-sm mb-4 leading-relaxed">{review.body}</p>
+                    <p className="text-[hsl(215,20%,60%)] text-sm mb-4 leading-relaxed">{review.body}</p>
                     <div className="flex items-center gap-2">
                       <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[hsl(38,92%,50%)] to-violet-500 flex items-center justify-center text-xs font-bold text-white">
                         {review.customerName.split(" ").map(n => n[0]).join("")}

@@ -102,11 +102,12 @@ shared/
 - Best Sellers, Portable, Family, Accessories
 
 ## Design Tokens
-- Background: hsl(220,40%,7%)
-- Card: hsl(220,38%,10%)
-- Border: hsl(218,35%,17%)
+- Background: hsl(220,20%,14%) - lighter dark tone
+- Card: hsl(220,18%,18%)
+- Section alt: hsl(220,18%,11%)
+- Border: hsl(218,18%,25%)
 - Primary: hsl(38,92%,50%) - warm gold
-- Text: white (primary), hsl(215,30%,65%) (secondary)
+- Text: white (primary), hsl(215,20%,60%) (secondary)
 
 ## Gallery
 - 20 unique product images in client/public/gallery/

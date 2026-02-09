@@ -99,12 +99,12 @@ function LoadingSkeleton() {
   return (
     <div className="space-y-6">
       {[1, 2, 3].map((i) => (
-        <div key={i} className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-6 space-y-4">
-          <div className="h-6 w-48 bg-[hsl(218,35%,17%)] rounded animate-pulse" />
+        <div key={i} className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6 space-y-4">
+          <div className="h-6 w-48 bg-[hsl(218,18%,25%)] rounded animate-pulse" />
           <div className="space-y-3">
-            <div className="h-10 w-full bg-[hsl(218,35%,17%)] rounded animate-pulse" />
-            <div className="h-10 w-full bg-[hsl(218,35%,17%)] rounded animate-pulse" />
-            <div className="h-10 w-2/3 bg-[hsl(218,35%,17%)] rounded animate-pulse" />
+            <div className="h-10 w-full bg-[hsl(218,18%,25%)] rounded animate-pulse" />
+            <div className="h-10 w-full bg-[hsl(218,18%,25%)] rounded animate-pulse" />
+            <div className="h-10 w-2/3 bg-[hsl(218,18%,25%)] rounded animate-pulse" />
           </div>
         </div>
       ))}
@@ -226,11 +226,11 @@ export default function AdminSettings() {
     });
   };
 
-  const inputClass = "w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] placeholder-[hsl(215,30%,65%)]";
-  const labelClass = "block text-sm font-medium text-[hsl(215,30%,65%)] mb-1.5";
+  const inputClass = "w-full rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,20%,14%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] placeholder-[hsl(215,20%,60%)]";
+  const labelClass = "block text-sm font-medium text-[hsl(215,20%,60%)] mb-1.5";
 
   return (
-    <div className="flex h-screen w-full bg-[hsl(220,50%,4%)] overflow-hidden">
+    <div className="flex h-screen w-full bg-[hsl(220,18%,11%)] overflow-hidden">
       <AdminSidebar active="/admin/settings" />
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <AdminHeader title="Settings" />
@@ -239,7 +239,7 @@ export default function AdminSettings() {
             <LoadingSkeleton />
           ) : (
             <>
-              <div className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-6" data-testid="card-payment-settings">
+              <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6" data-testid="card-payment-settings">
                 <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                   <div className="flex items-center gap-3">
                     <CreditCard className="h-5 w-5 text-[hsl(38,92%,50%)]" />
@@ -257,12 +257,12 @@ export default function AdminSettings() {
                 </div>
 
                 <div className="space-y-5">
-                  <div className="flex items-center justify-between gap-4 p-3 rounded-md bg-[hsl(220,40%,7%)] border border-[hsl(218,35%,17%)]">
+                  <div className="flex items-center justify-between gap-4 p-3 rounded-md bg-[hsl(220,20%,14%)] border border-[hsl(218,18%,25%)]">
                     <div className="flex items-center gap-3">
                       <SiStripe className="h-5 w-5 text-[#635BFF]" />
                       <div>
                         <p className="text-white text-sm font-medium">Stripe</p>
-                        <p className="text-[hsl(215,30%,65%)] text-xs">Accept credit card payments</p>
+                        <p className="text-[hsl(215,20%,60%)] text-xs">Accept credit card payments</p>
                       </div>
                     </div>
                     <Toggle
@@ -273,7 +273,7 @@ export default function AdminSettings() {
                   </div>
 
                   {form.stripeEnabled === "true" && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-4 border-l-2 border-[hsl(218,35%,17%)] ml-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-4 border-l-2 border-[hsl(218,18%,25%)] ml-2">
                       <div>
                         <label className={labelClass}>Stripe Public Key</label>
                         <input
@@ -299,12 +299,12 @@ export default function AdminSettings() {
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between gap-4 p-3 rounded-md bg-[hsl(220,40%,7%)] border border-[hsl(218,35%,17%)]">
+                  <div className="flex items-center justify-between gap-4 p-3 rounded-md bg-[hsl(220,20%,14%)] border border-[hsl(218,18%,25%)]">
                     <div className="flex items-center gap-3">
                       <SiPaypal className="h-5 w-5 text-[#00457C]" />
                       <div>
                         <p className="text-white text-sm font-medium">PayPal</p>
-                        <p className="text-[hsl(215,30%,65%)] text-xs">Accept PayPal payments</p>
+                        <p className="text-[hsl(215,20%,60%)] text-xs">Accept PayPal payments</p>
                       </div>
                     </div>
                     <Toggle
@@ -315,7 +315,7 @@ export default function AdminSettings() {
                   </div>
 
                   {form.paypalEnabled === "true" && (
-                    <div className="pl-4 border-l-2 border-[hsl(218,35%,17%)] ml-2">
+                    <div className="pl-4 border-l-2 border-[hsl(218,18%,25%)] ml-2">
                       <label className={labelClass}>PayPal Email</label>
                       <input
                         type="email"
@@ -328,12 +328,12 @@ export default function AdminSettings() {
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between gap-4 p-3 rounded-md bg-[hsl(220,40%,7%)] border border-[hsl(218,35%,17%)]">
+                  <div className="flex items-center justify-between gap-4 p-3 rounded-md bg-[hsl(220,20%,14%)] border border-[hsl(218,18%,25%)]">
                     <div className="flex items-center gap-3">
                       <CreditCard className="h-5 w-5 text-emerald-400" />
                       <div>
                         <p className="text-white text-sm font-medium">Cash on Delivery</p>
-                        <p className="text-[hsl(215,30%,65%)] text-xs">Allow payment upon delivery</p>
+                        <p className="text-[hsl(215,20%,60%)] text-xs">Allow payment upon delivery</p>
                       </div>
                     </div>
                     <Toggle
@@ -345,7 +345,7 @@ export default function AdminSettings() {
                 </div>
               </div>
 
-              <div className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-6" data-testid="card-store-settings">
+              <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6" data-testid="card-store-settings">
                 <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                   <div className="flex items-center gap-3">
                     <Store className="h-5 w-5 text-[hsl(38,92%,50%)]" />
@@ -438,7 +438,7 @@ export default function AdminSettings() {
                 </div>
               </div>
 
-              <div className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-6" data-testid="card-contact-settings">
+              <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6" data-testid="card-contact-settings">
                 <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                   <div className="flex items-center gap-3">
                     <Mail className="h-5 w-5 text-[hsl(38,92%,50%)]" />
@@ -492,7 +492,7 @@ export default function AdminSettings() {
                 </div>
               </div>
 
-              <div className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-6" data-testid="card-appearance-settings">
+              <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6" data-testid="card-appearance-settings">
                 <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                   <div className="flex items-center gap-3">
                     <Layout className="h-5 w-5 text-[hsl(38,92%,50%)]" />
@@ -542,7 +542,7 @@ export default function AdminSettings() {
                       </div>
                       <div className="flex items-end gap-3 pb-0.5">
                         <div className="flex items-center gap-3">
-                          <label className="text-sm font-medium text-[hsl(215,30%,65%)]">Show Logo Icon</label>
+                          <label className="text-sm font-medium text-[hsl(215,20%,60%)]">Show Logo Icon</label>
                           <Toggle
                             value={form.showLogoIcon}
                             onToggle={() => setForm({ ...form, showLogoIcon: form.showLogoIcon === "true" ? "false" : "true" })}
@@ -563,7 +563,7 @@ export default function AdminSettings() {
                         { key: "showNavContact", label: "Contact" },
                         { key: "showNavReviews", label: "Reviews" },
                       ].map(nav => (
-                        <div key={nav.key} className="flex items-center justify-between gap-2 p-3 rounded-md bg-[hsl(220,40%,7%)] border border-[hsl(218,35%,17%)]">
+                        <div key={nav.key} className="flex items-center justify-between gap-2 p-3 rounded-md bg-[hsl(220,20%,14%)] border border-[hsl(218,18%,25%)]">
                           <span className="text-white text-sm">{nav.label}</span>
                           <Toggle
                             value={(form as any)[nav.key]}
@@ -583,7 +583,7 @@ export default function AdminSettings() {
                         { key: "showFooterSocial", label: "Social Links" },
                         { key: "showFooterLinks", label: "Footer Links" },
                       ].map(sec => (
-                        <div key={sec.key} className="flex items-center justify-between gap-2 p-3 rounded-md bg-[hsl(220,40%,7%)] border border-[hsl(218,35%,17%)]">
+                        <div key={sec.key} className="flex items-center justify-between gap-2 p-3 rounded-md bg-[hsl(220,20%,14%)] border border-[hsl(218,18%,25%)]">
                           <span className="text-white text-sm">{sec.label}</span>
                           <Toggle
                             value={(form as any)[sec.key]}

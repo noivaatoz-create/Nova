@@ -27,7 +27,7 @@ export function Navigation() {
   const logoImgSize = settings?.logoSize === "small" ? "h-7 w-7" : settings?.logoSize === "large" ? "h-11 w-11" : "h-9 w-9";
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[hsl(220,40%,7%)]/80 backdrop-blur-xl" data-testid="nav-header">
+    <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[hsl(220,20%,14%)]/80 backdrop-blur-xl" data-testid="nav-header">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2" data-testid="link-home">
           {settings?.showLogoIcon !== "false" && <img src="/images/novaatoz-logo.png" alt="Novaatoz" className={`${logoImgSize} object-contain brightness-0 invert`} />}
@@ -42,7 +42,7 @@ export function Navigation() {
               className={`text-sm font-medium transition-colors ${
                 location === link.href
                   ? "text-white"
-                  : "text-[hsl(215,30%,65%)] hover:text-white"
+                  : "text-[hsl(215,20%,60%)] hover:text-white"
               }`}
               data-testid={`link-${link.label.toLowerCase()}`}
             >
@@ -54,7 +54,7 @@ export function Navigation() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setIsOpen(true)}
-            className="relative flex items-center justify-center rounded-md p-2 text-[hsl(215,30%,65%)] hover:text-white transition-colors"
+            className="relative flex items-center justify-center rounded-md p-2 text-[hsl(215,20%,60%)] hover:text-white transition-colors"
             data-testid="button-cart"
           >
             <ShoppingCart className="h-5 w-5" />
@@ -80,7 +80,7 @@ export function Navigation() {
                 <Menu className="h-5 w-5" />
               </button>
             </SheetTrigger>
-            <SheetContent side="right" className="bg-[hsl(220,40%,7%)] border-[hsl(218,35%,17%)] w-[280px]">
+            <SheetContent side="right" className="bg-[hsl(220,20%,14%)] border-[hsl(218,18%,25%)] w-[280px]">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2 text-white">
                   {settings?.showLogoIcon !== "false" && <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-7 w-7 object-contain brightness-0 invert" />}
@@ -96,7 +96,7 @@ export function Navigation() {
                     className={`text-base font-medium transition-colors py-2 ${
                       location === link.href
                         ? "text-white"
-                        : "text-[hsl(215,30%,65%)] hover:text-white"
+                        : "text-[hsl(215,20%,60%)] hover:text-white"
                     }`}
                     data-testid={`link-mobile-${link.label.toLowerCase()}`}
                   >
@@ -104,7 +104,7 @@ export function Navigation() {
                   </Link>
                 ))}
                 <Link href="/admin" onClick={() => setMobileOpen(false)}>
-                  <Button variant="outline" className="w-full mt-4 border-[hsl(218,35%,17%)] text-[hsl(215,30%,65%)]" data-testid="link-mobile-admin">
+                  <Button variant="outline" className="w-full mt-4 border-[hsl(218,18%,25%)] text-[hsl(215,20%,60%)]" data-testid="link-mobile-admin">
                     Admin Panel
                   </Button>
                 </Link>

@@ -25,12 +25,12 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[hsl(220,40%,7%)]">
+    <div className="min-h-screen bg-[hsl(220,20%,14%)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <p className="text-[hsl(38,92%,50%)] text-sm font-bold tracking-widest uppercase mb-4">Get in Touch</p>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6" data-testid="text-contact-title">Contact Us</h1>
-          <p className="text-[hsl(215,30%,65%)] text-lg">Have a question about our products or need support? We're here to help.</p>
+          <p className="text-[hsl(215,20%,60%)] text-lg">Have a question about our products or need support? We're here to help.</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-12">
@@ -44,7 +44,7 @@ export default function ContactPage() {
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     required
-                    className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
+                    className="w-full rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] px-4 py-2.5 text-white placeholder-[hsl(215,20%,60%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
                     placeholder="Your name"
                     data-testid="input-contact-name"
                   />
@@ -56,7 +56,7 @@ export default function ContactPage() {
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     required
-                    className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
+                    className="w-full rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] px-4 py-2.5 text-white placeholder-[hsl(215,20%,60%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
                     placeholder="you@example.com"
                     data-testid="input-contact-email"
                   />
@@ -69,7 +69,7 @@ export default function ContactPage() {
                   value={form.subject}
                   onChange={(e) => setForm({ ...form, subject: e.target.value })}
                   required
-                  className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
+                  className="w-full rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] px-4 py-2.5 text-white placeholder-[hsl(215,20%,60%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
                   placeholder="How can we help?"
                   data-testid="input-contact-subject"
                 />
@@ -81,7 +81,7 @@ export default function ContactPage() {
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   required
                   rows={6}
-                  className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm resize-none"
+                  className="w-full rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] px-4 py-2.5 text-white placeholder-[hsl(215,20%,60%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm resize-none"
                   placeholder="Tell us more..."
                   data-testid="input-contact-message"
                 />
@@ -110,8 +110,8 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="text-white font-semibold">{item.title}</p>
-                  <p className="text-[hsl(215,30%,65%)] text-sm">{item.value}</p>
-                  <p className="text-[hsl(215,30%,65%)]/60 text-xs mt-0.5">{item.sub}</p>
+                  <p className="text-[hsl(215,20%,60%)] text-sm">{item.value}</p>
+                  <p className="text-[hsl(215,20%,60%)]/60 text-xs mt-0.5">{item.sub}</p>
                 </div>
               </div>
             ))}

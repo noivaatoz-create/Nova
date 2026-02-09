@@ -33,12 +33,12 @@ const faqs = [
 
 export default function FAQPage() {
   return (
-    <div className="min-h-screen bg-[hsl(220,40%,7%)]">
+    <div className="min-h-screen bg-[hsl(220,20%,14%)]">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-16">
           <p className="text-[hsl(38,92%,50%)] text-sm font-bold tracking-widest uppercase mb-4">Support</p>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6" data-testid="text-faq-title">Frequently Asked Questions</h1>
-          <p className="text-[hsl(215,30%,65%)] text-lg">Everything you need to know about Novaatoz products.</p>
+          <p className="text-[hsl(215,20%,60%)] text-lg">Everything you need to know about Novaatoz products.</p>
         </div>
 
         <div className="space-y-12">
@@ -52,12 +52,12 @@ export default function FAQPage() {
                   <AccordionItem
                     key={i}
                     value={`${section.category}-${i}`}
-                    className="bg-[hsl(220,38%,10%)] rounded-md border border-[hsl(218,35%,17%)] px-6"
+                    className="bg-[hsl(220,18%,18%)] rounded-md border border-[hsl(218,18%,25%)] px-6"
                   >
                     <AccordionTrigger className="text-white text-base font-medium hover:no-underline" data-testid={`accordion-faq-${section.category.toLowerCase().replace(/\s/g, "-")}-${i}`}>
                       {faq.q}
                     </AccordionTrigger>
-                    <AccordionContent className="text-[hsl(215,30%,65%)] leading-relaxed">
+                    <AccordionContent className="text-[hsl(215,20%,60%)] leading-relaxed">
                       {faq.a}
                     </AccordionContent>
                   </AccordionItem>
@@ -67,9 +67,9 @@ export default function FAQPage() {
           ))}
         </div>
 
-        <div className="mt-16 text-center p-8 rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)]">
+        <div className="mt-16 text-center p-8 rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)]">
           <h3 className="text-xl font-bold text-white mb-3">Still have questions?</h3>
-          <p className="text-[hsl(215,30%,65%)] mb-6">Our support team is here to help you with anything you need.</p>
+          <p className="text-[hsl(215,20%,60%)] mb-6">Our support team is here to help you with anything you need.</p>
           <Link href="/contact">
             <button className="rounded-md bg-[hsl(38,92%,50%)] px-8 py-3 text-sm font-bold text-white transition-all hover:bg-[hsl(38,92%,40%)]" data-testid="button-contact-us">
               Contact Us

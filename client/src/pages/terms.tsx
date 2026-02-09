@@ -2,18 +2,18 @@ import { Link } from "wouter";
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-[hsl(220,40%,7%)]">
+    <div className="min-h-screen bg-[hsl(220,20%,14%)]">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <p className="text-[hsl(38,92%,50%)] text-sm font-bold tracking-widest uppercase mb-4">Legal</p>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6" data-testid="text-page-title">Terms of Service</h1>
-          <p className="text-[hsl(215,30%,65%)] text-lg">Please read these terms carefully before using the Novaatoz website or purchasing our products.</p>
+          <p className="text-[hsl(215,20%,60%)] text-lg">Please read these terms carefully before using the Novaatoz website or purchasing our products.</p>
         </div>
 
         <div className="space-y-12">
           <section>
             <h2 className="text-xl font-bold text-white mb-4" data-testid="text-section-acceptance">Acceptance of Terms</h2>
-            <div className="space-y-4 text-[hsl(215,30%,65%)] leading-relaxed text-sm">
+            <div className="space-y-4 text-[hsl(215,20%,60%)] leading-relaxed text-sm">
               <p>By accessing or using the Novaatoz website (novaatoz.com) and purchasing our products, you agree to be bound by these Terms of Service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws.</p>
               <p>If you do not agree with any of these terms, you are prohibited from using or accessing this site. The materials contained on this website are protected by applicable copyright and trademark law.</p>
               <p>Novaatoz reserves the right to modify these terms at any time. Changes will be effective immediately upon posting to this page. Your continued use of the website following the posting of changes constitutes your acceptance of those changes.</p>
@@ -22,7 +22,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-4" data-testid="text-section-products-pricing">Products and Pricing</h2>
-            <div className="space-y-4 text-[hsl(215,30%,65%)] leading-relaxed text-sm">
+            <div className="space-y-4 text-[hsl(215,20%,60%)] leading-relaxed text-sm">
               <p>All product descriptions, images, and specifications on the Novaatoz website are provided for informational purposes and are subject to change without notice.</p>
               <p>Prices for our products are subject to change without prior notice. While we make every effort to display accurate pricing, errors may occur. In the event of a pricing error, Novaatoz reserves the right to cancel any orders placed at the incorrect price and will notify you promptly.</p>
               <p>Product availability is not guaranteed. We reserve the right to limit the quantity of any product offered and to discontinue any product at any time. All product images are for illustration purposes and may differ slightly from the actual product.</p>
@@ -31,7 +31,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-4" data-testid="text-section-orders-payment">Orders and Payment</h2>
-            <div className="space-y-4 text-[hsl(215,30%,65%)] leading-relaxed text-sm">
+            <div className="space-y-4 text-[hsl(215,20%,60%)] leading-relaxed text-sm">
               <p>By placing an order through our website, you are making an offer to purchase the selected products. All orders are subject to acceptance by Novaatoz. We reserve the right to refuse or cancel any order for any reason, including but not limited to:</p>
               <ul className="list-disc list-inside space-y-2 pl-2">
                 <li>Product or service availability issues</li>
@@ -46,7 +46,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-4" data-testid="text-section-shipping">Shipping</h2>
-            <div className="space-y-4 text-[hsl(215,30%,65%)] leading-relaxed text-sm">
+            <div className="space-y-4 text-[hsl(215,20%,60%)] leading-relaxed text-sm">
               <p>Novaatoz offers various shipping options to deliver your order. Estimated delivery times are provided for reference purposes only and are not guaranteed. Delivery times may vary based on your location, shipping method selected, and other factors beyond our control.</p>
               <p>Novaatoz is not responsible for delays caused by shipping carriers, weather conditions, customs processing for international orders, or other circumstances outside our control. Risk of loss and title for items purchased from Novaatoz pass to you upon delivery of the items to the carrier.</p>
               <p>For more detailed information about our shipping options and policies, please visit our <Link href="/shipping-returns" className="text-[hsl(38,92%,50%)] hover:underline" data-testid="link-shipping-returns">Shipping & Returns</Link> page.</p>
@@ -55,7 +55,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-4" data-testid="text-section-returns-refunds">Returns and Refunds</h2>
-            <div className="space-y-4 text-[hsl(215,30%,65%)] leading-relaxed text-sm">
+            <div className="space-y-4 text-[hsl(215,20%,60%)] leading-relaxed text-sm">
               <p>Novaatoz offers a 30-day return policy from the date of delivery. To be eligible for a return, items must meet the following conditions:</p>
               <ul className="list-disc list-inside space-y-2 pl-2">
                 <li>The item must be unused and in its original condition</li>
@@ -70,7 +70,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-4" data-testid="text-section-warranty">Warranty</h2>
-            <div className="space-y-4 text-[hsl(215,30%,65%)] leading-relaxed text-sm">
+            <div className="space-y-4 text-[hsl(215,20%,60%)] leading-relaxed text-sm">
               <p>All Novaatoz devices are covered by a 1-year limited warranty from the date of original purchase. This warranty covers defects in materials and workmanship under normal use and service conditions.</p>
               <p>The warranty does not cover:</p>
               <ul className="list-disc list-inside space-y-2 pl-2">
@@ -86,7 +86,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-4" data-testid="text-section-limitation-liability">Limitation of Liability</h2>
-            <div className="space-y-4 text-[hsl(215,30%,65%)] leading-relaxed text-sm">
+            <div className="space-y-4 text-[hsl(215,20%,60%)] leading-relaxed text-sm">
               <p>To the fullest extent permitted by applicable law, Novaatoz shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, use, goodwill, or other intangible losses, resulting from:</p>
               <ul className="list-disc list-inside space-y-2 pl-2">
                 <li>Your access to, use of, or inability to access or use our website or products</li>
@@ -100,7 +100,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-4" data-testid="text-section-contact">Contact Information</h2>
-            <div className="space-y-4 text-[hsl(215,30%,65%)] leading-relaxed text-sm">
+            <div className="space-y-4 text-[hsl(215,20%,60%)] leading-relaxed text-sm">
               <p>If you have any questions about these Terms of Service, please contact us:</p>
               <ul className="list-none space-y-2 pl-2">
                 <li>Email: legal@novaatoz.com</li>
@@ -112,8 +112,8 @@ export default function TermsPage() {
           </section>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-[hsl(218,35%,17%)] text-center">
-          <p className="text-[hsl(215,30%,65%)] text-sm" data-testid="text-last-updated">
+        <div className="mt-16 pt-8 border-t border-[hsl(218,18%,25%)] text-center">
+          <p className="text-[hsl(215,20%,60%)] text-sm" data-testid="text-last-updated">
             Last updated: February 2026
           </p>
         </div>

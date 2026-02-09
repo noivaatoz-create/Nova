@@ -33,7 +33,7 @@ function AdminSidebar({ active }: { active: string }) {
   ];
 
   return (
-    <aside className="hidden lg:flex w-64 flex-col bg-[hsl(220,40%,8%)] border-r border-[hsl(218,35%,17%)] flex-shrink-0" data-testid="admin-sidebar">
+    <aside className="hidden lg:flex w-64 flex-col bg-[hsl(220,40%,8%)] border-r border-[hsl(218,18%,25%)] flex-shrink-0" data-testid="admin-sidebar">
       <div className="flex h-full flex-col justify-between p-4">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3 px-2 py-2">
@@ -42,7 +42,7 @@ function AdminSidebar({ active }: { active: string }) {
             </div>
             <div className="flex flex-col">
               <h1 className="text-white text-base font-bold tracking-tight">Novaatoz</h1>
-              <p className="text-[hsl(215,30%,65%)] text-xs font-medium tracking-wide">ADMIN CONSOLE</p>
+              <p className="text-[hsl(215,20%,60%)] text-xs font-medium tracking-wide">ADMIN CONSOLE</p>
             </div>
           </div>
           <nav className="flex flex-col gap-1 mt-4">
@@ -53,7 +53,7 @@ function AdminSidebar({ active }: { active: string }) {
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
                   active === item.href
                     ? "bg-[hsl(38,92%,50%)] text-white shadow-[0_0_15px_rgba(217,169,12,0.4)]"
-                    : "text-[hsl(215,30%,65%)] hover:bg-[hsl(218,35%,17%)] hover:text-white"
+                    : "text-[hsl(215,20%,60%)] hover:bg-[hsl(218,18%,25%)] hover:text-white"
                 }`}
                 data-testid={`link-admin-${item.label.toLowerCase()}`}
               >
@@ -63,10 +63,10 @@ function AdminSidebar({ active }: { active: string }) {
             ))}
           </nav>
         </div>
-        <div className="p-3 border-t border-[hsl(218,35%,17%)]">
+        <div className="p-3 border-t border-[hsl(218,18%,25%)]">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-sm text-[hsl(215,30%,65%)] hover:text-white hover:bg-white/5 transition-colors"
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-sm text-[hsl(215,20%,60%)] hover:text-white hover:bg-white/5 transition-colors"
             data-testid="button-admin-logout"
           >
             <LogOut className="h-4 w-4" />
@@ -80,27 +80,27 @@ function AdminSidebar({ active }: { active: string }) {
 
 function AdminHeader({ title }: { title: string }) {
   return (
-    <header className="flex items-center justify-between border-b border-[hsl(218,35%,17%)] bg-[hsl(220,40%,8%)]/95 backdrop-blur-md px-6 py-4 sticky top-0 z-10" data-testid="admin-header">
+    <header className="flex items-center justify-between border-b border-[hsl(218,18%,25%)] bg-[hsl(220,40%,8%)]/95 backdrop-blur-md px-6 py-4 sticky top-0 z-10" data-testid="admin-header">
       <div className="flex items-center gap-3">
         <LayoutDashboard className="h-5 w-5 text-[hsl(38,92%,50%)]" />
         <h2 className="text-white text-lg font-semibold tracking-tight">{title}</h2>
       </div>
       <div className="flex items-center gap-4">
         <div className="relative hidden md:block">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(215,30%,65%)]" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(215,20%,60%)]" />
           <input
-            className="w-64 pl-10 pr-3 py-2 border border-[hsl(218,35%,17%)] rounded-md bg-[hsl(220,38%,10%)] text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] text-sm"
+            className="w-64 pl-10 pr-3 py-2 border border-[hsl(218,18%,25%)] rounded-md bg-[hsl(220,18%,18%)] text-white placeholder-[hsl(215,20%,60%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] text-sm"
             placeholder="Search orders, products..."
             type="text"
             data-testid="input-admin-search"
           />
         </div>
         <div className="flex items-center gap-2">
-          <button className="relative p-2 rounded-md hover:bg-[hsl(218,35%,17%)] text-[hsl(215,30%,65%)] hover:text-white transition-colors" data-testid="button-notifications">
+          <button className="relative p-2 rounded-md hover:bg-[hsl(218,18%,25%)] text-[hsl(215,20%,60%)] hover:text-white transition-colors" data-testid="button-notifications">
             <Bell className="h-5 w-5" />
             <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-red-500 border border-[hsl(220,40%,8%)]" />
           </button>
-          <button className="p-2 rounded-md hover:bg-[hsl(218,35%,17%)] text-[hsl(215,30%,65%)] hover:text-white transition-colors" data-testid="button-help">
+          <button className="p-2 rounded-md hover:bg-[hsl(218,18%,25%)] text-[hsl(215,20%,60%)] hover:text-white transition-colors" data-testid="button-help">
             <HelpCircle className="h-5 w-5" />
           </button>
         </div>
@@ -203,7 +203,7 @@ export default function AdminDashboard() {
   const recentOrders = filteredOrders.slice(0, 5);
 
   return (
-    <div className="flex h-screen w-full bg-[hsl(220,50%,4%)] overflow-hidden">
+    <div className="flex h-screen w-full bg-[hsl(220,18%,11%)] overflow-hidden">
       <AdminSidebar active="/admin" />
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <AdminHeader title="Dashboard Overview" />
@@ -217,7 +217,7 @@ export default function AdminDashboard() {
                   className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
                     period === p
                       ? "bg-[hsl(38,92%,50%)] text-white"
-                      : "border border-[hsl(218,35%,17%)] text-[hsl(215,30%,65%)] hover:text-white hover:border-[hsl(38,92%,50%)]/50"
+                      : "border border-[hsl(218,18%,25%)] text-[hsl(215,20%,60%)] hover:text-white hover:border-[hsl(38,92%,50%)]/50"
                   }`}
                   data-testid={`button-period-${p}`}
                 >
@@ -237,9 +237,9 @@ export default function AdminDashboard() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {kpis.map((kpi, i) => (
-              <div key={i} className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-5 hover:border-[hsl(38,92%,50%)]/50 transition-colors group relative overflow-visible" data-testid={`kpi-${i}`}>
+              <div key={i} className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-5 hover:border-[hsl(38,92%,50%)]/50 transition-colors group relative overflow-visible" data-testid={`kpi-${i}`}>
                 <div className="flex flex-col gap-1 relative z-10">
-                  <p className="text-[hsl(215,30%,65%)] text-sm font-medium">{kpi.label}</p>
+                  <p className="text-[hsl(215,20%,60%)] text-sm font-medium">{kpi.label}</p>
                   <h3 className="text-white text-2xl font-bold tracking-tight">{kpi.value}</h3>
                 </div>
               </div>
@@ -247,7 +247,7 @@ export default function AdminDashboard() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-6 flex flex-col">
+            <div className="lg:col-span-2 bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6 flex flex-col">
               <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                 <div>
                   <h3 className="text-white text-base font-semibold">Sales Performance</h3>
@@ -264,10 +264,10 @@ export default function AdminDashboard() {
                       <stop offset="100%" stopColor="hsl(38,92%,50%)" stopOpacity="0" />
                     </linearGradient>
                   </defs>
-                  <line stroke="hsl(218,35%,17%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="50" y2="50" />
-                  <line stroke="hsl(218,35%,17%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="100" y2="100" />
-                  <line stroke="hsl(218,35%,17%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="150" y2="150" />
-                  <line stroke="hsl(218,35%,17%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="200" y2="200" />
+                  <line stroke="hsl(218,18%,25%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="50" y2="50" />
+                  <line stroke="hsl(218,18%,25%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="100" y2="100" />
+                  <line stroke="hsl(218,18%,25%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="150" y2="150" />
+                  <line stroke="hsl(218,18%,25%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="200" y2="200" />
                   {chartData.length > 0 ? (
                     <>
                       <path d={chartSvg.area} fill="url(#chartGradient)" />
@@ -280,7 +280,7 @@ export default function AdminDashboard() {
                       })}
                     </>
                   ) : (
-                    <text x="400" y="130" textAnchor="middle" fill="hsl(215,30%,65%)" fontSize="14">No data for selected period</text>
+                    <text x="400" y="130" textAnchor="middle" fill="hsl(215,20%,60%)" fontSize="14">No data for selected period</text>
                   )}
                 </svg>
               </div>
@@ -288,7 +288,7 @@ export default function AdminDashboard() {
 
             <div className="flex flex-col gap-6">
               {lowStockProducts.length > 0 && (
-                <div className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-5 relative overflow-visible" data-testid="card-low-stock">
+                <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-5 relative overflow-visible" data-testid="card-low-stock">
                   <div className="flex justify-between items-start mb-3 gap-4 flex-wrap">
                     <div className="flex items-center gap-2 text-amber-500 mb-1">
                       <AlertTriangle className="h-5 w-5" />
@@ -306,17 +306,17 @@ export default function AdminDashboard() {
                 </div>
               )}
 
-              <div className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-5 flex-1" data-testid="card-top-products">
+              <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-5 flex-1" data-testid="card-top-products">
                 <h3 className="text-white text-sm font-semibold mb-4">Top Products</h3>
                 <div className="space-y-3">
                   {products?.slice(0, 3).map((p) => (
                     <div key={p.id} className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-md overflow-hidden bg-[hsl(218,35%,17%)] flex-shrink-0">
+                      <div className="h-10 w-10 rounded-md overflow-hidden bg-[hsl(218,18%,25%)] flex-shrink-0">
                         <img src={p.image} alt={p.name} className="h-full w-full object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-white text-sm truncate">{p.name}</p>
-                        <p className="text-[hsl(215,30%,65%)] text-xs">${p.price}</p>
+                        <p className="text-[hsl(215,20%,60%)] text-xs">${p.price}</p>
                       </div>
                     </div>
                   ))}
@@ -325,24 +325,24 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-6" data-testid="card-recent-orders">
+          <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6" data-testid="card-recent-orders">
             <h3 className="text-white text-base font-semibold mb-4">Recent Orders</h3>
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
-                  <tr className="border-b border-[hsl(218,35%,17%)]">
-                    <th className="pb-3 text-[hsl(215,30%,65%)] text-xs font-medium uppercase tracking-wider">Order</th>
-                    <th className="pb-3 text-[hsl(215,30%,65%)] text-xs font-medium uppercase tracking-wider">Customer</th>
-                    <th className="pb-3 text-[hsl(215,30%,65%)] text-xs font-medium uppercase tracking-wider">Total</th>
-                    <th className="pb-3 text-[hsl(215,30%,65%)] text-xs font-medium uppercase tracking-wider">Status</th>
-                    <th className="pb-3 text-[hsl(215,30%,65%)] text-xs font-medium uppercase tracking-wider">Date</th>
+                  <tr className="border-b border-[hsl(218,18%,25%)]">
+                    <th className="pb-3 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Order</th>
+                    <th className="pb-3 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Customer</th>
+                    <th className="pb-3 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Total</th>
+                    <th className="pb-3 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Status</th>
+                    <th className="pb-3 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Date</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[hsl(218,35%,17%)]/50">
+                <tbody className="divide-y divide-[hsl(218,18%,25%)]/50">
                   {recentOrders.map((order) => (
                     <tr key={order.id}>
                       <td className="py-3 text-white text-sm font-medium">#{order.orderNumber}</td>
-                      <td className="py-3 text-[hsl(215,30%,65%)] text-sm">{order.customerName}</td>
+                      <td className="py-3 text-[hsl(215,20%,60%)] text-sm">{order.customerName}</td>
                       <td className="py-3 text-white text-sm font-medium">${order.total}</td>
                       <td className="py-3">
                         <span className={`text-xs font-semibold px-2 py-0.5 rounded ${
@@ -355,14 +355,14 @@ export default function AdminDashboard() {
                           {order.status}
                         </span>
                       </td>
-                      <td className="py-3 text-[hsl(215,30%,65%)] text-sm">
+                      <td className="py-3 text-[hsl(215,20%,60%)] text-sm">
                         {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : "N/A"}
                       </td>
                     </tr>
                   ))}
                   {recentOrders.length === 0 && (
                     <tr>
-                      <td colSpan={5} className="py-8 text-center text-[hsl(215,30%,65%)] text-sm">No orders yet</td>
+                      <td colSpan={5} className="py-8 text-center text-[hsl(215,20%,60%)] text-sm">No orders yet</td>
                     </tr>
                   )}
                 </tbody>
@@ -373,15 +373,15 @@ export default function AdminDashboard() {
       </main>
 
       <AlertDialog open={showResetDialog} onOpenChange={setShowResetDialog}>
-        <AlertDialogContent className="bg-[hsl(220,40%,7%)] border-[hsl(218,35%,17%)] text-white">
+        <AlertDialogContent className="bg-[hsl(220,20%,14%)] border-[hsl(218,18%,25%)] text-white">
           <AlertDialogHeader>
             <AlertDialogTitle>Reset All Revenue Data?</AlertDialogTitle>
-            <AlertDialogDescription className="text-[hsl(215,30%,65%)]">
+            <AlertDialogDescription className="text-[hsl(215,20%,60%)]">
               This will permanently delete all orders. Revenue will reset to $0.00. This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="border-[hsl(218,35%,17%)] text-[hsl(215,30%,65%)]" data-testid="button-cancel-reset">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="border-[hsl(218,18%,25%)] text-[hsl(215,20%,60%)]" data-testid="button-cancel-reset">Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => resetMutation.mutate()}
               className="bg-red-600 hover:bg-red-700 text-white"

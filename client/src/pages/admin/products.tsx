@@ -9,7 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 
-const inputClass = "w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)]";
+const inputClass = "w-full rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,20%,14%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)]";
 
 export default function AdminProducts() {
   const { data: products, isLoading } = useQuery<Product[]>({ queryKey: ["/api/products"] });
@@ -132,7 +132,7 @@ export default function AdminProducts() {
   };
 
   return (
-    <div className="flex h-screen w-full bg-[hsl(220,50%,4%)] overflow-hidden">
+    <div className="flex h-screen w-full bg-[hsl(220,18%,11%)] overflow-hidden">
       <AdminSidebar active="/admin/products" />
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <AdminHeader title="Products" />
@@ -151,39 +151,39 @@ export default function AdminProducts() {
             </button>
           </div>
 
-          <div className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md overflow-hidden">
+          <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
-                  <tr className="border-b border-[hsl(218,35%,17%)]">
-                    <th className="p-4 text-[hsl(215,30%,65%)] text-xs font-medium uppercase tracking-wider">Product</th>
-                    <th className="p-4 text-[hsl(215,30%,65%)] text-xs font-medium uppercase tracking-wider">Category</th>
-                    <th className="p-4 text-[hsl(215,30%,65%)] text-xs font-medium uppercase tracking-wider">Price</th>
-                    <th className="p-4 text-[hsl(215,30%,65%)] text-xs font-medium uppercase tracking-wider">Stock</th>
-                    <th className="p-4 text-[hsl(215,30%,65%)] text-xs font-medium uppercase tracking-wider">Status</th>
-                    <th className="p-4 text-[hsl(215,30%,65%)] text-xs font-medium uppercase tracking-wider">Actions</th>
+                  <tr className="border-b border-[hsl(218,18%,25%)]">
+                    <th className="p-4 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Product</th>
+                    <th className="p-4 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Category</th>
+                    <th className="p-4 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Price</th>
+                    <th className="p-4 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Stock</th>
+                    <th className="p-4 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Status</th>
+                    <th className="p-4 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[hsl(218,35%,17%)]/50">
+                <tbody className="divide-y divide-[hsl(218,18%,25%)]/50">
                   {products?.map((product) => (
                     <tr key={product.id} className="hover:bg-white/[0.02] transition-colors" data-testid={`row-product-${product.id}`}>
                       <td className="p-4">
                         <div className="flex items-center gap-3">
-                          <div className="h-12 w-12 rounded-md overflow-hidden bg-[hsl(218,35%,17%)] flex-shrink-0">
+                          <div className="h-12 w-12 rounded-md overflow-hidden bg-[hsl(218,18%,25%)] flex-shrink-0">
                             <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
                           </div>
                           <div>
                             <p className="text-white text-sm font-medium">{product.name}</p>
-                            <p className="text-[hsl(215,30%,65%)] text-xs">{product.slug}</p>
+                            <p className="text-[hsl(215,20%,60%)] text-xs">{product.slug}</p>
                           </div>
                         </div>
                       </td>
-                      <td className="p-4 text-[hsl(215,30%,65%)] text-sm">{product.category}</td>
+                      <td className="p-4 text-[hsl(215,20%,60%)] text-sm">{product.category}</td>
                       <td className="p-4">
                         <div className="flex flex-col">
                           <span className="text-white text-sm font-medium">${product.price}</span>
                           {product.compareAtPrice && (
-                            <span className="text-[hsl(215,30%,65%)] text-xs line-through" data-testid={`text-compare-price-${product.id}`}>${product.compareAtPrice}</span>
+                            <span className="text-[hsl(215,20%,60%)] text-xs line-through" data-testid={`text-compare-price-${product.id}`}>${product.compareAtPrice}</span>
                           )}
                         </div>
                       </td>
@@ -199,10 +199,10 @@ export default function AdminProducts() {
                       </td>
                       <td className="p-4">
                         <div className="flex items-center gap-2">
-                          <button onClick={() => openEdit(product)} className="p-1.5 rounded-md hover:bg-[hsl(218,35%,17%)] text-[hsl(215,30%,65%)] hover:text-white transition-colors" data-testid={`button-edit-${product.id}`}>
+                          <button onClick={() => openEdit(product)} className="p-1.5 rounded-md hover:bg-[hsl(218,18%,25%)] text-[hsl(215,20%,60%)] hover:text-white transition-colors" data-testid={`button-edit-${product.id}`}>
                             <Edit className="h-4 w-4" />
                           </button>
-                          <button onClick={() => setDeleteProductId(product.id)} className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,30%,65%)] hover:text-red-400 transition-colors" data-testid={`button-delete-${product.id}`}>
+                          <button onClick={() => setDeleteProductId(product.id)} className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,20%,60%)] hover:text-red-400 transition-colors" data-testid={`button-delete-${product.id}`}>
                             <Trash2 className="h-4 w-4" />
                           </button>
                         </div>
@@ -216,7 +216,7 @@ export default function AdminProducts() {
         </div>
 
         <Dialog open={showForm} onOpenChange={setShowForm}>
-          <DialogContent className="bg-[hsl(220,40%,7%)] border-[hsl(218,35%,17%)] text-white max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="bg-[hsl(220,20%,14%)] border-[hsl(218,18%,25%)] text-white max-w-3xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle data-testid="text-dialog-title">{editProduct ? "Edit Product" : "Add Product"}</DialogTitle>
             </DialogHeader>
@@ -254,12 +254,12 @@ export default function AdminProducts() {
                 <label className="block text-sm font-medium text-white mb-1">Main Image</label>
                 <div className="flex items-center gap-2">
                   <div className="relative flex-1">
-                    <Link className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(215,30%,65%)]" />
+                    <Link className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(215,20%,60%)]" />
                     <input type="text" value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })}
                       placeholder="Paste image URL here"
                       className={`${inputClass} pl-9`} data-testid="input-product-image" />
                   </div>
-                  <span className="text-[hsl(215,30%,65%)] text-xs">or</span>
+                  <span className="text-[hsl(215,20%,60%)] text-xs">or</span>
                   <input type="file" ref={mainImageRef} accept="image/*" className="hidden" data-testid="file-main-image"
                     onChange={async (e) => {
                       const file = e.target.files?.[0];
@@ -274,7 +274,7 @@ export default function AdminProducts() {
                     }} />
                   <Button type="button" variant="outline" size="sm" disabled={uploading}
                     onClick={() => mainImageRef.current?.click()}
-                    className="bg-[hsl(220,40%,7%)] text-[hsl(215,30%,65%)]"
+                    className="bg-[hsl(220,20%,14%)] text-[hsl(215,20%,60%)]"
                     data-testid="button-upload-main-image"
                   >
                     <Upload className="h-4 w-4" />
@@ -282,7 +282,7 @@ export default function AdminProducts() {
                   </Button>
                 </div>
                 {form.image && (
-                  <div className="mt-2 h-20 w-20 rounded-md overflow-hidden bg-[hsl(218,35%,17%)]" data-testid="preview-main-image">
+                  <div className="mt-2 h-20 w-20 rounded-md overflow-hidden bg-[hsl(218,18%,25%)]" data-testid="preview-main-image">
                     <img src={form.image} alt="Preview" className="h-full w-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                   </div>
                 )}
@@ -333,15 +333,15 @@ export default function AdminProducts() {
                   {form.isActive ? (
                     <ToggleRight className="h-7 w-7 text-[hsl(38,92%,50%)]" />
                   ) : (
-                    <ToggleLeft className="h-7 w-7 text-[hsl(215,30%,65%)]" />
+                    <ToggleLeft className="h-7 w-7 text-[hsl(215,20%,60%)]" />
                   )}
-                  <span className={form.isActive ? "text-emerald-400 font-medium" : "text-[hsl(215,30%,65%)]"}>
+                  <span className={form.isActive ? "text-emerald-400 font-medium" : "text-[hsl(215,20%,60%)]"}>
                     {form.isActive ? "Active" : "Inactive"}
                   </span>
                 </button>
               </div>
 
-              <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,35%,17%)]">
+              <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,18%,25%)]">
                 <List className="h-4 w-4 text-[hsl(38,92%,50%)]" />
                 <h3 className="text-sm font-semibold text-white">Features</h3>
               </div>
@@ -365,7 +365,7 @@ export default function AdminProducts() {
                         const updated = form.features.filter((_, idx) => idx !== i);
                         setForm({ ...form, features: updated });
                       }}
-                      className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,30%,65%)] hover:text-red-400"
+                      className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,20%,60%)] hover:text-red-400"
                       data-testid={`button-remove-feature-${i}`}
                     >
                       <X className="h-4 w-4" />
@@ -382,7 +382,7 @@ export default function AdminProducts() {
                 </button>
               </div>
 
-              <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,35%,17%)]">
+              <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,18%,25%)]">
                 <Wrench className="h-4 w-4 text-[hsl(38,92%,50%)]" />
                 <h3 className="text-sm font-semibold text-white">Specs</h3>
               </div>
@@ -417,7 +417,7 @@ export default function AdminProducts() {
                         const updated = specEntries.filter((_, idx) => idx !== i);
                         setSpecEntries(updated);
                       }}
-                      className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,30%,65%)] hover:text-red-400"
+                      className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,20%,60%)] hover:text-red-400"
                       data-testid={`button-remove-spec-${i}`}
                     >
                       <X className="h-4 w-4" />
@@ -434,7 +434,7 @@ export default function AdminProducts() {
                 </button>
               </div>
 
-              <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,35%,17%)]">
+              <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,18%,25%)]">
                 <Box className="h-4 w-4 text-[hsl(38,92%,50%)]" />
                 <h3 className="text-sm font-semibold text-white">What's in the Box</h3>
               </div>
@@ -458,7 +458,7 @@ export default function AdminProducts() {
                         const updated = form.whatsInBox.filter((_, idx) => idx !== i);
                         setForm({ ...form, whatsInBox: updated });
                       }}
-                      className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,30%,65%)] hover:text-red-400"
+                      className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,20%,60%)] hover:text-red-400"
                       data-testid={`button-remove-whatsInBox-${i}`}
                     >
                       <X className="h-4 w-4" />
@@ -475,7 +475,7 @@ export default function AdminProducts() {
                 </button>
               </div>
 
-              <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,35%,17%)]">
+              <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,18%,25%)]">
                 <Image className="h-4 w-4 text-[hsl(38,92%,50%)]" />
                 <h3 className="text-sm font-semibold text-white">Additional Images</h3>
               </div>
@@ -514,13 +514,13 @@ export default function AdminProducts() {
                       }} />
                     <Button type="button" variant="outline" size="icon" disabled={uploadingIdx === i}
                       onClick={() => additionalImageRefs.current.get(i)?.click()}
-                      className="bg-[hsl(220,40%,7%)] text-[hsl(215,30%,65%)]"
+                      className="bg-[hsl(220,20%,14%)] text-[hsl(215,20%,60%)]"
                       data-testid={`button-upload-image-${i}`}
                     >
                       <Upload className="h-4 w-4" />
                     </Button>
                     {imgUrl && (
-                      <div className="h-9 w-9 rounded-md overflow-hidden bg-[hsl(218,35%,17%)] flex-shrink-0" data-testid={`preview-image-${i}`}>
+                      <div className="h-9 w-9 rounded-md overflow-hidden bg-[hsl(218,18%,25%)] flex-shrink-0" data-testid={`preview-image-${i}`}>
                         <img src={imgUrl} alt="Preview" className="h-full w-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                       </div>
                     )}
@@ -530,7 +530,7 @@ export default function AdminProducts() {
                         const updated = form.images.filter((_, idx) => idx !== i);
                         setForm({ ...form, images: updated });
                       }}
-                      className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,30%,65%)] hover:text-red-400"
+                      className="p-1.5 rounded-md hover:bg-red-500/10 text-[hsl(215,20%,60%)] hover:text-red-400"
                       data-testid={`button-remove-image-${i}`}
                     >
                       <X className="h-4 w-4" />
@@ -547,14 +547,14 @@ export default function AdminProducts() {
                 </button>
               </div>
 
-              <div className="flex gap-3 pt-4 border-t border-[hsl(218,35%,17%)]">
+              <div className="flex gap-3 pt-4 border-t border-[hsl(218,18%,25%)]">
                 <button type="submit" disabled={saveMutation.isPending}
                   className="flex-1 rounded-md bg-[hsl(38,92%,50%)] py-2.5 text-sm font-bold text-white hover:bg-[hsl(38,92%,40%)] disabled:opacity-50 transition-colors"
                   data-testid="button-save-product">
                   {saveMutation.isPending ? "Saving..." : "Save Product"}
                 </button>
                 <button type="button" onClick={() => setShowForm(false)}
-                  className="px-6 rounded-md border border-[hsl(218,35%,17%)] py-2.5 text-sm font-medium text-[hsl(215,30%,65%)] hover:text-white transition-colors"
+                  className="px-6 rounded-md border border-[hsl(218,18%,25%)] py-2.5 text-sm font-medium text-[hsl(215,20%,60%)] hover:text-white transition-colors"
                   data-testid="button-cancel-product">
                   Cancel
                 </button>
@@ -564,15 +564,15 @@ export default function AdminProducts() {
         </Dialog>
 
         <AlertDialog open={deleteProductId !== null} onOpenChange={(open) => { if (!open) setDeleteProductId(null); }}>
-          <AlertDialogContent className="bg-[hsl(220,40%,7%)] border-[hsl(218,35%,17%)] text-white" data-testid="dialog-delete-confirm">
+          <AlertDialogContent className="bg-[hsl(220,20%,14%)] border-[hsl(218,18%,25%)] text-white" data-testid="dialog-delete-confirm">
             <AlertDialogHeader>
               <AlertDialogTitle>Delete Product?</AlertDialogTitle>
-              <AlertDialogDescription className="text-[hsl(215,30%,65%)]">
+              <AlertDialogDescription className="text-[hsl(215,20%,60%)]">
                 This action cannot be undone. The product will be permanently removed.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="border-[hsl(218,35%,17%)] text-[hsl(215,30%,65%)] hover:text-white hover:bg-[hsl(218,35%,17%)]/50" data-testid="button-cancel-delete">
+              <AlertDialogCancel className="border-[hsl(218,18%,25%)] text-[hsl(215,20%,60%)] hover:text-white hover:bg-[hsl(218,18%,25%)]/50" data-testid="button-cancel-delete">
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction 

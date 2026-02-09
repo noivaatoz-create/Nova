@@ -29,7 +29,7 @@ import { AdminGuard } from "@/lib/admin-auth";
 
 function CustomerLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen flex flex-col bg-[hsl(220,40%,7%)]">
+    <div className="min-h-screen flex flex-col bg-[hsl(220,20%,14%)]">
       <Navigation />
       <CartDrawer />
       <main className="flex-1">{children}</main>

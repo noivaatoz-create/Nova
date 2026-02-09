@@ -45,23 +45,23 @@ export default function TrackOrderPage() {
   const currentStepIndex = order ? getStepIndex(order.status) : -1;
 
   return (
-    <div className="min-h-screen bg-[hsl(220,40%,7%)]">
+    <div className="min-h-screen bg-[hsl(220,20%,14%)]">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <p className="text-[hsl(38,92%,50%)] text-sm font-bold tracking-widest uppercase mb-4">Order Tracking</p>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6" data-testid="text-track-order-title">Track Your Order</h1>
-          <p className="text-[hsl(215,30%,65%)] text-lg">Enter your order number to check the current status of your order.</p>
+          <p className="text-[hsl(215,20%,60%)] text-lg">Enter your order number to check the current status of your order.</p>
         </div>
 
         <form onSubmit={handleTrack} className="mb-10" data-testid="form-track-order">
-          <div className="rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] p-6">
+          <div className="rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] p-6">
             <div className="flex flex-col sm:flex-row gap-3">
               <input
                 type="text"
                 value={orderNumber}
                 onChange={(e) => setOrderNumber(e.target.value)}
                 placeholder="Enter your order number (e.g., NVZ-SAMPLE-001)"
-                className="flex-1 rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
+                className="flex-1 rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,20%,14%)] px-4 py-2.5 text-white placeholder-[hsl(215,20%,60%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
                 data-testid="input-order-number"
               />
               <button
@@ -82,7 +82,7 @@ export default function TrackOrderPage() {
         </form>
 
         {error && (
-          <div className="rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] p-6 mb-10" data-testid="text-track-error">
+          <div className="rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] p-6 mb-10" data-testid="text-track-error">
             <div className="flex items-center gap-3 text-red-400">
               <XCircle className="h-5 w-5 flex-shrink-0" />
               <p className="text-sm">{error}</p>
@@ -92,14 +92,14 @@ export default function TrackOrderPage() {
 
         {order && (
           <div className="space-y-6" data-testid="track-order-result">
-            <div className="rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] p-6">
+            <div className="rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] p-6">
               <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
                 <div>
-                  <p className="text-[hsl(215,30%,65%)] text-xs uppercase tracking-wider mb-1">Order Number</p>
+                  <p className="text-[hsl(215,20%,60%)] text-xs uppercase tracking-wider mb-1">Order Number</p>
                   <p className="text-white font-bold text-lg" data-testid="text-order-number">{order.orderNumber}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[hsl(215,30%,65%)] text-xs uppercase tracking-wider mb-1">Order Date</p>
+                  <p className="text-[hsl(215,20%,60%)] text-xs uppercase tracking-wider mb-1">Order Date</p>
                   <p className="text-white text-sm" data-testid="text-order-date">
                     {order.createdAt ? new Date(order.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : "N/A"}
                   </p>
@@ -125,13 +125,13 @@ export default function TrackOrderPage() {
                             className={`h-10 w-10 rounded-full flex items-center justify-center ${
                               reached
                                 ? "bg-[hsl(38,92%,50%)]"
-                                : "border-2 border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)]"
+                                : "border-2 border-[hsl(218,18%,25%)] bg-[hsl(220,20%,14%)]"
                             }`}
                             data-testid={`status-step-${step.key}`}
                           >
-                            <StepIcon className={`h-4 w-4 ${reached ? "text-white" : "text-[hsl(215,30%,65%)]"}`} />
+                            <StepIcon className={`h-4 w-4 ${reached ? "text-white" : "text-[hsl(215,20%,60%)]"}`} />
                           </div>
-                          <p className={`mt-2 text-xs font-medium ${reached ? "text-white" : "text-[hsl(215,30%,65%)]"}`}>
+                          <p className={`mt-2 text-xs font-medium ${reached ? "text-white" : "text-[hsl(215,20%,60%)]"}`}>
                             {step.label}
                           </p>
                         </div>
@@ -144,7 +144,7 @@ export default function TrackOrderPage() {
                         return (
                           <div
                             key={i}
-                            className={`absolute h-full ${filled ? "bg-[hsl(38,92%,50%)]" : "bg-[hsl(218,35%,17%)]"}`}
+                            className={`absolute h-full ${filled ? "bg-[hsl(38,92%,50%)]" : "bg-[hsl(218,18%,25%)]"}`}
                             style={{
                               left: `${(i / (STATUS_STEPS.length - 1)) * 100}%`,
                               width: `${100 / (STATUS_STEPS.length - 1)}%`,
@@ -167,22 +167,22 @@ export default function TrackOrderPage() {
                               className={`h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                                 reached
                                   ? "bg-[hsl(38,92%,50%)]"
-                                  : "border-2 border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)]"
+                                  : "border-2 border-[hsl(218,18%,25%)] bg-[hsl(220,20%,14%)]"
                               }`}
                               data-testid={`status-step-mobile-${step.key}`}
                             >
-                              <StepIcon className={`h-4 w-4 ${reached ? "text-white" : "text-[hsl(215,30%,65%)]"}`} />
+                              <StepIcon className={`h-4 w-4 ${reached ? "text-white" : "text-[hsl(215,20%,60%)]"}`} />
                             </div>
                             {!isLast && (
                               <div
                                 className={`w-0.5 h-6 mt-1 ${
-                                  i < currentStepIndex ? "bg-[hsl(38,92%,50%)]" : "bg-[hsl(218,35%,17%)]"
+                                  i < currentStepIndex ? "bg-[hsl(38,92%,50%)]" : "bg-[hsl(218,18%,25%)]"
                                 }`}
                               />
                             )}
                           </div>
                           <div className="pt-2">
-                            <p className={`text-sm font-medium ${reached ? "text-white" : "text-[hsl(215,30%,65%)]"}`}>
+                            <p className={`text-sm font-medium ${reached ? "text-white" : "text-[hsl(215,20%,60%)]"}`}>
                               {step.label}
                             </p>
                           </div>
@@ -195,14 +195,14 @@ export default function TrackOrderPage() {
             </div>
 
             {order.trackingNumber && (
-              <div className="rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] p-6" data-testid="tracking-number-card">
-                <p className="text-[hsl(215,30%,65%)] text-xs uppercase tracking-wider mb-1">Tracking Number</p>
+              <div className="rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] p-6" data-testid="tracking-number-card">
+                <p className="text-[hsl(215,20%,60%)] text-xs uppercase tracking-wider mb-1">Tracking Number</p>
                 <p className="text-white font-mono text-sm" data-testid="text-tracking-number">{order.trackingNumber}</p>
               </div>
             )}
 
             {order.items && order.items.length > 0 && (
-              <div className="rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] p-6">
+              <div className="rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)] p-6">
                 <p className="text-white font-bold mb-4">Order Items</p>
                 <div className="space-y-4">
                   {order.items.map((item: any, i: number) => (
@@ -211,13 +211,13 @@ export default function TrackOrderPage() {
                         <img
                           src={item.image}
                           alt={item.name}
-                          className="h-12 w-12 rounded-md object-cover bg-[hsl(220,40%,7%)]"
+                          className="h-12 w-12 rounded-md object-cover bg-[hsl(220,20%,14%)]"
                           data-testid={`order-item-image-${i}`}
                         />
                       )}
                       <div className="flex-1 min-w-0">
                         <p className="text-white text-sm font-medium truncate" data-testid={`order-item-name-${i}`}>{item.name}</p>
-                        <p className="text-[hsl(215,30%,65%)] text-xs">Qty: {item.quantity}</p>
+                        <p className="text-[hsl(215,20%,60%)] text-xs">Qty: {item.quantity}</p>
                       </div>
                       {item.price != null && (
                         <p className="text-white text-sm font-medium" data-testid={`order-item-price-${i}`}>
@@ -227,8 +227,8 @@ export default function TrackOrderPage() {
                     </div>
                   ))}
                 </div>
-                <div className="border-t border-[hsl(218,35%,17%)] mt-4 pt-4 flex items-center justify-between flex-wrap gap-2">
-                  <p className="text-[hsl(215,30%,65%)] text-sm font-medium">Total</p>
+                <div className="border-t border-[hsl(218,18%,25%)] mt-4 pt-4 flex items-center justify-between flex-wrap gap-2">
+                  <p className="text-[hsl(215,20%,60%)] text-sm font-medium">Total</p>
                   <p className="text-white text-lg font-bold" data-testid="text-order-total">${Number(order.total).toFixed(2)}</p>
                 </div>
               </div>

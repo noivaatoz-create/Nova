@@ -2,7 +2,7 @@ import { Droplets, Award, Users, Globe } from "lucide-react";
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[hsl(220,40%,7%)]">
+    <div className="min-h-screen bg-[hsl(220,20%,14%)]">
       <section className="relative py-24 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[hsl(38,92%,50%)]/10 rounded-full blur-[100px] -z-10" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -11,7 +11,7 @@ export default function AboutPage() {
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6" data-testid="text-about-title">
               Redefining Oral Care for the Future
             </h1>
-            <p className="text-[hsl(215,30%,65%)] text-lg leading-relaxed">
+            <p className="text-[hsl(215,20%,60%)] text-lg leading-relaxed">
               At Novaatoz, we believe that daily hygiene should be an experience, not a chore. We combine cutting-edge hydro-technology with cyber-minimalist design to create products that people actually want to use.
             </p>
           </div>
@@ -23,10 +23,10 @@ export default function AboutPage() {
               { icon: Award, label: "Awards Won", value: "12" },
               { icon: Globe, label: "Countries", value: "25+" },
             ].map((stat, i) => (
-              <div key={i} className="text-center p-8 rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)]" data-testid={`stat-${i}`}>
+              <div key={i} className="text-center p-8 rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,18%,18%)]" data-testid={`stat-${i}`}>
                 <stat.icon className="h-8 w-8 text-[hsl(38,92%,50%)] mx-auto mb-4" />
                 <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
-                <p className="text-[hsl(215,30%,65%)] text-sm">{stat.label}</p>
+                <p className="text-[hsl(215,20%,60%)] text-sm">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -34,20 +34,20 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
             <div>
               <h2 className="text-3xl font-bold text-white mb-6">Our Mission</h2>
-              <p className="text-[hsl(215,30%,65%)] leading-relaxed mb-4">
+              <p className="text-[hsl(215,20%,60%)] leading-relaxed mb-4">
                 We started Novaatoz with a simple observation: dental care technology hadn't kept up with the rest of our lives. While everything else got smarter and sleeker, the tools we use for our most fundamental hygiene remained stuck in the past.
               </p>
-              <p className="text-[hsl(215,30%,65%)] leading-relaxed mb-4">
+              <p className="text-[hsl(215,20%,60%)] leading-relaxed mb-4">
                 Our team of dental professionals and industrial designers came together to create something different. Something that feels like it belongs in 2025, not 1995.
               </p>
-              <p className="text-[hsl(215,30%,65%)] leading-relaxed">
+              <p className="text-[hsl(215,20%,60%)] leading-relaxed">
                 Every Novaatoz product is engineered in California, tested with real dental professionals, and designed to make you actually look forward to flossing.
               </p>
             </div>
             <div className="relative">
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)]">
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)]">
                 <img src="/images/hero-product.png" alt="Novaatoz product" className="w-full h-full object-cover opacity-80" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[hsl(220,40%,7%)] via-transparent to-transparent opacity-50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[hsl(220,20%,14%)] via-transparent to-transparent opacity-50" />
               </div>
             </div>
           </div>
@@ -62,7 +62,7 @@ export default function AboutPage() {
               ].map((val, i) => (
                 <div key={i} className="p-6" data-testid={`value-${i}`}>
                   <h3 className="text-white font-bold text-lg mb-3">{val.title}</h3>
-                  <p className="text-[hsl(215,30%,65%)] text-sm leading-relaxed">{val.desc}</p>
+                  <p className="text-[hsl(215,20%,60%)] text-sm leading-relaxed">{val.desc}</p>
                 </div>
               ))}
             </div>
