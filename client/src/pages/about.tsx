@@ -4,10 +4,10 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[hsl(220,40%,7%)]">
       <section className="relative py-24 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[hsl(220,91%,55%)]/10 rounded-full blur-[100px] -z-10" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[hsl(38,92%,50%)]/10 rounded-full blur-[100px] -z-10" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <p className="text-[hsl(220,91%,55%)] text-sm font-bold tracking-widest uppercase mb-4">Our Story</p>
+            <p className="text-[hsl(38,92%,50%)] text-sm font-bold tracking-widest uppercase mb-4">Our Story</p>
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6" data-testid="text-about-title">
               Redefining Oral Care for the Future
             </h1>
@@ -24,7 +24,7 @@ export default function AboutPage() {
               { icon: Globe, label: "Countries", value: "25+" },
             ].map((stat, i) => (
               <div key={i} className="text-center p-8 rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)]" data-testid={`stat-${i}`}>
-                <stat.icon className="h-8 w-8 text-[hsl(220,91%,55%)] mx-auto mb-4" />
+                <stat.icon className="h-8 w-8 text-[hsl(38,92%,50%)] mx-auto mb-4" />
                 <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
                 <p className="text-[hsl(215,30%,65%)] text-sm">{stat.label}</p>
               </div>

@@ -28,7 +28,7 @@ export default function ContactPage() {
     <div className="min-h-screen bg-[hsl(220,40%,7%)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-[hsl(220,91%,55%)] text-sm font-bold tracking-widest uppercase mb-4">Get in Touch</p>
+          <p className="text-[hsl(38,92%,50%)] text-sm font-bold tracking-widest uppercase mb-4">Get in Touch</p>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6" data-testid="text-contact-title">Contact Us</h1>
           <p className="text-[hsl(215,30%,65%)] text-lg">Have a question about our products or need support? We're here to help.</p>
         </div>
@@ -44,7 +44,7 @@ export default function ContactPage() {
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     required
-                    className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] focus:border-[hsl(220,91%,55%)] text-sm"
+                    className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
                     placeholder="Your name"
                     data-testid="input-contact-name"
                   />
@@ -56,7 +56,7 @@ export default function ContactPage() {
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     required
-                    className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] focus:border-[hsl(220,91%,55%)] text-sm"
+                    className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
                     placeholder="you@example.com"
                     data-testid="input-contact-email"
                   />
@@ -69,7 +69,7 @@ export default function ContactPage() {
                   value={form.subject}
                   onChange={(e) => setForm({ ...form, subject: e.target.value })}
                   required
-                  className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] focus:border-[hsl(220,91%,55%)] text-sm"
+                  className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
                   placeholder="How can we help?"
                   data-testid="input-contact-subject"
                 />
@@ -81,7 +81,7 @@ export default function ContactPage() {
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   required
                   rows={6}
-                  className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] focus:border-[hsl(220,91%,55%)] text-sm resize-none"
+                  className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm resize-none"
                   placeholder="Tell us more..."
                   data-testid="input-contact-message"
                 />
@@ -89,7 +89,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="rounded-md bg-[hsl(220,91%,55%)] px-8 py-3 text-sm font-bold text-white transition-all hover:bg-[hsl(220,91%,45%)] hover:shadow-[0_0_20px_rgba(37,106,244,0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="rounded-md bg-[hsl(38,92%,50%)] px-8 py-3 text-sm font-bold text-white transition-all hover:bg-[hsl(38,92%,40%)] hover:shadow-[0_0_20px_rgba(217,169,12,0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
                 data-testid="button-send-message"
               >
                 {isSubmitting ? "Sending..." : "Send Message"}
@@ -105,8 +105,8 @@ export default function ContactPage() {
               { icon: Clock, title: "Hours", value: "Mon-Fri 9am-5pm", sub: "Pacific Standard Time" },
             ].map((item, i) => (
               <div key={i} className="flex gap-4" data-testid={`contact-info-${i}`}>
-                <div className="h-12 w-12 rounded-md bg-[hsl(220,91%,55%)]/10 flex items-center justify-center flex-shrink-0">
-                  <item.icon className="h-5 w-5 text-[hsl(220,91%,55%)]" />
+                <div className="h-12 w-12 rounded-md bg-[hsl(38,92%,50%)]/10 flex items-center justify-center flex-shrink-0">
+                  <item.icon className="h-5 w-5 text-[hsl(38,92%,50%)]" />
                 </div>
                 <div>
                   <p className="text-white font-semibold">{item.title}</p>

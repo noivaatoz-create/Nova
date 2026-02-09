@@ -36,7 +36,7 @@ export default function FAQPage() {
     <div className="min-h-screen bg-[hsl(220,40%,7%)]">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-16">
-          <p className="text-[hsl(220,91%,55%)] text-sm font-bold tracking-widest uppercase mb-4">Support</p>
+          <p className="text-[hsl(38,92%,50%)] text-sm font-bold tracking-widest uppercase mb-4">Support</p>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6" data-testid="text-faq-title">Frequently Asked Questions</h1>
           <p className="text-[hsl(215,30%,65%)] text-lg">Everything you need to know about Novaatoz products.</p>
         </div>
@@ -71,7 +71,7 @@ export default function FAQPage() {
           <h3 className="text-xl font-bold text-white mb-3">Still have questions?</h3>
           <p className="text-[hsl(215,30%,65%)] mb-6">Our support team is here to help you with anything you need.</p>
           <Link href="/contact">
-            <button className="rounded-md bg-[hsl(220,91%,55%)] px-8 py-3 text-sm font-bold text-white transition-all hover:bg-[hsl(220,91%,45%)]" data-testid="button-contact-us">
+            <button className="rounded-md bg-[hsl(38,92%,50%)] px-8 py-3 text-sm font-bold text-white transition-all hover:bg-[hsl(38,92%,40%)]" data-testid="button-contact-us">
               Contact Us
             </button>
           </Link>

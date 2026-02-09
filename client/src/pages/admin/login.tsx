@@ -51,7 +51,7 @@ export default function AdminLogin() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] pl-10 pr-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] placeholder-[hsl(215,30%,65%)]"
+                className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] pl-10 pr-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] placeholder-[hsl(215,30%,65%)]"
                 placeholder="Enter username"
                 data-testid="input-admin-username"
                 required
@@ -67,7 +67,7 @@ export default function AdminLogin() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] pl-10 pr-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] placeholder-[hsl(215,30%,65%)]"
+                className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] pl-10 pr-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] placeholder-[hsl(215,30%,65%)]"
                 placeholder="Enter password"
                 data-testid="input-admin-password"
                 required
@@ -78,7 +78,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full flex items-center justify-center gap-2 rounded-md bg-[hsl(220,91%,55%)] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[hsl(220,91%,45%)] transition-colors disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 rounded-md bg-[hsl(38,92%,50%)] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[hsl(38,92%,40%)] transition-colors disabled:opacity-50"
             data-testid="button-admin-login"
           >
             <LogIn className="h-4 w-4" />

@@ -18,7 +18,7 @@ export function AdminGuard({ children }: { children: React.ReactNode }) {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[hsl(220,50%,4%)]">
-        <div className="h-8 w-8 border-2 border-[hsl(220,91%,55%)] border-t-transparent rounded-full animate-spin" />
+        <div className="h-8 w-8 border-2 border-[hsl(38,92%,50%)] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }

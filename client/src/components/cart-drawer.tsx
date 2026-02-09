@@ -19,7 +19,7 @@ export function CartDrawer() {
       <SheetContent side="right" className="bg-[hsl(220,40%,7%)] border-[hsl(218,35%,17%)] w-full sm:max-w-md flex flex-col" data-testid="cart-drawer">
         <SheetHeader className="pb-4 border-b border-[hsl(218,35%,17%)]">
           <SheetTitle className="text-white flex items-center gap-2">
-            <ShoppingBag className="h-5 w-5 text-[hsl(220,91%,55%)]" />
+            <ShoppingBag className="h-5 w-5 text-[hsl(38,92%,50%)]" />
             Your Cart ({itemCount})
           </SheetTitle>
         </SheetHeader>
@@ -32,7 +32,7 @@ export function CartDrawer() {
               <p className="text-[hsl(215,30%,65%)] text-sm mt-1">Add some products to get started</p>
             </div>
             <Link href="/shop" onClick={() => setIsOpen(false)}>
-              <Button className="bg-[hsl(220,91%,55%)] text-white no-default-hover-elevate no-default-active-elevate hover:bg-[hsl(220,91%,45%)]" data-testid="button-continue-shopping">
+              <Button className="bg-[hsl(38,92%,50%)] text-white no-default-hover-elevate no-default-active-elevate hover:bg-[hsl(38,92%,40%)]" data-testid="button-continue-shopping">
                 Continue Shopping
               </Button>
             </Link>
@@ -40,13 +40,13 @@ export function CartDrawer() {
         ) : (
           <>
             {remaining > 0 && (
-              <div className="mt-4 rounded-md bg-[hsl(220,91%,55%)]/10 border border-[hsl(220,91%,55%)]/20 p-3 text-sm" data-testid="text-free-shipping-progress">
-                <p className="text-[hsl(220,91%,55%)]">
+              <div className="mt-4 rounded-md bg-[hsl(38,92%,50%)]/10 border border-[hsl(38,92%,50%)]/20 p-3 text-sm" data-testid="text-free-shipping-progress">
+                <p className="text-[hsl(38,92%,50%)]">
                   Add <span className="font-bold">${remaining.toFixed(2)}</span> more for free shipping!
                 </p>
                 <div className="mt-2 h-1.5 w-full rounded-full bg-[hsl(218,35%,17%)]">
                   <div
-                    className="h-full rounded-full bg-[hsl(220,91%,55%)] transition-all duration-500"
+                    className="h-full rounded-full bg-[hsl(38,92%,50%)] transition-all duration-500"
                     style={{ width: `${Math.min((total / freeShippingThreshold) * 100, 100)}%` }}
                   />
                 </div>
@@ -90,7 +90,7 @@ export function CartDrawer() {
                           <Plus className="h-3 w-3" />
                         </button>
                       </div>
-                      <p className="text-[hsl(220,91%,55%)] font-bold text-sm" data-testid={`text-item-price-${item.id}`}>
+                      <p className="text-[hsl(38,92%,50%)] font-bold text-sm" data-testid={`text-item-price-${item.id}`}>
                         ${(parseFloat(item.price) * item.quantity).toFixed(2)}
                       </p>
                     </div>
@@ -122,7 +122,7 @@ export function CartDrawer() {
               </div>
               <Link href="/checkout" onClick={() => setIsOpen(false)}>
                 <Button
-                  className="w-full bg-[hsl(220,91%,55%)] text-white font-bold mt-2 no-default-hover-elevate no-default-active-elevate hover:bg-[hsl(220,91%,45%)] hover:shadow-[0_0_20px_rgba(37,106,244,0.4)]"
+                  className="w-full bg-[hsl(38,92%,50%)] text-white font-bold mt-2 no-default-hover-elevate no-default-active-elevate hover:bg-[hsl(38,92%,40%)] hover:shadow-[0_0_20px_rgba(217,169,12,0.4)]"
                   data-testid="button-checkout"
                 >
                   Checkout <ArrowRight className="h-4 w-4 ml-2" />

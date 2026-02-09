@@ -36,7 +36,7 @@ export default function ShopPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search products..."
-              className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] pl-10 pr-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] focus:border-[hsl(220,91%,55%)] text-sm"
+              className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] pl-10 pr-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
               data-testid="input-search"
             />
           </div>
@@ -47,8 +47,8 @@ export default function ShopPage() {
                 onClick={() => setCategory(cat)}
                 className={`px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
                   category === cat
-                    ? "bg-[hsl(220,91%,55%)] text-white"
-                    : "bg-[hsl(220,38%,10%)] text-[hsl(215,30%,65%)] border border-[hsl(218,35%,17%)] hover:border-[hsl(220,91%,55%)]/50 hover:text-white"
+                    ? "bg-[hsl(38,92%,50%)] text-white"
+                    : "bg-[hsl(220,38%,10%)] text-[hsl(215,30%,65%)] border border-[hsl(218,35%,17%)] hover:border-[hsl(38,92%,50%)]/50 hover:text-white"
                 }`}
                 data-testid={`button-filter-${cat.toLowerCase().replace(/\s/g, "-")}`}
               >
@@ -77,7 +77,7 @@ export default function ShopPage() {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filtered?.map((product) => (
-                <div key={product.id} className="flex flex-col overflow-hidden rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] shadow-sm transition-all hover:shadow-md hover:border-[hsl(220,91%,55%)]/30 group" data-testid={`card-product-${product.id}`}>
+                <div key={product.id} className="flex flex-col overflow-hidden rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] shadow-sm transition-all hover:shadow-md hover:border-[hsl(38,92%,50%)]/30 group" data-testid={`card-product-${product.id}`}>
                   <Link href={`/product/${product.slug}`}>
                     <div className="relative aspect-[4/5] w-full bg-gray-800 overflow-hidden cursor-pointer">
                       <img
@@ -87,7 +87,7 @@ export default function ShopPage() {
                       />
                       {product.badge && (
                         <div className={`absolute top-3 left-3 rounded-md px-2 py-1 text-xs font-bold text-white uppercase tracking-wider ${
-                          product.badge === "Flagship" ? "bg-[hsl(220,91%,55%)]" :
+                          product.badge === "Flagship" ? "bg-[hsl(38,92%,50%)]" :
                           product.badge === "Best Seller" ? "bg-emerald-500" :
                           product.badge === "Family" ? "bg-violet-500" :
                           "bg-amber-500"
@@ -104,7 +104,7 @@ export default function ShopPage() {
                         {product.compareAtPrice && (
                           <span className="text-[hsl(215,30%,65%)] text-sm line-through">${product.compareAtPrice}</span>
                         )}
-                        <span className="text-[hsl(220,91%,55%)] font-bold">${product.price}</span>
+                        <span className="text-[hsl(38,92%,50%)] font-bold">${product.price}</span>
                       </div>
                     </div>
                     <p className="text-sm text-[hsl(215,30%,65%)] mb-3 flex-1">{product.shortDescription}</p>
@@ -117,7 +117,7 @@ export default function ShopPage() {
                       </Link>
                       <button
                         onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image })}
-                        className="rounded-md bg-[hsl(220,91%,55%)] py-2 px-4 text-sm font-semibold text-white hover:bg-[hsl(220,91%,45%)] transition-colors"
+                        className="rounded-md bg-[hsl(38,92%,50%)] py-2 px-4 text-sm font-semibold text-white hover:bg-[hsl(38,92%,40%)] transition-colors"
                         data-testid={`button-add-cart-${product.slug}`}
                       >
                         Add

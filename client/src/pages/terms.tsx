@@ -5,7 +5,7 @@ export default function TermsPage() {
     <div className="min-h-screen bg-[hsl(220,40%,7%)]">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-[hsl(220,91%,55%)] text-sm font-bold tracking-widest uppercase mb-4">Legal</p>
+          <p className="text-[hsl(38,92%,50%)] text-sm font-bold tracking-widest uppercase mb-4">Legal</p>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6" data-testid="text-page-title">Terms of Service</h1>
           <p className="text-[hsl(215,30%,65%)] text-lg">Please read these terms carefully before using the Novaatoz website or purchasing our products.</p>
         </div>
@@ -49,7 +49,7 @@ export default function TermsPage() {
             <div className="space-y-4 text-[hsl(215,30%,65%)] leading-relaxed text-sm">
               <p>Novaatoz offers various shipping options to deliver your order. Estimated delivery times are provided for reference purposes only and are not guaranteed. Delivery times may vary based on your location, shipping method selected, and other factors beyond our control.</p>
               <p>Novaatoz is not responsible for delays caused by shipping carriers, weather conditions, customs processing for international orders, or other circumstances outside our control. Risk of loss and title for items purchased from Novaatoz pass to you upon delivery of the items to the carrier.</p>
-              <p>For more detailed information about our shipping options and policies, please visit our <Link href="/shipping-returns" className="text-[hsl(220,91%,55%)] hover:underline" data-testid="link-shipping-returns">Shipping & Returns</Link> page.</p>
+              <p>For more detailed information about our shipping options and policies, please visit our <Link href="/shipping-returns" className="text-[hsl(38,92%,50%)] hover:underline" data-testid="link-shipping-returns">Shipping & Returns</Link> page.</p>
             </div>
           </section>
 
@@ -107,7 +107,7 @@ export default function TermsPage() {
                 <li>Phone: +1 (800) 555-0199</li>
                 <li>Address: 123 Innovation Drive, San Francisco, CA 94105, United States</li>
               </ul>
-              <p>You may also visit our <Link href="/contact" className="text-[hsl(220,91%,55%)] hover:underline" data-testid="link-contact">Contact Us</Link> page to submit a message directly.</p>
+              <p>You may also visit our <Link href="/contact" className="text-[hsl(38,92%,50%)] hover:underline" data-testid="link-contact">Contact Us</Link> page to submit a message directly.</p>
             </div>
           </section>
         </div>

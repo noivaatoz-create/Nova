@@ -48,7 +48,7 @@ export default function TrackOrderPage() {
     <div className="min-h-screen bg-[hsl(220,40%,7%)]">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <p className="text-[hsl(220,91%,55%)] text-sm font-bold tracking-widest uppercase mb-4">Order Tracking</p>
+          <p className="text-[hsl(38,92%,50%)] text-sm font-bold tracking-widest uppercase mb-4">Order Tracking</p>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6" data-testid="text-track-order-title">Track Your Order</h1>
           <p className="text-[hsl(215,30%,65%)] text-lg">Enter your order number to check the current status of your order.</p>
         </div>
@@ -61,13 +61,13 @@ export default function TrackOrderPage() {
                 value={orderNumber}
                 onChange={(e) => setOrderNumber(e.target.value)}
                 placeholder="Enter your order number (e.g., NVZ-SAMPLE-001)"
-                className="flex-1 rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] focus:border-[hsl(220,91%,55%)] text-sm"
+                className="flex-1 rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] focus:border-[hsl(38,92%,50%)] text-sm"
                 data-testid="input-order-number"
               />
               <button
                 type="submit"
                 disabled={loading}
-                className="rounded-md bg-[hsl(220,91%,55%)] px-6 py-2.5 text-sm font-bold text-white transition-all hover:bg-[hsl(220,91%,45%)] hover:shadow-[0_0_20px_rgba(37,106,244,0.4)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 flex-shrink-0"
+                className="rounded-md bg-[hsl(38,92%,50%)] px-6 py-2.5 text-sm font-bold text-white transition-all hover:bg-[hsl(38,92%,40%)] hover:shadow-[0_0_20px_rgba(217,169,12,0.4)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 flex-shrink-0"
                 data-testid="button-track-order"
               >
                 {loading ? (
@@ -124,7 +124,7 @@ export default function TrackOrderPage() {
                           <div
                             className={`h-10 w-10 rounded-full flex items-center justify-center ${
                               reached
-                                ? "bg-[hsl(220,91%,55%)]"
+                                ? "bg-[hsl(38,92%,50%)]"
                                 : "border-2 border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)]"
                             }`}
                             data-testid={`status-step-${step.key}`}
@@ -144,7 +144,7 @@ export default function TrackOrderPage() {
                         return (
                           <div
                             key={i}
-                            className={`absolute h-full ${filled ? "bg-[hsl(220,91%,55%)]" : "bg-[hsl(218,35%,17%)]"}`}
+                            className={`absolute h-full ${filled ? "bg-[hsl(38,92%,50%)]" : "bg-[hsl(218,35%,17%)]"}`}
                             style={{
                               left: `${(i / (STATUS_STEPS.length - 1)) * 100}%`,
                               width: `${100 / (STATUS_STEPS.length - 1)}%`,
@@ -166,7 +166,7 @@ export default function TrackOrderPage() {
                             <div
                               className={`h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                                 reached
-                                  ? "bg-[hsl(220,91%,55%)]"
+                                  ? "bg-[hsl(38,92%,50%)]"
                                   : "border-2 border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)]"
                               }`}
                               data-testid={`status-step-mobile-${step.key}`}
@@ -176,7 +176,7 @@ export default function TrackOrderPage() {
                             {!isLast && (
                               <div
                                 className={`w-0.5 h-6 mt-1 ${
-                                  i < currentStepIndex ? "bg-[hsl(220,91%,55%)]" : "bg-[hsl(218,35%,17%)]"
+                                  i < currentStepIndex ? "bg-[hsl(38,92%,50%)]" : "bg-[hsl(218,35%,17%)]"
                                 }`}
                               />
                             )}

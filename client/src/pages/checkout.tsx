@@ -93,7 +93,7 @@ export default function CheckoutPage() {
           <h1 className="text-2xl font-bold text-white mb-4">Your cart is empty</h1>
           <p className="text-[hsl(215,30%,65%)] mb-6">Add some products to proceed to checkout.</p>
           <Link href="/shop">
-            <button className="rounded-md bg-[hsl(220,91%,55%)] px-6 py-2.5 text-white font-semibold hover:bg-[hsl(220,91%,45%)]" data-testid="button-back-to-shop">
+            <button className="rounded-md bg-[hsl(38,92%,50%)] px-6 py-2.5 text-white font-semibold hover:bg-[hsl(38,92%,40%)]" data-testid="button-back-to-shop">
               Back to Shop
             </button>
           </Link>
@@ -117,40 +117,40 @@ export default function CheckoutPage() {
             <div className="lg:col-span-2 space-y-8">
               <div className="rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] p-6">
                 <h2 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                  <Truck className="h-5 w-5 text-[hsl(220,91%,55%)]" />
+                  <Truck className="h-5 w-5 text-[hsl(38,92%,50%)]" />
                   Shipping Information
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="sm:col-span-2">
                     <label className="block text-sm font-medium text-white mb-1.5">Full Name</label>
                     <input type="text" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] text-sm" placeholder="John Doe" data-testid="input-checkout-name" />
+                      className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] text-sm" placeholder="John Doe" data-testid="input-checkout-name" />
                   </div>
                   <div className="sm:col-span-2">
                     <label className="block text-sm font-medium text-white mb-1.5">Email</label>
                     <input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] text-sm" placeholder="john@example.com" data-testid="input-checkout-email" />
+                      className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] text-sm" placeholder="john@example.com" data-testid="input-checkout-email" />
                   </div>
                   <div className="sm:col-span-2">
                     <label className="block text-sm font-medium text-white mb-1.5">Address</label>
                     <input type="text" required value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })}
-                      className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] text-sm" placeholder="123 Main St" data-testid="input-checkout-address" />
+                      className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] text-sm" placeholder="123 Main St" data-testid="input-checkout-address" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-white mb-1.5">City</label>
                     <input type="text" required value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })}
-                      className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] text-sm" placeholder="San Francisco" data-testid="input-checkout-city" />
+                      className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] text-sm" placeholder="San Francisco" data-testid="input-checkout-city" />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-white mb-1.5">State</label>
                       <input type="text" required value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })}
-                        className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] text-sm" placeholder="CA" data-testid="input-checkout-state" />
+                        className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] text-sm" placeholder="CA" data-testid="input-checkout-state" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-white mb-1.5">ZIP</label>
                       <input type="text" required value={form.zip} onChange={(e) => setForm({ ...form, zip: e.target.value })}
-                        className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] text-sm" placeholder="94102" data-testid="input-checkout-zip" />
+                        className="w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-4 py-2.5 text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] text-sm" placeholder="94102" data-testid="input-checkout-zip" />
                     </div>
                   </div>
                 </div>
@@ -158,7 +158,7 @@ export default function CheckoutPage() {
 
               <div className="rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,38%,10%)] p-6">
                 <h2 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                  <CreditCard className="h-5 w-5 text-[hsl(220,91%,55%)]" />
+                  <CreditCard className="h-5 w-5 text-[hsl(38,92%,50%)]" />
                   Payment Method
                 </h2>
                 <div className="grid grid-cols-2 gap-4">
@@ -168,8 +168,8 @@ export default function CheckoutPage() {
                       onClick={() => setPaymentMethod("stripe")}
                       className={`flex items-center justify-center gap-3 p-4 rounded-md border transition-colors ${
                         paymentMethod === "stripe"
-                          ? "border-[hsl(220,91%,55%)] bg-[hsl(220,91%,55%)]/10"
-                          : "border-[hsl(218,35%,17%)] hover:border-[hsl(220,91%,55%)]/50"
+                          ? "border-[hsl(38,92%,50%)] bg-[hsl(38,92%,50%)]/10"
+                          : "border-[hsl(218,35%,17%)] hover:border-[hsl(38,92%,50%)]/50"
                       }`}
                       data-testid="button-payment-stripe"
                     >
@@ -183,8 +183,8 @@ export default function CheckoutPage() {
                       onClick={() => setPaymentMethod("paypal")}
                       className={`flex items-center justify-center gap-3 p-4 rounded-md border transition-colors ${
                         paymentMethod === "paypal"
-                          ? "border-[hsl(220,91%,55%)] bg-[hsl(220,91%,55%)]/10"
-                          : "border-[hsl(218,35%,17%)] hover:border-[hsl(220,91%,55%)]/50"
+                          ? "border-[hsl(38,92%,50%)] bg-[hsl(38,92%,50%)]/10"
+                          : "border-[hsl(218,35%,17%)] hover:border-[hsl(38,92%,50%)]/50"
                       }`}
                       data-testid="button-payment-paypal"
                     >
@@ -198,8 +198,8 @@ export default function CheckoutPage() {
                       onClick={() => setPaymentMethod("cod")}
                       className={`flex items-center justify-center gap-3 p-4 rounded-md border transition-colors ${
                         paymentMethod === "cod"
-                          ? "border-[hsl(220,91%,55%)] bg-[hsl(220,91%,55%)]/10"
-                          : "border-[hsl(218,35%,17%)] hover:border-[hsl(220,91%,55%)]/50"
+                          ? "border-[hsl(38,92%,50%)] bg-[hsl(38,92%,50%)]/10"
+                          : "border-[hsl(218,35%,17%)] hover:border-[hsl(38,92%,50%)]/50"
                       }`}
                       data-testid="button-payment-cod"
                     >
@@ -253,7 +253,7 @@ export default function CheckoutPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full mt-6 flex items-center justify-center gap-2 rounded-md bg-[hsl(220,91%,55%)] h-12 text-base font-bold text-white transition-all hover:bg-[hsl(220,91%,45%)] hover:shadow-[0_0_20px_rgba(37,106,244,0.4)] disabled:opacity-50"
+                  className="w-full mt-6 flex items-center justify-center gap-2 rounded-md bg-[hsl(38,92%,50%)] h-12 text-base font-bold text-white transition-all hover:bg-[hsl(38,92%,40%)] hover:shadow-[0_0_20px_rgba(217,169,12,0.4)] disabled:opacity-50"
                   data-testid="button-place-order"
                 >
                   <Lock className="h-4 w-4" />

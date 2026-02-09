@@ -69,12 +69,12 @@ export function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-[hsl(220,91%,55%)] text-sm leading-6"
+                  className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-[hsl(38,92%,50%)] text-sm leading-6"
                   data-testid="input-newsletter-email"
                 />
                 <button
                   type="submit"
-                  className="flex-none rounded-md bg-[hsl(220,91%,55%)] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[hsl(220,91%,45%)] transition-colors"
+                  className="flex-none rounded-md bg-[hsl(38,92%,50%)] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[hsl(38,92%,40%)] transition-colors"
                   data-testid="button-subscribe"
                 >
                   Subscribe
@@ -123,7 +123,7 @@ export function Footer() {
 
         <div className="border-t border-[hsl(218,35%,17%)] mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-2">
           <p className="text-xs text-[hsl(215,30%,65%)]">{settings?.copyrightText || "\u00A9 2025 Novaatoz Inc. All rights reserved."}</p>
-          <Link href="/admin/login" className="text-xs text-[hsl(215,30%,45%)] hover:text-[hsl(220,91%,55%)] transition-colors" data-testid="link-admin">
+          <Link href="/admin/login" className="text-xs text-[hsl(215,30%,45%)] hover:text-[hsl(38,92%,50%)] transition-colors" data-testid="link-admin">
             Admin
           </Link>
         </div>

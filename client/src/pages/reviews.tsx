@@ -20,7 +20,7 @@ export default function ReviewsPage() {
     <div className="min-h-screen bg-[hsl(220,40%,7%)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-[hsl(220,91%,55%)] text-sm font-bold tracking-widest uppercase mb-4">Testimonials</p>
+          <p className="text-[hsl(38,92%,50%)] text-sm font-bold tracking-widest uppercase mb-4">Testimonials</p>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6" data-testid="text-reviews-title">Customer Reviews</h1>
           <p className="text-[hsl(215,30%,65%)] text-lg">See what our customers are saying about their Novaatoz experience.</p>
         </div>
@@ -80,7 +80,7 @@ export default function ReviewsPage() {
                 <h4 className="text-white font-semibold mb-2">{review.title}</h4>
                 <p className="text-[hsl(215,30%,65%)] text-sm mb-4 leading-relaxed">{review.body}</p>
                 <div className="flex items-center gap-2">
-                  <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[hsl(220,91%,55%)] to-violet-500 flex items-center justify-center text-xs font-bold text-white">
+                  <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[hsl(38,92%,50%)] to-violet-500 flex items-center justify-center text-xs font-bold text-white">
                     {review.customerName.split(" ").map(n => n[0]).join("")}
                   </div>
                   <div>

@@ -72,7 +72,7 @@ function Toggle({ value, onToggle, testId }: { value: string; onToggle: () => vo
       type="button"
       onClick={onToggle}
       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-        value === "true" ? "bg-[hsl(220,91%,55%)]" : "bg-[hsl(218,35%,25%)]"
+        value === "true" ? "bg-[hsl(38,92%,50%)]" : "bg-[hsl(218,35%,25%)]"
       }`}
       data-testid={testId}
     >
@@ -202,7 +202,7 @@ export default function AdminSettings() {
     });
   };
 
-  const inputClass = "w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] placeholder-[hsl(215,30%,65%)]";
+  const inputClass = "w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] placeholder-[hsl(215,30%,65%)]";
   const labelClass = "block text-sm font-medium text-[hsl(215,30%,65%)] mb-1.5";
 
   return (
@@ -218,13 +218,13 @@ export default function AdminSettings() {
               <div className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-6" data-testid="card-payment-settings">
                 <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                   <div className="flex items-center gap-3">
-                    <CreditCard className="h-5 w-5 text-[hsl(220,91%,55%)]" />
+                    <CreditCard className="h-5 w-5 text-[hsl(38,92%,50%)]" />
                     <h3 className="text-white text-base font-semibold">Payment Settings</h3>
                   </div>
                   <button
                     onClick={savePayment}
                     disabled={saveMutation.isPending}
-                    className="flex items-center gap-2 rounded-md bg-[hsl(220,91%,55%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(220,91%,45%)] transition-colors disabled:opacity-50"
+                    className="flex items-center gap-2 rounded-md bg-[hsl(38,92%,50%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(38,92%,40%)] transition-colors disabled:opacity-50"
                     data-testid="button-save-payment"
                   >
                     <Save className="h-4 w-4" />
@@ -324,13 +324,13 @@ export default function AdminSettings() {
               <div className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-6" data-testid="card-store-settings">
                 <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                   <div className="flex items-center gap-3">
-                    <Store className="h-5 w-5 text-[hsl(220,91%,55%)]" />
+                    <Store className="h-5 w-5 text-[hsl(38,92%,50%)]" />
                     <h3 className="text-white text-base font-semibold">Store Settings</h3>
                   </div>
                   <button
                     onClick={saveStore}
                     disabled={saveMutation.isPending}
-                    className="flex items-center gap-2 rounded-md bg-[hsl(220,91%,55%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(220,91%,45%)] transition-colors disabled:opacity-50"
+                    className="flex items-center gap-2 rounded-md bg-[hsl(38,92%,50%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(38,92%,40%)] transition-colors disabled:opacity-50"
                     data-testid="button-save-store"
                   >
                     <Save className="h-4 w-4" />
@@ -417,13 +417,13 @@ export default function AdminSettings() {
               <div className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-6" data-testid="card-contact-settings">
                 <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                   <div className="flex items-center gap-3">
-                    <Mail className="h-5 w-5 text-[hsl(220,91%,55%)]" />
+                    <Mail className="h-5 w-5 text-[hsl(38,92%,50%)]" />
                     <h3 className="text-white text-base font-semibold">Contact Information</h3>
                   </div>
                   <button
                     onClick={saveContact}
                     disabled={saveMutation.isPending}
-                    className="flex items-center gap-2 rounded-md bg-[hsl(220,91%,55%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(220,91%,45%)] transition-colors disabled:opacity-50"
+                    className="flex items-center gap-2 rounded-md bg-[hsl(38,92%,50%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(38,92%,40%)] transition-colors disabled:opacity-50"
                     data-testid="button-save-contact"
                   >
                     <Save className="h-4 w-4" />
@@ -471,13 +471,13 @@ export default function AdminSettings() {
               <div className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-6" data-testid="card-appearance-settings">
                 <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                   <div className="flex items-center gap-3">
-                    <Layout className="h-5 w-5 text-[hsl(220,91%,55%)]" />
+                    <Layout className="h-5 w-5 text-[hsl(38,92%,50%)]" />
                     <h3 className="text-white text-base font-semibold">Header & Footer</h3>
                   </div>
                   <button
                     onClick={saveAppearance}
                     disabled={saveMutation.isPending}
-                    className="flex items-center gap-2 rounded-md bg-[hsl(220,91%,55%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(220,91%,45%)] transition-colors disabled:opacity-50"
+                    className="flex items-center gap-2 rounded-md bg-[hsl(38,92%,50%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(38,92%,40%)] transition-colors disabled:opacity-50"
                     data-testid="button-save-appearance"
                   >
                     <Save className="h-4 w-4" />
@@ -488,7 +488,7 @@ export default function AdminSettings() {
                 <div className="space-y-6">
                   <div>
                     <h4 className="text-white text-sm font-medium mb-3 flex items-center gap-2">
-                      <Type className="h-4 w-4 text-[hsl(220,91%,55%)]" />
+                      <Type className="h-4 w-4 text-[hsl(38,92%,50%)]" />
                       Logo
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

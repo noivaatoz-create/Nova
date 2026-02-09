@@ -5,7 +5,7 @@ export default function PrivacyPolicyPage() {
     <div className="min-h-screen bg-[hsl(220,40%,7%)]">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-[hsl(220,91%,55%)] text-sm font-bold tracking-widest uppercase mb-4">Legal</p>
+          <p className="text-[hsl(38,92%,50%)] text-sm font-bold tracking-widest uppercase mb-4">Legal</p>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6" data-testid="text-page-title">Privacy Policy</h1>
           <p className="text-[hsl(215,30%,65%)] text-lg">Your privacy is important to us. This policy explains how Novaatoz collects, uses, and protects your personal information.</p>
         </div>
@@ -110,7 +110,7 @@ export default function PrivacyPolicyPage() {
                 <li>Phone: +1 (800) 555-0199</li>
                 <li>Address: 123 Innovation Drive, San Francisco, CA 94105, United States</li>
               </ul>
-              <p>You may also visit our <Link href="/contact" className="text-[hsl(220,91%,55%)] hover:underline" data-testid="link-contact">Contact Us</Link> page to submit a message directly.</p>
+              <p>You may also visit our <Link href="/contact" className="text-[hsl(38,92%,50%)] hover:underline" data-testid="link-contact">Contact Us</Link> page to submit a message directly.</p>
             </div>
           </section>
         </div>

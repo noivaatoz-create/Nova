@@ -5,7 +5,7 @@ export default function ShippingReturnsPage() {
     <div className="min-h-screen bg-[hsl(220,40%,7%)]">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-[hsl(220,91%,55%)] text-sm font-bold tracking-widest uppercase mb-4">Policies</p>
+          <p className="text-[hsl(38,92%,50%)] text-sm font-bold tracking-widest uppercase mb-4">Policies</p>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6" data-testid="text-page-title">Shipping & Returns</h1>
           <p className="text-[hsl(215,30%,65%)] text-lg">Everything you need to know about how we ship your orders and handle returns at Novaatoz.</p>
         </div>
@@ -59,7 +59,7 @@ export default function ShippingReturnsPage() {
                 <li>Proof of purchase (order number or receipt) must be provided</li>
                 <li>The return request must be initiated within 30 days of receiving your order</li>
               </ul>
-              <p>To start a return, please contact our support team at returns@novaatoz.com or through our <Link href="/contact" className="text-[hsl(220,91%,55%)] hover:underline" data-testid="link-contact-returns">Contact Us</Link> page. We will provide you with a return authorization number and shipping instructions.</p>
+              <p>To start a return, please contact our support team at returns@novaatoz.com or through our <Link href="/contact" className="text-[hsl(38,92%,50%)] hover:underline" data-testid="link-contact-returns">Contact Us</Link> page. We will provide you with a return authorization number and shipping instructions.</p>
               <p>Items that are not eligible for return include opened consumable products (such as replacement nozzle tips and cleaning tablets), personalized items, and products marked as final sale.</p>
             </div>
           </section>
@@ -110,7 +110,7 @@ export default function ShippingReturnsPage() {
                 <li>Phone: +1 (800) 555-0199</li>
                 <li>Hours: Monday - Friday, 9am - 5pm PST</li>
               </ul>
-              <p>Visit our <Link href="/contact" className="text-[hsl(220,91%,55%)] hover:underline" data-testid="link-contact-support">Contact Us</Link> page for additional ways to reach us.</p>
+              <p>Visit our <Link href="/contact" className="text-[hsl(38,92%,50%)] hover:underline" data-testid="link-contact-support">Contact Us</Link> page for additional ways to reach us.</p>
             </div>
           </section>
         </div>

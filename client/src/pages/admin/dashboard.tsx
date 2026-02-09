@@ -37,7 +37,7 @@ function AdminSidebar({ active }: { active: string }) {
       <div className="flex h-full flex-col justify-between p-4">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3 px-2 py-2">
-            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[hsl(220,91%,55%)] to-violet-600 flex items-center justify-center shadow-[0_0_15px_rgba(37,106,244,0.3)]">
+            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[hsl(38,92%,50%)] to-violet-600 flex items-center justify-center shadow-[0_0_15px_rgba(217,169,12,0.3)]">
               <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-7 w-7 object-contain brightness-0 invert" />
             </div>
             <div className="flex flex-col">
@@ -52,7 +52,7 @@ function AdminSidebar({ active }: { active: string }) {
                 href={item.href}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
                   active === item.href
-                    ? "bg-[hsl(220,91%,55%)] text-white shadow-[0_0_15px_rgba(37,106,244,0.4)]"
+                    ? "bg-[hsl(38,92%,50%)] text-white shadow-[0_0_15px_rgba(217,169,12,0.4)]"
                     : "text-[hsl(215,30%,65%)] hover:bg-[hsl(218,35%,17%)] hover:text-white"
                 }`}
                 data-testid={`link-admin-${item.label.toLowerCase()}`}
@@ -82,14 +82,14 @@ function AdminHeader({ title }: { title: string }) {
   return (
     <header className="flex items-center justify-between border-b border-[hsl(218,35%,17%)] bg-[hsl(220,40%,8%)]/95 backdrop-blur-md px-6 py-4 sticky top-0 z-10" data-testid="admin-header">
       <div className="flex items-center gap-3">
-        <LayoutDashboard className="h-5 w-5 text-[hsl(220,91%,55%)]" />
+        <LayoutDashboard className="h-5 w-5 text-[hsl(38,92%,50%)]" />
         <h2 className="text-white text-lg font-semibold tracking-tight">{title}</h2>
       </div>
       <div className="flex items-center gap-4">
         <div className="relative hidden md:block">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(215,30%,65%)]" />
           <input
-            className="w-64 pl-10 pr-3 py-2 border border-[hsl(218,35%,17%)] rounded-md bg-[hsl(220,38%,10%)] text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)] text-sm"
+            className="w-64 pl-10 pr-3 py-2 border border-[hsl(218,35%,17%)] rounded-md bg-[hsl(220,38%,10%)] text-white placeholder-[hsl(215,30%,65%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] text-sm"
             placeholder="Search orders, products..."
             type="text"
             data-testid="input-admin-search"
@@ -216,8 +216,8 @@ export default function AdminDashboard() {
                   onClick={() => setPeriod(p)}
                   className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
                     period === p
-                      ? "bg-[hsl(220,91%,55%)] text-white"
-                      : "border border-[hsl(218,35%,17%)] text-[hsl(215,30%,65%)] hover:text-white hover:border-[hsl(220,91%,55%)]/50"
+                      ? "bg-[hsl(38,92%,50%)] text-white"
+                      : "border border-[hsl(218,35%,17%)] text-[hsl(215,30%,65%)] hover:text-white hover:border-[hsl(38,92%,50%)]/50"
                   }`}
                   data-testid={`button-period-${p}`}
                 >
@@ -237,7 +237,7 @@ export default function AdminDashboard() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {kpis.map((kpi, i) => (
-              <div key={i} className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-5 hover:border-[hsl(220,91%,55%)]/50 transition-colors group relative overflow-visible" data-testid={`kpi-${i}`}>
+              <div key={i} className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-5 hover:border-[hsl(38,92%,50%)]/50 transition-colors group relative overflow-visible" data-testid={`kpi-${i}`}>
                 <div className="flex flex-col gap-1 relative z-10">
                   <p className="text-[hsl(215,30%,65%)] text-sm font-medium">{kpi.label}</p>
                   <h3 className="text-white text-2xl font-bold tracking-tight">{kpi.value}</h3>
@@ -260,8 +260,8 @@ export default function AdminDashboard() {
                 <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 800 250">
                   <defs>
                     <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0%" stopColor="hsl(220,91%,55%)" stopOpacity="0.3" />
-                      <stop offset="100%" stopColor="hsl(220,91%,55%)" stopOpacity="0" />
+                      <stop offset="0%" stopColor="hsl(38,92%,50%)" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="hsl(38,92%,50%)" stopOpacity="0" />
                     </linearGradient>
                   </defs>
                   <line stroke="hsl(218,35%,17%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="50" y2="50" />
@@ -271,12 +271,12 @@ export default function AdminDashboard() {
                   {chartData.length > 0 ? (
                     <>
                       <path d={chartSvg.area} fill="url(#chartGradient)" />
-                      <path d={chartSvg.path} fill="none" stroke="hsl(220,91%,55%)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
+                      <path d={chartSvg.path} fill="none" stroke="hsl(38,92%,50%)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
                       {chartData.map((d, i) => {
                         const maxR = Math.max(...chartData.map(x => x.revenue), 1);
                         const x = chartData.length === 1 ? 400 : (i / (chartData.length - 1)) * 760 + 20;
                         const y = 230 - ((d.revenue / maxR) * 210);
-                        return <circle key={i} cx={x} cy={y} r="4" fill="hsl(220,91%,55%)" />;
+                        return <circle key={i} cx={x} cy={y} r="4" fill="hsl(38,92%,50%)" />;
                       })}
                     </>
                   ) : (

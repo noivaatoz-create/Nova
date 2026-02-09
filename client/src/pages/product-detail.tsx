@@ -40,7 +40,7 @@ export default function ProductDetailPage() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-white mb-4">Product Not Found</h1>
           <Link href="/shop">
-            <button className="rounded-md bg-[hsl(220,91%,55%)] px-6 py-2 text-white font-semibold">
+            <button className="rounded-md bg-[hsl(38,92%,50%)] px-6 py-2 text-white font-semibold">
               Back to Shop
             </button>
           </Link>
@@ -96,7 +96,7 @@ export default function ProductDetailPage() {
             </div>
             {product.badge && (
               <div className={`absolute top-4 left-4 rounded-md px-3 py-1.5 text-xs font-bold text-white uppercase tracking-wider ${
-                product.badge === "Flagship" ? "bg-[hsl(220,91%,55%)]" :
+                product.badge === "Flagship" ? "bg-[hsl(38,92%,50%)]" :
                 product.badge === "Best Seller" ? "bg-emerald-500" :
                 product.badge === "Family" ? "bg-violet-500" :
                 "bg-amber-500"
@@ -108,7 +108,7 @@ export default function ProductDetailPage() {
 
           <div className="flex flex-col gap-6">
             <div>
-              <p className="text-[hsl(220,91%,55%)] text-sm font-bold tracking-widest uppercase mb-2" data-testid="text-category">{product.category}</p>
+              <p className="text-[hsl(38,92%,50%)] text-sm font-bold tracking-widest uppercase mb-2" data-testid="text-category">{product.category}</p>
               <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3" data-testid="text-product-name">{product.name}</h1>
 
               {productReviews.length > 0 && (
@@ -170,7 +170,7 @@ export default function ProductDetailPage() {
               <button
                 onClick={handleAddToCart}
                 disabled={product.stock <= 0}
-                className="w-full flex items-center justify-center gap-2 rounded-md bg-[hsl(220,91%,55%)] h-12 text-base font-bold text-white transition-all hover:bg-[hsl(220,91%,45%)] hover:shadow-[0_0_20px_rgba(37,106,244,0.4)] disabled:opacity-50 disabled:cursor-not-allowed group"
+                className="w-full flex items-center justify-center gap-2 rounded-md bg-[hsl(38,92%,50%)] h-12 text-base font-bold text-white transition-all hover:bg-[hsl(38,92%,40%)] hover:shadow-[0_0_20px_rgba(217,169,12,0.4)] disabled:opacity-50 disabled:cursor-not-allowed group"
                 data-testid="button-add-to-cart"
               >
                 Add to Cart - ${(parseFloat(product.price) * quantity).toFixed(2)}
@@ -183,7 +183,7 @@ export default function ProductDetailPage() {
                   Free 2-Day Shipping
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <ShieldCheck className="h-4 w-4 text-[hsl(220,91%,55%)]" />
+                  <ShieldCheck className="h-4 w-4 text-[hsl(38,92%,50%)]" />
                   2-Year Warranty
                 </div>
               </div>
@@ -199,13 +199,13 @@ export default function ProductDetailPage() {
                 {Object.entries(specs).map(([key, value]) => {
                   const Icon = specIcons[key] || Shield;
                   return (
-                    <div key={key} className="bg-[hsl(220,38%,10%)] p-6 rounded-md border border-[hsl(218,35%,17%)] flex flex-col gap-4 group hover:border-[hsl(220,91%,55%)]/50 transition-colors" data-testid={`spec-${key.toLowerCase().replace(/\s/g, "-")}`}>
-                      <div className="h-12 w-12 rounded-md bg-[hsl(220,91%,55%)]/10 text-[hsl(220,91%,55%)] flex items-center justify-center">
+                    <div key={key} className="bg-[hsl(220,38%,10%)] p-6 rounded-md border border-[hsl(218,35%,17%)] flex flex-col gap-4 group hover:border-[hsl(38,92%,50%)]/50 transition-colors" data-testid={`spec-${key.toLowerCase().replace(/\s/g, "-")}`}>
+                      <div className="h-12 w-12 rounded-md bg-[hsl(38,92%,50%)]/10 text-[hsl(38,92%,50%)] flex items-center justify-center">
                         <Icon className="h-6 w-6" />
                       </div>
                       <div>
                         <p className="text-[hsl(215,30%,65%)] uppercase text-xs font-bold tracking-wider mb-1">{key}</p>
-                        <p className="text-xl font-bold text-white group-hover:text-[hsl(220,91%,55%)] transition-colors">{value}</p>
+                        <p className="text-xl font-bold text-white group-hover:text-[hsl(38,92%,50%)] transition-colors">{value}</p>
                       </div>
                     </div>
                   );
@@ -221,7 +221,7 @@ export default function ProductDetailPage() {
                 <ul className="space-y-4">
                   {whatsInBox.map((item, i) => (
                     <li key={i} className="flex items-center gap-4 p-4 rounded-md bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)]">
-                      <CheckCircle className="h-5 w-5 text-[hsl(220,91%,55%)] flex-shrink-0" />
+                      <CheckCircle className="h-5 w-5 text-[hsl(38,92%,50%)] flex-shrink-0" />
                       <span className="font-medium text-white">{item}</span>
                     </li>
                   ))}
@@ -293,7 +293,7 @@ export default function ProductDetailPage() {
                     <h4 className="text-white font-semibold mb-2">{review.title}</h4>
                     <p className="text-[hsl(215,30%,65%)] text-sm mb-4 leading-relaxed">{review.body}</p>
                     <div className="flex items-center gap-2">
-                      <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[hsl(220,91%,55%)] to-violet-500 flex items-center justify-center text-xs font-bold text-white">
+                      <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[hsl(38,92%,50%)] to-violet-500 flex items-center justify-center text-xs font-bold text-white">
                         {review.customerName.split(" ").map(n => n[0]).join("")}
                       </div>
                       <div>

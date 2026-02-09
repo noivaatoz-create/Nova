@@ -1,13 +1,13 @@
 # Novaatoz - Premium Water Flosser E-Commerce Store
 
 ## Overview
-A complete ecommerce website for Novaatoz, a water flosser company. Features a dark futuristic cyber-minimalist design with electric blue accents (hsl(220,91%,55%)).
+A complete ecommerce website for Novaatoz, a water flosser company. Features a dark futuristic cyber-minimalist design with warm gold accents (hsl(38,92%,50%)) inspired by the product imagery's warm beige/golden aesthetic.
 
 ## Tech Stack
 - Frontend: React + TypeScript + Vite + TanStack Query + Wouter + Zustand
 - Backend: Express.js + Drizzle ORM + PostgreSQL (Neon)
 - Styling: Tailwind CSS + Shadcn UI components
-- Theme: Always-dark mode with custom electric blue primary color
+- Theme: Always-dark mode with warm gold primary color (hsl(38,92%,50%))
 
 ## Project Structure
 ```
@@ -104,5 +104,11 @@ shared/
 - Background: hsl(220,40%,7%)
 - Card: hsl(220,38%,10%)
 - Border: hsl(218,35%,17%)
-- Primary: hsl(220,91%,55%) - electric blue
+- Primary: hsl(38,92%,50%) - warm gold
 - Text: white (primary), hsl(215,30%,65%) (secondary)
+
+## Gallery
+- 40 product images in client/public/gallery/
+- Images 001-020: ezgif-frame-XXX_suffix.jpg (original product frames)
+- Images 021-040: gallery-0XX.png (generated product shots)
+- Displayed in 4-row marquee on home page with infinite scroll animation

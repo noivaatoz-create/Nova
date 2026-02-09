@@ -59,7 +59,7 @@ export function Navigation() {
           >
             <ShoppingCart className="h-5 w-5" />
             {itemCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[hsl(220,91%,55%)] text-[10px] font-bold text-white" data-testid="text-cart-count">
+              <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[hsl(38,92%,50%)] text-[10px] font-bold text-white" data-testid="text-cart-count">
                 {itemCount}
               </span>
             )}
@@ -67,7 +67,7 @@ export function Navigation() {
 
           <Link href="/shop">
             <Button
-              className="hidden sm:flex bg-[hsl(220,91%,55%)] text-white font-bold hover:bg-[hsl(220,91%,45%)] hover:shadow-[0_0_15px_rgba(37,106,244,0.5)] no-default-hover-elevate no-default-active-elevate"
+              className="hidden sm:flex bg-[hsl(38,92%,50%)] text-white font-bold hover:bg-[hsl(38,92%,40%)] hover:shadow-[0_0_15px_rgba(217,169,12,0.5)] no-default-hover-elevate no-default-active-elevate"
               data-testid="button-buy-now"
             >
               Buy Now

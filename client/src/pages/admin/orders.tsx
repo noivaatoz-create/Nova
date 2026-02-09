@@ -70,7 +70,7 @@ export default function AdminOrders() {
                           <select
                             value={order.status}
                             onChange={(e) => updateStatusMutation.mutate({ id: order.id, status: e.target.value })}
-                            className={`text-xs font-semibold px-2 py-1 rounded border-0 focus:ring-1 focus:ring-[hsl(220,91%,55%)] cursor-pointer ${
+                            className={`text-xs font-semibold px-2 py-1 rounded border-0 focus:ring-1 focus:ring-[hsl(38,92%,50%)] cursor-pointer ${
                               order.status === "paid" ? "bg-emerald-500/10 text-emerald-400" :
                               order.status === "shipped" ? "bg-blue-500/10 text-blue-400" :
                               order.status === "delivered" ? "bg-violet-500/10 text-violet-400" :

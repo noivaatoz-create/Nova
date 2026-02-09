@@ -57,7 +57,7 @@ export default function AdminMessages() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-[hsl(220,38%,10%)] border border-[hsl(218,35%,17%)] rounded-md p-5" data-testid="stat-total-messages">
               <div className="flex items-center gap-3">
-                <Mail className="h-5 w-5 text-[hsl(220,91%,55%)]" />
+                <Mail className="h-5 w-5 text-[hsl(38,92%,50%)]" />
                 <div>
                   <p className="text-[hsl(215,30%,65%)] text-sm font-medium">Total Messages</p>
                   <h3 className="text-white text-2xl font-bold tracking-tight">{totalMessages}</h3>
@@ -200,7 +200,7 @@ export default function AdminMessages() {
                       updateStatusMutation.mutate({ id: selectedMessage.id, status: e.target.value });
                       setSelectedMessage({ ...selectedMessage, status: e.target.value });
                     }}
-                    className={`text-xs font-semibold px-2 py-1 rounded border-0 focus:ring-1 focus:ring-[hsl(220,91%,55%)] cursor-pointer ${
+                    className={`text-xs font-semibold px-2 py-1 rounded border-0 focus:ring-1 focus:ring-[hsl(38,92%,50%)] cursor-pointer ${
                       selectedMessage.status === "new" ? "bg-emerald-500/10 text-emerald-400" :
                       selectedMessage.status === "read" ? "bg-blue-500/10 text-blue-400" :
                       "bg-gray-500/10 text-gray-400"

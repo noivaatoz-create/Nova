@@ -9,7 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 
-const inputClass = "w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(220,91%,55%)]";
+const inputClass = "w-full rounded-md border border-[hsl(218,35%,17%)] bg-[hsl(220,40%,7%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)]";
 
 export default function AdminProducts() {
   const { data: products, isLoading } = useQuery<Product[]>({ queryKey: ["/api/products"] });
@@ -143,7 +143,7 @@ export default function AdminProducts() {
             </div>
             <button
               onClick={() => { resetForm(); setEditProduct(null); setShowForm(true); }}
-              className="flex items-center gap-2 rounded-md bg-[hsl(220,91%,55%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(220,91%,45%)] transition-colors"
+              className="flex items-center gap-2 rounded-md bg-[hsl(38,92%,50%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(38,92%,40%)] transition-colors"
               data-testid="button-add-product"
             >
               <Plus className="h-4 w-4" />
@@ -223,7 +223,7 @@ export default function AdminProducts() {
             <form onSubmit={handleSubmit} className="space-y-4">
 
               <div className="flex items-center gap-2 pb-2">
-                <Package className="h-4 w-4 text-[hsl(220,91%,55%)]" />
+                <Package className="h-4 w-4 text-[hsl(38,92%,50%)]" />
                 <h3 className="text-sm font-semibold text-white">Basic Info</h3>
               </div>
 
@@ -331,7 +331,7 @@ export default function AdminProducts() {
                   data-testid="button-toggle-active"
                 >
                   {form.isActive ? (
-                    <ToggleRight className="h-7 w-7 text-[hsl(220,91%,55%)]" />
+                    <ToggleRight className="h-7 w-7 text-[hsl(38,92%,50%)]" />
                   ) : (
                     <ToggleLeft className="h-7 w-7 text-[hsl(215,30%,65%)]" />
                   )}
@@ -342,7 +342,7 @@ export default function AdminProducts() {
               </div>
 
               <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,35%,17%)]">
-                <List className="h-4 w-4 text-[hsl(220,91%,55%)]" />
+                <List className="h-4 w-4 text-[hsl(38,92%,50%)]" />
                 <h3 className="text-sm font-semibold text-white">Features</h3>
               </div>
               <div className="space-y-2">
@@ -375,7 +375,7 @@ export default function AdminProducts() {
                 <button
                   type="button"
                   onClick={() => setForm({ ...form, features: [...form.features, ""] })}
-                  className="flex items-center gap-1 text-[hsl(220,91%,55%)] text-sm hover:text-[hsl(220,91%,65%)]"
+                  className="flex items-center gap-1 text-[hsl(38,92%,50%)] text-sm hover:text-[hsl(38,92%,60%)]"
                   data-testid="button-add-feature"
                 >
                   <Plus className="h-4 w-4" /> Add Feature
@@ -383,7 +383,7 @@ export default function AdminProducts() {
               </div>
 
               <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,35%,17%)]">
-                <Wrench className="h-4 w-4 text-[hsl(220,91%,55%)]" />
+                <Wrench className="h-4 w-4 text-[hsl(38,92%,50%)]" />
                 <h3 className="text-sm font-semibold text-white">Specs</h3>
               </div>
               <div className="space-y-2">
@@ -427,7 +427,7 @@ export default function AdminProducts() {
                 <button
                   type="button"
                   onClick={() => setSpecEntries([...specEntries, { key: "", value: "" }])}
-                  className="flex items-center gap-1 text-[hsl(220,91%,55%)] text-sm hover:text-[hsl(220,91%,65%)]"
+                  className="flex items-center gap-1 text-[hsl(38,92%,50%)] text-sm hover:text-[hsl(38,92%,60%)]"
                   data-testid="button-add-spec"
                 >
                   <Plus className="h-4 w-4" /> Add Spec
@@ -435,7 +435,7 @@ export default function AdminProducts() {
               </div>
 
               <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,35%,17%)]">
-                <Box className="h-4 w-4 text-[hsl(220,91%,55%)]" />
+                <Box className="h-4 w-4 text-[hsl(38,92%,50%)]" />
                 <h3 className="text-sm font-semibold text-white">What's in the Box</h3>
               </div>
               <div className="space-y-2">
@@ -468,7 +468,7 @@ export default function AdminProducts() {
                 <button
                   type="button"
                   onClick={() => setForm({ ...form, whatsInBox: [...form.whatsInBox, ""] })}
-                  className="flex items-center gap-1 text-[hsl(220,91%,55%)] text-sm hover:text-[hsl(220,91%,65%)]"
+                  className="flex items-center gap-1 text-[hsl(38,92%,50%)] text-sm hover:text-[hsl(38,92%,60%)]"
                   data-testid="button-add-whatsInBox"
                 >
                   <Plus className="h-4 w-4" /> Add Item
@@ -476,7 +476,7 @@ export default function AdminProducts() {
               </div>
 
               <div className="flex items-center gap-2 pt-4 pb-2 border-t border-[hsl(218,35%,17%)]">
-                <Image className="h-4 w-4 text-[hsl(220,91%,55%)]" />
+                <Image className="h-4 w-4 text-[hsl(38,92%,50%)]" />
                 <h3 className="text-sm font-semibold text-white">Additional Images</h3>
               </div>
               <div className="space-y-2">
@@ -540,7 +540,7 @@ export default function AdminProducts() {
                 <button
                   type="button"
                   onClick={() => setForm({ ...form, images: [...form.images, ""] })}
-                  className="flex items-center gap-1 text-[hsl(220,91%,55%)] text-sm hover:text-[hsl(220,91%,65%)]"
+                  className="flex items-center gap-1 text-[hsl(38,92%,50%)] text-sm hover:text-[hsl(38,92%,60%)]"
                   data-testid="button-add-image"
                 >
                   <Plus className="h-4 w-4" /> Add Image
@@ -549,7 +549,7 @@ export default function AdminProducts() {
 
               <div className="flex gap-3 pt-4 border-t border-[hsl(218,35%,17%)]">
                 <button type="submit" disabled={saveMutation.isPending}
-                  className="flex-1 rounded-md bg-[hsl(220,91%,55%)] py-2.5 text-sm font-bold text-white hover:bg-[hsl(220,91%,45%)] disabled:opacity-50 transition-colors"
+                  className="flex-1 rounded-md bg-[hsl(38,92%,50%)] py-2.5 text-sm font-bold text-white hover:bg-[hsl(38,92%,40%)] disabled:opacity-50 transition-colors"
                   data-testid="button-save-product">
                   {saveMutation.isPending ? "Saving..." : "Save Product"}
                 </button>
