@@ -24,14 +24,19 @@ client/src/
     product-detail.tsx - Full product page with specs, FAQ, reviews
     checkout.tsx       - Shipping form + dynamic payment methods from settings
     about.tsx          - Company story, stats, mission, values
-    contact.tsx        - Contact form + company info from settings
+    contact.tsx        - Contact form submits to /api/contact, saved to DB
     faq.tsx            - Categorized FAQ with accordions
     reviews.tsx        - All reviews with rating distribution
+    privacy-policy.tsx - Privacy Policy page
+    terms.tsx          - Terms of Service page
+    shipping-returns.tsx - Shipping & Returns page
+    track-order.tsx    - Track order by order number with status timeline
     admin/
       login.tsx        - Admin login page with username/password form
       dashboard.tsx    - KPIs with date filtering, real chart, reset data + shared AdminSidebar/AdminHeader
       products.tsx     - Full CRUD with delete confirmation, features, specs, whatsInBox, images editors
       orders.tsx       - Order list with status management + detail modal
+      messages.tsx     - Contact form submissions management (view, status update, delete)
       settings.tsx     - Site settings: Payment, Store, Contact, Header/Footer config
   lib/
     admin-auth.tsx     - AdminGuard component for protecting admin routes
@@ -50,7 +55,7 @@ shared/
 - Cart state managed client-side with Zustand + localStorage persistence
 - Admin panel protected with session-based login (username/password via ADMIN_USERNAME/ADMIN_PASSWORD env vars, default: admin/admin123)
 - Admin auth uses express-session with rate-limited login (5 attempts per 15 min)
-- Protected admin routes: POST/PATCH/DELETE products, GET/PATCH/DELETE orders, PATCH settings
+- Protected admin routes: POST/PATCH/DELETE products, GET/PATCH/DELETE orders, GET/PATCH/DELETE contact, PATCH settings
 - Footer includes subtle "Admin" link to /admin/login
 - Payment methods (Stripe/PayPal/COD) configurable from admin settings - UI only, no real payment integration
 - Tax rate, shipping threshold, flat rate all configurable via admin settings
@@ -68,6 +73,7 @@ shared/
 - reviews: productId, customerName, rating, title, body, verified
 - subscribers: email
 - site_settings: key (unique), value - stores all configurable settings
+- contact_submissions: name, email, subject, message, status (new/read/replied)
 
 ## Site Settings Keys
 - storeName, currency, orderPrefix
@@ -88,6 +94,8 @@ shared/
 - GET/POST /api/reviews
 - POST /api/subscribers
 - GET/PATCH /api/settings
+- POST /api/contact (public), GET/PATCH/DELETE /api/contact (admin)
+- GET /api/track/:orderNumber (public - limited order info for tracking)
 
 ## Product Categories
 - Best Sellers, Portable, Family, Accessories
