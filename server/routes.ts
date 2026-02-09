@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertProductSchema, insertOrderSchema, insertReviewSchema, insertSubscriberSchema } from "@shared/schema";
+import { insertProductSchema, insertOrderSchema, insertReviewSchema, insertSubscriberSchema, insertContactSubmissionSchema } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 function requireAdmin(req: any, res: any, next: any) {
@@ -169,6 +169,46 @@ export async function registerRoutes(
   app.delete("/api/orders", requireAdmin, async (_req, res) => {
     await storage.deleteAllOrders();
     res.status(204).send();
+  });
+
+  app.post("/api/contact", async (req, res) => {
+    const parsed = insertContactSubmissionSchema.safeParse(req.body);
+    if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+    const submission = await storage.createContactSubmission(parsed.data);
+    res.status(201).json(submission);
+  });
+
+  app.get("/api/contact", requireAdmin, async (_req, res) => {
+    const submissions = await storage.getContactSubmissions();
+    res.json(submissions);
+  });
+
+  app.patch("/api/contact/:id", requireAdmin, async (req, res) => {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
+    const submission = await storage.updateContactSubmission(id, req.body);
+    if (!submission) return res.status(404).json({ error: "Submission not found" });
+    res.json(submission);
+  });
+
+  app.delete("/api/contact/:id", requireAdmin, async (req, res) => {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
+    await storage.deleteContactSubmission(id);
+    res.status(204).send();
+  });
+
+  app.get("/api/track/:orderNumber", async (req, res) => {
+    const order = await storage.getOrderByOrderNumber(req.params.orderNumber);
+    if (!order) return res.status(404).json({ error: "Order not found" });
+    res.json({
+      orderNumber: order.orderNumber,
+      status: order.status,
+      items: order.items,
+      total: order.total,
+      trackingNumber: order.trackingNumber,
+      createdAt: order.createdAt,
+    });
   });
 
   return httpServer;

@@ -15,10 +15,15 @@ import AboutPage from "@/pages/about";
 import ContactPage from "@/pages/contact";
 import FAQPage from "@/pages/faq";
 import ReviewsPage from "@/pages/reviews";
+import PrivacyPolicyPage from "@/pages/privacy-policy";
+import TermsPage from "@/pages/terms";
+import ShippingReturnsPage from "@/pages/shipping-returns";
+import TrackOrderPage from "@/pages/track-order";
 import AdminDashboard from "@/pages/admin/dashboard";
 import AdminProducts from "@/pages/admin/products";
 import AdminOrders from "@/pages/admin/orders";
 import AdminSettings from "@/pages/admin/settings";
+import AdminMessages from "@/pages/admin/messages";
 import AdminLogin from "@/pages/admin/login";
 import { AdminGuard } from "@/lib/admin-auth";
 
@@ -60,6 +65,18 @@ function Router() {
       <Route path="/reviews">
         {() => <CustomerLayout><ReviewsPage /></CustomerLayout>}
       </Route>
+      <Route path="/privacy-policy">
+        {() => <CustomerLayout><PrivacyPolicyPage /></CustomerLayout>}
+      </Route>
+      <Route path="/terms">
+        {() => <CustomerLayout><TermsPage /></CustomerLayout>}
+      </Route>
+      <Route path="/shipping-returns">
+        {() => <CustomerLayout><ShippingReturnsPage /></CustomerLayout>}
+      </Route>
+      <Route path="/track-order">
+        {() => <CustomerLayout><TrackOrderPage /></CustomerLayout>}
+      </Route>
       <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin">
         {() => <AdminGuard><AdminDashboard /></AdminGuard>}
@@ -72,6 +89,9 @@ function Router() {
       </Route>
       <Route path="/admin/settings">
         {() => <AdminGuard><AdminSettings /></AdminGuard>}
+      </Route>
+      <Route path="/admin/messages">
+        {() => <AdminGuard><AdminMessages /></AdminGuard>}
       </Route>
       <Route>
         {() => <CustomerLayout><NotFound /></CustomerLayout>}

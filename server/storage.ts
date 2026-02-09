@@ -1,12 +1,13 @@
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 import {
-  products, orders, reviews, subscribers, siteSettings,
+  products, orders, reviews, subscribers, siteSettings, contactSubmissions,
   type Product, type InsertProduct,
   type Order, type InsertOrder,
   type Review, type InsertReview,
   type Subscriber, type InsertSubscriber,
   type SiteSetting, type InsertSiteSetting,
+  type ContactSubmission, type InsertContactSubmission,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -31,6 +32,13 @@ export interface IStorage {
   getSettings(): Promise<SiteSetting[]>;
   getSetting(key: string): Promise<SiteSetting | undefined>;
   upsertSetting(key: string, value: string): Promise<SiteSetting>;
+
+  getContactSubmissions(): Promise<ContactSubmission[]>;
+  createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
+  updateContactSubmission(id: number, data: Partial<InsertContactSubmission>): Promise<ContactSubmission | undefined>;
+  deleteContactSubmission(id: number): Promise<void>;
+
+  getOrderByOrderNumber(orderNumber: string): Promise<Order | undefined>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -116,6 +124,28 @@ export class DatabaseStorage implements IStorage {
     }
     const [created] = await db.insert(siteSettings).values({ key, value }).returning();
     return created;
+  }
+  async getContactSubmissions(): Promise<ContactSubmission[]> {
+    return db.select().from(contactSubmissions);
+  }
+
+  async createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission> {
+    const [created] = await db.insert(contactSubmissions).values(submission).returning();
+    return created;
+  }
+
+  async updateContactSubmission(id: number, data: Partial<InsertContactSubmission>): Promise<ContactSubmission | undefined> {
+    const [updated] = await db.update(contactSubmissions).set(data).where(eq(contactSubmissions.id, id)).returning();
+    return updated;
+  }
+
+  async deleteContactSubmission(id: number): Promise<void> {
+    await db.delete(contactSubmissions).where(eq(contactSubmissions.id, id));
+  }
+
+  async getOrderByOrderNumber(orderNumber: string): Promise<Order | undefined> {
+    const [order] = await db.select().from(orders).where(eq(orders.orderNumber, orderNumber));
+    return order;
   }
 }
 
