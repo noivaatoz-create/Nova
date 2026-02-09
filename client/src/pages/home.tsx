@@ -110,22 +110,31 @@ function ValuePropsSection() {
 }
 
 const galleryImages = [
-  ...Array.from({ length: 20 }, (_, i) => {
-    const num = String(i + 1).padStart(3, "0");
-    const suffix = i === 0 ? "1770676967743" : "1770676967744";
-    return `/gallery/ezgif-frame-${num}_${suffix}.jpg`;
-  }),
-  ...Array.from({ length: 20 }, (_, i) => {
-    const num = String(i + 21).padStart(3, "0");
-    return `/gallery/gallery-${num}.png`;
-  }),
+  "/gallery/ezgif-frame-001_1770676967743.jpg",
+  "/gallery/gallery-021.png",
+  "/gallery/gallery-042.png",
+  "/gallery/gallery-023.png",
+  "/gallery/gallery-043.png",
+  "/gallery/ezgif-frame-015_1770676967744.jpg",
+  "/gallery/gallery-044.png",
+  "/gallery/gallery-026.png",
+  "/gallery/gallery-045.png",
+  "/gallery/gallery-034.png",
+  "/gallery/gallery-022.png",
+  "/gallery/gallery-028.png",
+  "/gallery/gallery-041.png",
+  "/gallery/ezgif-frame-020_1770676967744.jpg",
+  "/gallery/gallery-046.png",
+  "/gallery/gallery-024.png",
+  "/gallery/gallery-033.png",
+  "/gallery/gallery-047.png",
+  "/gallery/gallery-038.png",
+  "/gallery/gallery-040.png",
 ];
 
 function GalleryMarqueeSection() {
   const row1 = galleryImages.slice(0, 10);
   const row2 = galleryImages.slice(10, 20);
-  const row3 = galleryImages.slice(20, 30);
-  const row4 = galleryImages.slice(30, 40);
 
   return (
     <section className="py-20 bg-[hsl(220,50%,4%)] border-t border-[hsl(218,35%,17%)]/50 overflow-hidden" data-testid="section-gallery">
@@ -147,20 +156,6 @@ function GalleryMarqueeSection() {
           {[...row2, ...row2, ...row2].map((src, i) => (
             <div key={i} className="flex-shrink-0 w-[300px] h-[200px] mx-2 rounded-md overflow-hidden border border-[hsl(218,35%,17%)]/50">
               <img src={src} alt={`Product showcase ${(i % 10) + 11}`} className="w-full h-full object-cover" loading="lazy" />
-            </div>
-          ))}
-        </div>
-        <div className="flex animate-marquee-left">
-          {[...row3, ...row3, ...row3].map((src, i) => (
-            <div key={i} className="flex-shrink-0 w-[300px] h-[200px] mx-2 rounded-md overflow-hidden border border-[hsl(218,35%,17%)]/50">
-              <img src={src} alt={`Product showcase ${(i % 10) + 21}`} className="w-full h-full object-cover" loading="lazy" />
-            </div>
-          ))}
-        </div>
-        <div className="flex animate-marquee-right">
-          {[...row4, ...row4, ...row4].map((src, i) => (
-            <div key={i} className="flex-shrink-0 w-[300px] h-[200px] mx-2 rounded-md overflow-hidden border border-[hsl(218,35%,17%)]/50">
-              <img src={src} alt={`Product showcase ${(i % 10) + 31}`} className="w-full h-full object-cover" loading="lazy" />
             </div>
           ))}
         </div>

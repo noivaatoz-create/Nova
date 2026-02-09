@@ -109,7 +109,7 @@ shared/
 - Text: white (primary), hsl(215,30%,65%) (secondary)
 
 ## Gallery
-- 40 product images in client/public/gallery/
-- Images 001-020: ezgif-frame-XXX_suffix.jpg (original product frames)
-- Images 021-040: gallery-0XX.png (generated product shots)
-- Displayed in 4-row marquee on home page with infinite scroll animation
+- 20 unique product images in client/public/gallery/
+- 3 original frames: ezgif-frame-001, 015, 020 (distinct angles/water effects)
+- 17 generated shots: gallery-021 to gallery-047 (varied scenes: lifestyle, macro, flatlay, gift box, travel, silhouette, lineup, knolling)
+- Displayed in 2-row marquee on home page with infinite scroll animation
