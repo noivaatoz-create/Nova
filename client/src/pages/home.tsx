@@ -109,6 +109,44 @@ function ValuePropsSection() {
   );
 }
 
+const galleryImages = Array.from({ length: 20 }, (_, i) => {
+  const num = String(i + 1).padStart(3, "0");
+  const suffix = i === 0 ? "1770676967743" : "1770676967744";
+  return `/gallery/ezgif-frame-${num}_${suffix}.jpg`;
+});
+
+function GalleryMarqueeSection() {
+  const row1 = galleryImages.slice(0, 10);
+  const row2 = galleryImages.slice(10, 20);
+
+  return (
+    <section className="py-20 bg-[hsl(220,50%,4%)] border-t border-[hsl(218,35%,17%)]/50 overflow-hidden" data-testid="section-gallery">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-12">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl mb-4">Designed for Perfection</h2>
+          <p className="text-[hsl(215,30%,65%)] text-lg">Every angle, every detail - crafted with precision engineering and premium materials.</p>
+        </div>
+      </div>
+      <div className="space-y-4">
+        <div className="flex animate-marquee-left">
+          {[...row1, ...row1, ...row1].map((src, i) => (
+            <div key={i} className="flex-shrink-0 w-[300px] h-[200px] mx-2 rounded-md overflow-hidden border border-[hsl(218,35%,17%)]/50">
+              <img src={src} alt={`Product showcase ${(i % 10) + 1}`} className="w-full h-full object-cover" loading="lazy" />
+            </div>
+          ))}
+        </div>
+        <div className="flex animate-marquee-right">
+          {[...row2, ...row2, ...row2].map((src, i) => (
+            <div key={i} className="flex-shrink-0 w-[300px] h-[200px] mx-2 rounded-md overflow-hidden border border-[hsl(218,35%,17%)]/50">
+              <img src={src} alt={`Product showcase ${(i % 10) + 11}`} className="w-full h-full object-cover" loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FeaturedProductsSection() {
   const { data: products, isLoading } = useQuery<Product[]>({ queryKey: ["/api/products"] });
   const { addItem } = useCartStore();
@@ -337,6 +375,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-[hsl(220,40%,7%)]">
       <HeroSection />
       <ValuePropsSection />
+      <GalleryMarqueeSection />
       <FeaturedProductsSection />
       <ComparisonSection />
       <ReviewsPreviewSection />
