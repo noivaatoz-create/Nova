@@ -3,7 +3,7 @@ import { AdminSidebar, AdminHeader } from "./dashboard";
 import type { Product } from "@shared/schema";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Edit, Trash2, Package, X, List, Image, Box, Wrench, ToggleLeft, ToggleRight, Upload, Link } from "lucide-react";
+import { Plus, Edit, Trash2, Package, X, List, Image, Box, Wrench, ToggleLeft, ToggleRight, Upload, Link, Star } from "lucide-react";
 import { useState, useRef, useCallback } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
@@ -19,7 +19,7 @@ export default function AdminProducts() {
   const [form, setForm] = useState({
     name: "", slug: "", shortDescription: "", longDescription: "",
     price: "", compareAtPrice: "", category: "Best Sellers", badge: "",
-    image: "", stock: "100", isActive: true,
+    image: "", stock: "100", isActive: true, isFeatured: false,
     features: [] as string[],
     specs: {} as Record<string, string>,
     whatsInBox: [] as string[],
@@ -83,7 +83,7 @@ export default function AdminProducts() {
     setForm({
       name: "", slug: "", shortDescription: "", longDescription: "",
       price: "", compareAtPrice: "", category: "Best Sellers", badge: "",
-      image: "", stock: "100", isActive: true,
+      image: "", stock: "100", isActive: true, isFeatured: false,
       features: [], specs: {}, whatsInBox: [], images: [],
     });
     setSpecEntries([]);
@@ -98,6 +98,7 @@ export default function AdminProducts() {
       category: p.category, badge: p.badge || "",
       image: p.image, stock: String(p.stock),
       isActive: p.isActive,
+      isFeatured: p.isFeatured,
       features: p.features || [],
       specs: p.specs || {},
       whatsInBox: p.whatsInBox || [],
@@ -124,6 +125,7 @@ export default function AdminProducts() {
       image: form.image,
       stock: stockNum,
       isActive: form.isActive,
+      isFeatured: form.isFeatured,
       features: form.features.filter(f => f.trim()),
       specs: Object.fromEntries(specEntries.filter(e => e.key.trim()).map(e => [e.key, e.value])),
       whatsInBox: form.whatsInBox.filter(w => w.trim()),
@@ -161,6 +163,7 @@ export default function AdminProducts() {
                     <th className="p-4 text-muted-foreground text-xs font-medium uppercase tracking-wider">Price</th>
                     <th className="p-4 text-muted-foreground text-xs font-medium uppercase tracking-wider">Stock</th>
                     <th className="p-4 text-muted-foreground text-xs font-medium uppercase tracking-wider">Status</th>
+                    <th className="p-4 text-muted-foreground text-xs font-medium uppercase tracking-wider">Featured</th>
                     <th className="p-4 text-muted-foreground text-xs font-medium uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
@@ -196,6 +199,18 @@ export default function AdminProducts() {
                         <span className={`text-xs font-semibold px-2 py-0.5 rounded ${product.isActive ? "bg-emerald-500/10 text-emerald-400" : "bg-red-500/10 text-red-400"}`}>
                           {product.isActive ? "Active" : "Inactive"}
                         </span>
+                      </td>
+                      <td className="p-4">
+                        <button
+                          onClick={async () => {
+                            await apiRequest("PATCH", `/api/products/${product.id}`, { isFeatured: !product.isFeatured });
+                            queryClient.invalidateQueries({ queryKey: ["/api/products"] });
+                          }}
+                          className="p-1.5 rounded-md hover:bg-muted transition-colors"
+                          data-testid={`button-toggle-featured-${product.id}`}
+                        >
+                          <Star className={`h-5 w-5 ${product.isFeatured ? "text-primary fill-primary" : "text-muted-foreground"}`} />
+                        </button>
                       </td>
                       <td className="p-4">
                         <div className="flex items-center gap-2">
@@ -337,6 +352,20 @@ export default function AdminProducts() {
                   )}
                   <span className={form.isActive ? "text-emerald-400 font-medium" : "text-muted-foreground"}>
                     {form.isActive ? "Active" : "Inactive"}
+                  </span>
+                </button>
+              </div>
+              <div className="flex items-center justify-between py-2">
+                <label className="text-sm font-medium text-foreground">Featured</label>
+                <button
+                  type="button"
+                  onClick={() => setForm({ ...form, isFeatured: !form.isFeatured })}
+                  className="flex items-center gap-2 text-sm"
+                  data-testid="button-toggle-featured"
+                >
+                  <Star className={`h-6 w-6 ${form.isFeatured ? "text-primary fill-primary" : "text-muted-foreground"}`} />
+                  <span className={form.isFeatured ? "text-primary font-medium" : "text-muted-foreground"}>
+                    {form.isFeatured ? "Featured" : "Not Featured"}
                   </span>
                 </button>
               </div>

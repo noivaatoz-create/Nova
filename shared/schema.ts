@@ -20,6 +20,7 @@ export const products = pgTable("products", {
   whatsInBox: text("whats_in_box").array().notNull().default(sql`'{}'::text[]`),
   stock: integer("stock").notNull().default(100),
   isActive: boolean("is_active").notNull().default(true),
+  isFeatured: boolean("is_featured").notNull().default(false),
 });
 
 export const cartItems = pgTable("cart_items", {

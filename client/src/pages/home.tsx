@@ -190,7 +190,7 @@ function FeaturedProductsSection() {
                   </div>
                 </div>
               ))
-            : products?.map((product) => (
+            : products?.filter(p => p.isFeatured)?.map((product) => (
                 <div key={product.id} className="flex w-[320px] flex-col overflow-hidden rounded-md border border-border bg-card shadow-sm transition-all hover:shadow-md hover:border-primary/30 group" data-testid={`card-product-${product.id}`}>
                   <Link href={`/product/${product.slug}`}>
                     <div className="relative aspect-[4/5] w-full bg-muted overflow-hidden cursor-pointer">
