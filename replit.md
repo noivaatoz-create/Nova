@@ -7,7 +7,7 @@ A complete ecommerce website for Novaatoz, a water flosser company. Features a d
 - Frontend: React + TypeScript + Vite + TanStack Query + Wouter + Zustand
 - Backend: Express.js + Drizzle ORM + PostgreSQL (Neon)
 - Styling: Tailwind CSS + Shadcn UI components
-- Theme: Dark/Light mode toggle with warm gold primary color (hsl(38,92%,50%)), defaults to dark
+- Theme: Dark/Light mode toggle with warm gold primary color (hsl(38,92%,50%)), defaults to light
 
 ## Project Structure
 ```

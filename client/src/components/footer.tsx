@@ -36,7 +36,7 @@ export function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           <div>
             <div className="flex items-center gap-2 mb-6">
-              {settings?.showLogoIcon !== "false" && <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-9 w-9 object-contain brightness-0 invert" />}
+              {settings?.showLogoIcon !== "false" && <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-9 w-9 object-contain dark:invert" />}
               <span className="text-xl font-bold tracking-tight text-foreground">{settings?.logoText || "NOVAATOZ"}</span>
             </div>
             <p className="text-muted-foreground max-w-md mb-8 leading-relaxed">

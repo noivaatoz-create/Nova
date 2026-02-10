@@ -36,7 +36,7 @@ export default function AdminLogin() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-10 w-10 object-contain brightness-0 invert" />
+            <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-10 w-10 object-contain dark:invert" />
             <span className="text-2xl font-bold tracking-tight text-foreground">NOVAATOZ</span>
           </div>
           <p className="text-muted-foreground text-sm">Admin Panel Login</p>
