@@ -93,7 +93,7 @@ export default function CheckoutPage() {
           <h1 className="text-2xl font-bold text-foreground mb-4">Your cart is empty</h1>
           <p className="text-muted-foreground mb-6">Add some products to proceed to checkout.</p>
           <Link href="/shop">
-            <button className="rounded-md bg-primary px-6 py-2.5 text-white font-semibold" data-testid="button-back-to-shop">
+            <button className="rounded-md bg-primary px-6 py-2.5 text-primary-foreground font-semibold" data-testid="button-back-to-shop">
               Back to Shop
             </button>
           </Link>
@@ -253,7 +253,7 @@ export default function CheckoutPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full mt-6 flex items-center justify-center gap-2 rounded-md bg-primary h-12 text-base font-bold text-white transition-all hover:shadow-[0_0_20px_rgba(217,169,12,0.4)] disabled:opacity-50"
+                  className="w-full mt-6 flex items-center justify-center gap-2 rounded-md bg-primary h-12 text-base font-bold text-primary-foreground transition-all hover:shadow-[0_0_20px_hsl(var(--primary)/0.4)] disabled:opacity-50"
                   data-testid="button-place-order"
                 >
                   <Lock className="h-4 w-4" />

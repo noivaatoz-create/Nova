@@ -19,9 +19,9 @@ function HeroSection() {
               </span>
               New JetClean Pro Released
             </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] text-white">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] text-foreground">
               The Future of <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-white" style={{ textShadow: "0 0 20px rgba(217,169,12,0.5)" }}>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-foreground">
                 Oral Care
               </span>
             </h1>
@@ -30,12 +30,12 @@ function HeroSection() {
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
               <Link href="/shop">
-                <button className="flex items-center justify-center rounded-md bg-primary h-12 px-8 text-base font-bold text-white transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(217,169,12,0.4)]" data-testid="button-shop-hero">
+                <button className="flex items-center justify-center rounded-md bg-primary h-12 px-8 text-base font-bold text-primary-foreground transition-all hover:scale-[1.02] shadow-[0_0_20px_hsl(var(--primary)/0.4)]" data-testid="button-shop-hero">
                   Shop the Future
                 </button>
               </Link>
               <Link href="/product/jetclean-pro">
-                <button className="flex items-center justify-center rounded-md border border-border bg-card/50 h-12 px-8 text-base font-medium text-white transition-all hover:bg-card hover:border-primary/50" data-testid="button-watch-demo">
+                <button className="flex items-center justify-center rounded-md border border-border bg-card/50 h-12 px-8 text-base font-medium text-foreground transition-all hover:bg-card hover:border-primary/50" data-testid="button-watch-demo">
                   View Details
                 </button>
               </Link>
@@ -43,15 +43,15 @@ function HeroSection() {
           </div>
           <div className="relative lg:h-[600px] flex items-center justify-center">
             <div className="absolute w-[400px] h-[400px] border border-primary/20 rounded-full animate-[spin_10s_linear_infinite]" />
-            <div className="absolute w-[500px] h-[500px] border border-white/5 rounded-full" />
-            <div className="relative z-10 w-full max-w-md aspect-[3/4] rounded-2xl bg-gradient-to-b from-gray-800 to-black p-1 shadow-2xl ring-1 ring-white/10">
+            <div className="absolute w-[500px] h-[500px] border border-border/10 rounded-full" />
+            <div className="relative z-10 w-full max-w-md aspect-[3/4] rounded-2xl bg-gradient-to-b from-muted to-card p-1 shadow-2xl ring-1 ring-border/20">
               <div className="h-full w-full rounded-xl bg-card overflow-hidden relative">
                 <img
                   alt="Novaatoz JetClean Pro Water Flosser"
                   className="h-full w-full object-cover opacity-90"
                   src="/images/hero-product.png"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                 <div className="absolute bottom-8 left-8 right-8">
                   <div className="flex justify-between items-end gap-4">
                     <div>
@@ -193,7 +193,7 @@ function FeaturedProductsSection() {
             : products?.map((product) => (
                 <div key={product.id} className="flex w-[320px] flex-col overflow-hidden rounded-md border border-border bg-card shadow-sm transition-all hover:shadow-md hover:border-primary/30 group" data-testid={`card-product-${product.id}`}>
                   <Link href={`/product/${product.slug}`}>
-                    <div className="relative aspect-[4/5] w-full bg-gray-800 overflow-hidden cursor-pointer">
+                    <div className="relative aspect-[4/5] w-full bg-muted overflow-hidden cursor-pointer">
                       <img
                         alt={product.name}
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-90"
@@ -219,13 +219,13 @@ function FeaturedProductsSection() {
                     <p className="text-sm text-muted-foreground mb-4 flex-1">{product.shortDescription}</p>
                     <div className="flex gap-2">
                       <Link href={`/product/${product.slug}`} className="flex-1">
-                        <button className="w-full rounded-md bg-white/5 py-2 text-sm font-semibold text-foreground hover:bg-white/10 transition-colors border border-white/10" data-testid={`button-view-${product.slug}`}>
+                        <button className="w-full rounded-md bg-foreground/5 py-2 text-sm font-semibold text-foreground hover:bg-foreground/10 transition-colors border border-border" data-testid={`button-view-${product.slug}`}>
                           View Details
                         </button>
                       </Link>
                       <button
                         onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image })}
-                        className="rounded-md bg-primary py-2 px-4 text-sm font-semibold text-white transition-colors"
+                        className="rounded-md bg-primary py-2 px-4 text-sm font-semibold text-primary-foreground transition-colors"
                         data-testid={`button-add-cart-${product.slug}`}
                       >
                         Add
@@ -372,7 +372,7 @@ function CTASection() {
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link href="/shop">
-            <button className="rounded-md bg-primary h-12 px-8 text-base font-bold text-white transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(217,169,12,0.4)]" data-testid="button-shop-cta">
+            <button className="rounded-md bg-primary h-12 px-8 text-base font-bold text-primary-foreground transition-all hover:scale-[1.02] shadow-[0_0_20px_hsl(var(--primary)/0.4)]" data-testid="button-shop-cta">
               Shop Now
             </button>
           </Link>

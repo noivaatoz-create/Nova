@@ -33,16 +33,16 @@ function AdminSidebar({ active }: { active: string }) {
   ];
 
   return (
-    <aside className="hidden lg:flex w-64 flex-col bg-[hsl(220,40%,8%)] border-r border-[hsl(218,18%,25%)] flex-shrink-0" data-testid="admin-sidebar">
+    <aside className="hidden lg:flex w-64 flex-col bg-section-alt border-r border-border flex-shrink-0" data-testid="admin-sidebar">
       <div className="flex h-full flex-col justify-between p-4">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3 px-2 py-2">
-            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[hsl(38,92%,50%)] to-violet-600 flex items-center justify-center shadow-[0_0_15px_rgba(217,169,12,0.3)]">
+            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-violet-600 flex items-center justify-center">
               <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-7 w-7 object-contain brightness-0 invert" />
             </div>
             <div className="flex flex-col">
-              <h1 className="text-white text-base font-bold tracking-tight">Novaatoz</h1>
-              <p className="text-[hsl(215,20%,60%)] text-xs font-medium tracking-wide">ADMIN CONSOLE</p>
+              <h1 className="text-foreground text-base font-bold tracking-tight">Novaatoz</h1>
+              <p className="text-muted-foreground text-xs font-medium tracking-wide">ADMIN CONSOLE</p>
             </div>
           </div>
           <nav className="flex flex-col gap-1 mt-4">
@@ -52,8 +52,8 @@ function AdminSidebar({ active }: { active: string }) {
                 href={item.href}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
                   active === item.href
-                    ? "bg-[hsl(38,92%,50%)] text-white shadow-[0_0_15px_rgba(217,169,12,0.4)]"
-                    : "text-[hsl(215,20%,60%)] hover:bg-[hsl(218,18%,25%)] hover:text-white"
+                    ? "bg-primary text-foreground"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 }`}
                 data-testid={`link-admin-${item.label.toLowerCase()}`}
               >
@@ -63,10 +63,10 @@ function AdminSidebar({ active }: { active: string }) {
             ))}
           </nav>
         </div>
-        <div className="p-3 border-t border-[hsl(218,18%,25%)]">
+        <div className="p-3 border-t border-border">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-sm text-[hsl(215,20%,60%)] hover:text-white hover:bg-white/5 transition-colors"
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors"
             data-testid="button-admin-logout"
           >
             <LogOut className="h-4 w-4" />
@@ -80,27 +80,27 @@ function AdminSidebar({ active }: { active: string }) {
 
 function AdminHeader({ title }: { title: string }) {
   return (
-    <header className="flex items-center justify-between border-b border-[hsl(218,18%,25%)] bg-[hsl(220,40%,8%)]/95 backdrop-blur-md px-6 py-4 sticky top-0 z-10" data-testid="admin-header">
+    <header className="flex items-center justify-between border-b border-border bg-section-alt/95 backdrop-blur-md px-6 py-4 sticky top-0 z-10" data-testid="admin-header">
       <div className="flex items-center gap-3">
-        <LayoutDashboard className="h-5 w-5 text-[hsl(38,92%,50%)]" />
-        <h2 className="text-white text-lg font-semibold tracking-tight">{title}</h2>
+        <LayoutDashboard className="h-5 w-5 text-primary" />
+        <h2 className="text-foreground text-lg font-semibold tracking-tight">{title}</h2>
       </div>
       <div className="flex items-center gap-4">
         <div className="relative hidden md:block">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(215,20%,60%)]" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input
-            className="w-64 pl-10 pr-3 py-2 border border-[hsl(218,18%,25%)] rounded-md bg-[hsl(220,18%,18%)] text-white placeholder-[hsl(215,20%,60%)] focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] text-sm"
+            className="w-64 pl-10 pr-3 py-2 border border-border rounded-md bg-card text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring text-sm"
             placeholder="Search orders, products..."
             type="text"
             data-testid="input-admin-search"
           />
         </div>
         <div className="flex items-center gap-2">
-          <button className="relative p-2 rounded-md hover:bg-[hsl(218,18%,25%)] text-[hsl(215,20%,60%)] hover:text-white transition-colors" data-testid="button-notifications">
+          <button className="relative p-2 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-colors" data-testid="button-notifications">
             <Bell className="h-5 w-5" />
-            <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-red-500 border border-[hsl(220,40%,8%)]" />
+            <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-red-500 border border-section-alt" />
           </button>
-          <button className="p-2 rounded-md hover:bg-[hsl(218,18%,25%)] text-[hsl(215,20%,60%)] hover:text-white transition-colors" data-testid="button-help">
+          <button className="p-2 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-colors" data-testid="button-help">
             <HelpCircle className="h-5 w-5" />
           </button>
         </div>
@@ -203,7 +203,7 @@ export default function AdminDashboard() {
   const recentOrders = filteredOrders.slice(0, 5);
 
   return (
-    <div className="flex h-screen w-full bg-[hsl(220,18%,11%)] overflow-hidden">
+    <div className="flex h-screen w-full bg-section-alt overflow-hidden">
       <AdminSidebar active="/admin" />
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <AdminHeader title="Dashboard Overview" />
@@ -216,8 +216,8 @@ export default function AdminDashboard() {
                   onClick={() => setPeriod(p)}
                   className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
                     period === p
-                      ? "bg-[hsl(38,92%,50%)] text-white"
-                      : "border border-[hsl(218,18%,25%)] text-[hsl(215,20%,60%)] hover:text-white hover:border-[hsl(38,92%,50%)]/50"
+                      ? "bg-primary text-foreground"
+                      : "border border-border text-muted-foreground hover:text-foreground hover:border-primary/50"
                   }`}
                   data-testid={`button-period-${p}`}
                 >
@@ -237,21 +237,21 @@ export default function AdminDashboard() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {kpis.map((kpi, i) => (
-              <div key={i} className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-5 hover:border-[hsl(38,92%,50%)]/50 transition-colors group relative overflow-visible" data-testid={`kpi-${i}`}>
+              <div key={i} className="bg-card border border-border rounded-md p-5 hover:border-primary/50 transition-colors group relative overflow-visible" data-testid={`kpi-${i}`}>
                 <div className="flex flex-col gap-1 relative z-10">
-                  <p className="text-[hsl(215,20%,60%)] text-sm font-medium">{kpi.label}</p>
-                  <h3 className="text-white text-2xl font-bold tracking-tight">{kpi.value}</h3>
+                  <p className="text-muted-foreground text-sm font-medium">{kpi.label}</p>
+                  <h3 className="text-foreground text-2xl font-bold tracking-tight">{kpi.value}</h3>
                 </div>
               </div>
             ))}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6 flex flex-col">
+            <div className="lg:col-span-2 bg-card border border-border rounded-md p-6 flex flex-col">
               <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                 <div>
-                  <h3 className="text-white text-base font-semibold">Sales Performance</h3>
-                  <p className="text-[hsl(218,25%,40%)] text-xs mt-1">
+                  <h3 className="text-foreground text-base font-semibold">Sales Performance</h3>
+                  <p className="text-muted-foreground text-xs mt-1">
                     {period === "week" ? "Daily revenue this week" : period === "month" ? "Daily revenue this month" : period === "year" ? "Monthly revenue this year" : "All time revenue"}
                   </p>
                 </div>
@@ -260,27 +260,27 @@ export default function AdminDashboard() {
                 <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 800 250">
                   <defs>
                     <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0%" stopColor="hsl(38,92%,50%)" stopOpacity="0.3" />
-                      <stop offset="100%" stopColor="hsl(38,92%,50%)" stopOpacity="0" />
+                      <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
                     </linearGradient>
                   </defs>
-                  <line stroke="hsl(218,18%,25%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="50" y2="50" />
-                  <line stroke="hsl(218,18%,25%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="100" y2="100" />
-                  <line stroke="hsl(218,18%,25%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="150" y2="150" />
-                  <line stroke="hsl(218,18%,25%)" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="200" y2="200" />
+                  <line stroke="hsl(var(--border))" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="50" y2="50" />
+                  <line stroke="hsl(var(--border))" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="100" y2="100" />
+                  <line stroke="hsl(var(--border))" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="150" y2="150" />
+                  <line stroke="hsl(var(--border))" strokeDasharray="4" strokeWidth="1" x1="0" x2="800" y1="200" y2="200" />
                   {chartData.length > 0 ? (
                     <>
                       <path d={chartSvg.area} fill="url(#chartGradient)" />
-                      <path d={chartSvg.path} fill="none" stroke="hsl(38,92%,50%)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
+                      <path d={chartSvg.path} fill="none" stroke="hsl(var(--primary))" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
                       {chartData.map((d, i) => {
                         const maxR = Math.max(...chartData.map(x => x.revenue), 1);
                         const x = chartData.length === 1 ? 400 : (i / (chartData.length - 1)) * 760 + 20;
                         const y = 230 - ((d.revenue / maxR) * 210);
-                        return <circle key={i} cx={x} cy={y} r="4" fill="hsl(38,92%,50%)" />;
+                        return <circle key={i} cx={x} cy={y} r="4" fill="hsl(var(--primary))" />;
                       })}
                     </>
                   ) : (
-                    <text x="400" y="130" textAnchor="middle" fill="hsl(215,20%,60%)" fontSize="14">No data for selected period</text>
+                    <text x="400" y="130" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="14">No data for selected period</text>
                   )}
                 </svg>
               </div>
@@ -288,7 +288,7 @@ export default function AdminDashboard() {
 
             <div className="flex flex-col gap-6">
               {lowStockProducts.length > 0 && (
-                <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-5 relative overflow-visible" data-testid="card-low-stock">
+                <div className="bg-card border border-border rounded-md p-5 relative overflow-visible" data-testid="card-low-stock">
                   <div className="flex justify-between items-start mb-3 gap-4 flex-wrap">
                     <div className="flex items-center gap-2 text-amber-500 mb-1">
                       <AlertTriangle className="h-5 w-5" />
@@ -298,7 +298,7 @@ export default function AdminDashboard() {
                   <div className="space-y-3">
                     {lowStockProducts.map((p) => (
                       <div key={p.id} className="flex items-center justify-between gap-2">
-                        <span className="text-white text-sm truncate">{p.name}</span>
+                        <span className="text-foreground text-sm truncate">{p.name}</span>
                         <span className="text-amber-400 text-sm font-bold whitespace-nowrap">{p.stock} left</span>
                       </div>
                     ))}
@@ -306,17 +306,17 @@ export default function AdminDashboard() {
                 </div>
               )}
 
-              <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-5 flex-1" data-testid="card-top-products">
-                <h3 className="text-white text-sm font-semibold mb-4">Top Products</h3>
+              <div className="bg-card border border-border rounded-md p-5 flex-1" data-testid="card-top-products">
+                <h3 className="text-foreground text-sm font-semibold mb-4">Top Products</h3>
                 <div className="space-y-3">
                   {products?.slice(0, 3).map((p) => (
                     <div key={p.id} className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-md overflow-hidden bg-[hsl(218,18%,25%)] flex-shrink-0">
+                      <div className="h-10 w-10 rounded-md overflow-hidden bg-muted flex-shrink-0">
                         <img src={p.image} alt={p.name} className="h-full w-full object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-white text-sm truncate">{p.name}</p>
-                        <p className="text-[hsl(215,20%,60%)] text-xs">${p.price}</p>
+                        <p className="text-foreground text-sm truncate">{p.name}</p>
+                        <p className="text-muted-foreground text-xs">${p.price}</p>
                       </div>
                     </div>
                   ))}
@@ -325,25 +325,25 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6" data-testid="card-recent-orders">
-            <h3 className="text-white text-base font-semibold mb-4">Recent Orders</h3>
+          <div className="bg-card border border-border rounded-md p-6" data-testid="card-recent-orders">
+            <h3 className="text-foreground text-base font-semibold mb-4">Recent Orders</h3>
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
-                  <tr className="border-b border-[hsl(218,18%,25%)]">
-                    <th className="pb-3 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Order</th>
-                    <th className="pb-3 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Customer</th>
-                    <th className="pb-3 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Total</th>
-                    <th className="pb-3 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Status</th>
-                    <th className="pb-3 text-[hsl(215,20%,60%)] text-xs font-medium uppercase tracking-wider">Date</th>
+                  <tr className="border-b border-border">
+                    <th className="pb-3 text-muted-foreground text-xs font-medium uppercase tracking-wider">Order</th>
+                    <th className="pb-3 text-muted-foreground text-xs font-medium uppercase tracking-wider">Customer</th>
+                    <th className="pb-3 text-muted-foreground text-xs font-medium uppercase tracking-wider">Total</th>
+                    <th className="pb-3 text-muted-foreground text-xs font-medium uppercase tracking-wider">Status</th>
+                    <th className="pb-3 text-muted-foreground text-xs font-medium uppercase tracking-wider">Date</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[hsl(218,18%,25%)]/50">
+                <tbody className="divide-y divide-border/50">
                   {recentOrders.map((order) => (
                     <tr key={order.id}>
-                      <td className="py-3 text-white text-sm font-medium">#{order.orderNumber}</td>
-                      <td className="py-3 text-[hsl(215,20%,60%)] text-sm">{order.customerName}</td>
-                      <td className="py-3 text-white text-sm font-medium">${order.total}</td>
+                      <td className="py-3 text-foreground text-sm font-medium">#{order.orderNumber}</td>
+                      <td className="py-3 text-muted-foreground text-sm">{order.customerName}</td>
+                      <td className="py-3 text-foreground text-sm font-medium">${order.total}</td>
                       <td className="py-3">
                         <span className={`text-xs font-semibold px-2 py-0.5 rounded ${
                           order.status === "paid" ? "bg-emerald-500/10 text-emerald-400" :
@@ -355,14 +355,14 @@ export default function AdminDashboard() {
                           {order.status}
                         </span>
                       </td>
-                      <td className="py-3 text-[hsl(215,20%,60%)] text-sm">
+                      <td className="py-3 text-muted-foreground text-sm">
                         {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : "N/A"}
                       </td>
                     </tr>
                   ))}
                   {recentOrders.length === 0 && (
                     <tr>
-                      <td colSpan={5} className="py-8 text-center text-[hsl(215,20%,60%)] text-sm">No orders yet</td>
+                      <td colSpan={5} className="py-8 text-center text-muted-foreground text-sm">No orders yet</td>
                     </tr>
                   )}
                 </tbody>
@@ -373,18 +373,18 @@ export default function AdminDashboard() {
       </main>
 
       <AlertDialog open={showResetDialog} onOpenChange={setShowResetDialog}>
-        <AlertDialogContent className="bg-[hsl(220,20%,14%)] border-[hsl(218,18%,25%)] text-white">
+        <AlertDialogContent className="bg-background border-border text-foreground">
           <AlertDialogHeader>
             <AlertDialogTitle>Reset All Revenue Data?</AlertDialogTitle>
-            <AlertDialogDescription className="text-[hsl(215,20%,60%)]">
+            <AlertDialogDescription className="text-muted-foreground">
               This will permanently delete all orders. Revenue will reset to $0.00. This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="border-[hsl(218,18%,25%)] text-[hsl(215,20%,60%)]" data-testid="button-cancel-reset">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="border-border text-muted-foreground" data-testid="button-cancel-reset">Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => resetMutation.mutate()}
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-red-600 hover:bg-red-700 text-foreground"
               data-testid="button-confirm-reset"
             >
               Reset All Data

@@ -40,7 +40,7 @@ export default function ProductDetailPage() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-foreground mb-4">Product Not Found</h1>
           <Link href="/shop">
-            <button className="rounded-md bg-primary px-6 py-2 text-white font-semibold">
+            <button className="rounded-md bg-primary px-6 py-2 text-primary-foreground font-semibold">
               Back to Shop
             </button>
           </Link>
@@ -170,7 +170,7 @@ export default function ProductDetailPage() {
               <button
                 onClick={handleAddToCart}
                 disabled={product.stock <= 0}
-                className="w-full flex items-center justify-center gap-2 rounded-md bg-primary h-12 text-base font-bold text-white transition-all hover:shadow-[0_0_20px_rgba(217,169,12,0.4)] disabled:opacity-50 disabled:cursor-not-allowed group"
+                className="w-full flex items-center justify-center gap-2 rounded-md bg-primary h-12 text-base font-bold text-primary-foreground transition-all hover:shadow-[0_0_20px_hsl(var(--primary)/0.4)] disabled:opacity-50 disabled:cursor-not-allowed group"
                 data-testid="button-add-to-cart"
               >
                 Add to Cart - ${(parseFloat(product.price) * quantity).toFixed(2)}

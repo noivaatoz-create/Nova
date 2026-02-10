@@ -31,15 +31,15 @@ export function Footer() {
   };
 
   return (
-    <footer className="border-t border-[hsl(218,18%,25%)] bg-[hsl(220,18%,11%)] pt-16 pb-8" data-testid="footer">
+    <footer className="border-t border-border bg-section-alt pt-16 pb-8" data-testid="footer">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           <div>
             <div className="flex items-center gap-2 mb-6">
               {settings?.showLogoIcon !== "false" && <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-9 w-9 object-contain brightness-0 invert" />}
-              <span className="text-xl font-bold tracking-tight text-white">{settings?.logoText || "NOVAATOZ"}</span>
+              <span className="text-xl font-bold tracking-tight text-foreground">{settings?.logoText || "NOVAATOZ"}</span>
             </div>
-            <p className="text-[hsl(215,20%,60%)] max-w-md mb-8 leading-relaxed">
+            <p className="text-muted-foreground max-w-md mb-8 leading-relaxed">
               Redefining the daily ritual. Novaatoz combines cutting-edge hydro-technology with minimalist design to bring dental-grade care into your home.
             </p>
             {settings?.showFooterSocial !== "false" && (() => {
@@ -47,32 +47,32 @@ export function Footer() {
               return (
                 <div className="flex gap-4">
                   {(settings?.socialTwitter || !hasAnySocialLinks) && (
-                    <a href={settings?.socialTwitter || "#"} target="_blank" rel="noopener noreferrer" className="text-[hsl(215,20%,60%)] hover:text-white transition-colors" data-testid="link-twitter">
+                    <a href={settings?.socialTwitter || "#"} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-twitter">
                       <SiX className="h-5 w-5" />
                     </a>
                   )}
                   {(settings?.socialInstagram || !hasAnySocialLinks) && (
-                    <a href={settings?.socialInstagram || "#"} target="_blank" rel="noopener noreferrer" className="text-[hsl(215,20%,60%)] hover:text-white transition-colors" data-testid="link-instagram">
+                    <a href={settings?.socialInstagram || "#"} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-instagram">
                       <SiInstagram className="h-5 w-5" />
                     </a>
                   )}
                   {(settings?.socialFacebook || !hasAnySocialLinks) && (
-                    <a href={settings?.socialFacebook || "#"} target="_blank" rel="noopener noreferrer" className="text-[hsl(215,20%,60%)] hover:text-white transition-colors" data-testid="link-facebook">
+                    <a href={settings?.socialFacebook || "#"} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-facebook">
                       <SiFacebook className="h-5 w-5" />
                     </a>
                   )}
                   {(settings?.socialYoutube || !hasAnySocialLinks) && (
-                    <a href={settings?.socialYoutube || "#"} target="_blank" rel="noopener noreferrer" className="text-[hsl(215,20%,60%)] hover:text-white transition-colors" data-testid="link-youtube">
+                    <a href={settings?.socialYoutube || "#"} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-youtube">
                       <SiYoutube className="h-5 w-5" />
                     </a>
                   )}
                   {(settings?.socialTiktok || !hasAnySocialLinks) && (
-                    <a href={settings?.socialTiktok || "#"} target="_blank" rel="noopener noreferrer" className="text-[hsl(215,20%,60%)] hover:text-white transition-colors" data-testid="link-tiktok">
+                    <a href={settings?.socialTiktok || "#"} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-tiktok">
                       <SiTiktok className="h-5 w-5" />
                     </a>
                   )}
                   {(settings?.socialLinkedin || !hasAnySocialLinks) && (
-                    <a href={settings?.socialLinkedin || "#"} target="_blank" rel="noopener noreferrer" className="text-[hsl(215,20%,60%)] hover:text-white transition-colors" data-testid="link-linkedin">
+                    <a href={settings?.socialLinkedin || "#"} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-linkedin">
                       <SiLinkedin className="h-5 w-5" />
                     </a>
                   )}
@@ -82,20 +82,20 @@ export function Footer() {
           </div>
           {settings?.showFooterNewsletter !== "false" && (
             <div>
-              <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Stay in the loop</h3>
-              <p className="text-[hsl(215,20%,60%)] mb-4">Join our newsletter for exclusive drops and oral health tips.</p>
+              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">Stay in the loop</h3>
+              <p className="text-muted-foreground mb-4">Join our newsletter for exclusive drops and oral health tips.</p>
               <form className="flex gap-2 max-w-md" onSubmit={handleSubscribe}>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-[hsl(38,92%,50%)] text-sm leading-6"
+                  className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-foreground shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-ring text-sm leading-6"
                   data-testid="input-newsletter-email"
                 />
                 <button
                   type="submit"
-                  className="flex-none rounded-md bg-[hsl(38,92%,50%)] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[hsl(38,92%,40%)] transition-colors"
+                  className="flex-none rounded-md bg-primary px-3.5 py-2.5 text-sm font-semibold text-foreground shadow-sm transition-colors"
                   data-testid="button-subscribe"
                 >
                   Subscribe
@@ -106,45 +106,45 @@ export function Footer() {
         </div>
 
         {settings?.showFooterLinks !== "false" && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-[hsl(218,18%,25%)] pt-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-border pt-12">
             <div>
-              <h3 className="text-sm font-semibold text-white mb-4">Products</h3>
+              <h3 className="text-sm font-semibold text-foreground mb-4">Products</h3>
               <ul className="space-y-3">
-                <li><Link href="/product/jetclean-pro" className="text-sm text-[hsl(215,20%,60%)] hover:text-white transition-colors">JetClean Pro</Link></li>
-                <li><Link href="/product/travelpulse-mini" className="text-sm text-[hsl(215,20%,60%)] hover:text-white transition-colors">TravelPulse Mini</Link></li>
-                <li><Link href="/product/familytank-xl" className="text-sm text-[hsl(215,20%,60%)] hover:text-white transition-colors">FamilyTank XL</Link></li>
-                <li><Link href="/shop" className="text-sm text-[hsl(215,20%,60%)] hover:text-white transition-colors">Accessories</Link></li>
+                <li><Link href="/product/jetclean-pro" className="text-sm text-muted-foreground hover:text-foreground transition-colors">JetClean Pro</Link></li>
+                <li><Link href="/product/travelpulse-mini" className="text-sm text-muted-foreground hover:text-foreground transition-colors">TravelPulse Mini</Link></li>
+                <li><Link href="/product/familytank-xl" className="text-sm text-muted-foreground hover:text-foreground transition-colors">FamilyTank XL</Link></li>
+                <li><Link href="/shop" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Accessories</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white mb-4">Company</h3>
+              <h3 className="text-sm font-semibold text-foreground mb-4">Company</h3>
               <ul className="space-y-3">
-                <li><Link href="/about" className="text-sm text-[hsl(215,20%,60%)] hover:text-white transition-colors">About Us</Link></li>
-                <li><Link href="/reviews" className="text-sm text-[hsl(215,20%,60%)] hover:text-white transition-colors">Reviews</Link></li>
-                <li><Link href="/contact" className="text-sm text-[hsl(215,20%,60%)] hover:text-white transition-colors">Contact</Link></li>
+                <li><Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">About Us</Link></li>
+                <li><Link href="/reviews" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Reviews</Link></li>
+                <li><Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white mb-4">Support</h3>
+              <h3 className="text-sm font-semibold text-foreground mb-4">Support</h3>
               <ul className="space-y-3">
-                <li><Link href="/faq" className="text-sm text-[hsl(215,20%,60%)] hover:text-white transition-colors">FAQ</Link></li>
-                <li><Link href="/shipping-returns" className="text-sm text-[hsl(215,20%,60%)] hover:text-white transition-colors">Shipping & Returns</Link></li>
-                <li><Link href="/track-order" className="text-sm text-[hsl(215,20%,60%)] hover:text-white transition-colors">Track Order</Link></li>
+                <li><Link href="/faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">FAQ</Link></li>
+                <li><Link href="/shipping-returns" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Shipping & Returns</Link></li>
+                <li><Link href="/track-order" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Track Order</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white mb-4">Legal</h3>
+              <h3 className="text-sm font-semibold text-foreground mb-4">Legal</h3>
               <ul className="space-y-3">
-                <li><Link href="/privacy-policy" className="text-sm text-[hsl(215,20%,60%)] hover:text-white transition-colors">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="text-sm text-[hsl(215,20%,60%)] hover:text-white transition-colors">Terms of Service</Link></li>
+                <li><Link href="/privacy-policy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</Link></li>
               </ul>
             </div>
           </div>
         )}
 
-        <div className="border-t border-[hsl(218,18%,25%)] mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-2">
-          <p className="text-xs text-[hsl(215,20%,60%)]">{settings?.copyrightText || "\u00A9 2025 Novaatoz Inc. All rights reserved."}</p>
-          <Link href="/admin/login" className="text-xs text-[hsl(215,30%,45%)] hover:text-[hsl(38,92%,50%)] transition-colors" data-testid="link-admin">
+        <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-2">
+          <p className="text-xs text-muted-foreground">{settings?.copyrightText || "\u00A9 2025 Novaatoz Inc. All rights reserved."}</p>
+          <Link href="/admin/login" className="text-xs text-muted-foreground hover:text-primary transition-colors" data-testid="link-admin">
             Admin
           </Link>
         </div>

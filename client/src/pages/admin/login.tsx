@@ -32,26 +32,26 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[hsl(220,18%,11%)] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-section-alt px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
             <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-10 w-10 object-contain brightness-0 invert" />
-            <span className="text-2xl font-bold tracking-tight text-white">NOVAATOZ</span>
+            <span className="text-2xl font-bold tracking-tight text-foreground">NOVAATOZ</span>
           </div>
-          <p className="text-[hsl(215,20%,60%)] text-sm">Admin Panel Login</p>
+          <p className="text-muted-foreground text-sm">Admin Panel Login</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6 space-y-5">
+        <form onSubmit={handleSubmit} className="bg-card border border-border rounded-md p-6 space-y-5">
           <div>
-            <label className="block text-sm font-medium text-[hsl(215,20%,60%)] mb-1.5">Username</label>
+            <label className="block text-sm font-medium text-muted-foreground mb-1.5">Username</label>
             <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(215,20%,60%)]" />
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,20%,14%)] pl-10 pr-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] placeholder-[hsl(215,20%,60%)]"
+                className="w-full rounded-md border border-border bg-background pl-10 pr-3 py-2 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-ring placeholder-muted-foreground"
                 placeholder="Enter username"
                 data-testid="input-admin-username"
                 required
@@ -60,14 +60,14 @@ export default function AdminLogin() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-[hsl(215,20%,60%)] mb-1.5">Password</label>
+            <label className="block text-sm font-medium text-muted-foreground mb-1.5">Password</label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(215,20%,60%)]" />
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,20%,14%)] pl-10 pr-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] placeholder-[hsl(215,20%,60%)]"
+                className="w-full rounded-md border border-border bg-background pl-10 pr-3 py-2 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-ring placeholder-muted-foreground"
                 placeholder="Enter password"
                 data-testid="input-admin-password"
                 required
@@ -78,7 +78,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full flex items-center justify-center gap-2 rounded-md bg-[hsl(38,92%,50%)] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[hsl(38,92%,40%)] transition-colors disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-semibold text-foreground transition-colors disabled:opacity-50"
             data-testid="button-admin-login"
           >
             <LogIn className="h-4 w-4" />

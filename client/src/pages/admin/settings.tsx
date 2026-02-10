@@ -84,7 +84,7 @@ function Toggle({ value, onToggle, testId }: { value: string; onToggle: () => vo
       type="button"
       onClick={onToggle}
       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-        value === "true" ? "bg-[hsl(38,92%,50%)]" : "bg-[hsl(218,35%,25%)]"
+        value === "true" ? "bg-primary" : "bg-muted"
       }`}
       data-testid={testId}
     >
@@ -99,12 +99,12 @@ function LoadingSkeleton() {
   return (
     <div className="space-y-6">
       {[1, 2, 3].map((i) => (
-        <div key={i} className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6 space-y-4">
-          <div className="h-6 w-48 bg-[hsl(218,18%,25%)] rounded animate-pulse" />
+        <div key={i} className="bg-card border border-border rounded-md p-6 space-y-4">
+          <div className="h-6 w-48 bg-muted rounded animate-pulse" />
           <div className="space-y-3">
-            <div className="h-10 w-full bg-[hsl(218,18%,25%)] rounded animate-pulse" />
-            <div className="h-10 w-full bg-[hsl(218,18%,25%)] rounded animate-pulse" />
-            <div className="h-10 w-2/3 bg-[hsl(218,18%,25%)] rounded animate-pulse" />
+            <div className="h-10 w-full bg-muted rounded animate-pulse" />
+            <div className="h-10 w-full bg-muted rounded animate-pulse" />
+            <div className="h-10 w-2/3 bg-muted rounded animate-pulse" />
           </div>
         </div>
       ))}
@@ -226,11 +226,11 @@ export default function AdminSettings() {
     });
   };
 
-  const inputClass = "w-full rounded-md border border-[hsl(218,18%,25%)] bg-[hsl(220,20%,14%)] px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[hsl(38,92%,50%)] placeholder-[hsl(215,20%,60%)]";
-  const labelClass = "block text-sm font-medium text-[hsl(215,20%,60%)] mb-1.5";
+  const inputClass = "w-full rounded-md border border-border bg-background px-3 py-2 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-ring placeholder-muted-foreground";
+  const labelClass = "block text-sm font-medium text-muted-foreground mb-1.5";
 
   return (
-    <div className="flex h-screen w-full bg-[hsl(220,18%,11%)] overflow-hidden">
+    <div className="flex h-screen w-full bg-section-alt overflow-hidden">
       <AdminSidebar active="/admin/settings" />
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <AdminHeader title="Settings" />
@@ -239,16 +239,16 @@ export default function AdminSettings() {
             <LoadingSkeleton />
           ) : (
             <>
-              <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6" data-testid="card-payment-settings">
+              <div className="bg-card border border-border rounded-md p-6" data-testid="card-payment-settings">
                 <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                   <div className="flex items-center gap-3">
-                    <CreditCard className="h-5 w-5 text-[hsl(38,92%,50%)]" />
-                    <h3 className="text-white text-base font-semibold">Payment Settings</h3>
+                    <CreditCard className="h-5 w-5 text-primary" />
+                    <h3 className="text-foreground text-base font-semibold">Payment Settings</h3>
                   </div>
                   <button
                     onClick={savePayment}
                     disabled={saveMutation.isPending}
-                    className="flex items-center gap-2 rounded-md bg-[hsl(38,92%,50%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(38,92%,40%)] transition-colors disabled:opacity-50"
+                    className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-foreground transition-colors disabled:opacity-50"
                     data-testid="button-save-payment"
                   >
                     <Save className="h-4 w-4" />
@@ -257,12 +257,12 @@ export default function AdminSettings() {
                 </div>
 
                 <div className="space-y-5">
-                  <div className="flex items-center justify-between gap-4 p-3 rounded-md bg-[hsl(220,20%,14%)] border border-[hsl(218,18%,25%)]">
+                  <div className="flex items-center justify-between gap-4 p-3 rounded-md bg-background border border-border">
                     <div className="flex items-center gap-3">
                       <SiStripe className="h-5 w-5 text-[#635BFF]" />
                       <div>
-                        <p className="text-white text-sm font-medium">Stripe</p>
-                        <p className="text-[hsl(215,20%,60%)] text-xs">Accept credit card payments</p>
+                        <p className="text-foreground text-sm font-medium">Stripe</p>
+                        <p className="text-muted-foreground text-xs">Accept credit card payments</p>
                       </div>
                     </div>
                     <Toggle
@@ -273,7 +273,7 @@ export default function AdminSettings() {
                   </div>
 
                   {form.stripeEnabled === "true" && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-4 border-l-2 border-[hsl(218,18%,25%)] ml-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-4 border-l-2 border-border ml-2">
                       <div>
                         <label className={labelClass}>Stripe Public Key</label>
                         <input
@@ -299,12 +299,12 @@ export default function AdminSettings() {
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between gap-4 p-3 rounded-md bg-[hsl(220,20%,14%)] border border-[hsl(218,18%,25%)]">
+                  <div className="flex items-center justify-between gap-4 p-3 rounded-md bg-background border border-border">
                     <div className="flex items-center gap-3">
                       <SiPaypal className="h-5 w-5 text-[#00457C]" />
                       <div>
-                        <p className="text-white text-sm font-medium">PayPal</p>
-                        <p className="text-[hsl(215,20%,60%)] text-xs">Accept PayPal payments</p>
+                        <p className="text-foreground text-sm font-medium">PayPal</p>
+                        <p className="text-muted-foreground text-xs">Accept PayPal payments</p>
                       </div>
                     </div>
                     <Toggle
@@ -315,7 +315,7 @@ export default function AdminSettings() {
                   </div>
 
                   {form.paypalEnabled === "true" && (
-                    <div className="pl-4 border-l-2 border-[hsl(218,18%,25%)] ml-2">
+                    <div className="pl-4 border-l-2 border-border ml-2">
                       <label className={labelClass}>PayPal Email</label>
                       <input
                         type="email"
@@ -328,12 +328,12 @@ export default function AdminSettings() {
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between gap-4 p-3 rounded-md bg-[hsl(220,20%,14%)] border border-[hsl(218,18%,25%)]">
+                  <div className="flex items-center justify-between gap-4 p-3 rounded-md bg-background border border-border">
                     <div className="flex items-center gap-3">
                       <CreditCard className="h-5 w-5 text-emerald-400" />
                       <div>
-                        <p className="text-white text-sm font-medium">Cash on Delivery</p>
-                        <p className="text-[hsl(215,20%,60%)] text-xs">Allow payment upon delivery</p>
+                        <p className="text-foreground text-sm font-medium">Cash on Delivery</p>
+                        <p className="text-muted-foreground text-xs">Allow payment upon delivery</p>
                       </div>
                     </div>
                     <Toggle
@@ -345,16 +345,16 @@ export default function AdminSettings() {
                 </div>
               </div>
 
-              <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6" data-testid="card-store-settings">
+              <div className="bg-card border border-border rounded-md p-6" data-testid="card-store-settings">
                 <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                   <div className="flex items-center gap-3">
-                    <Store className="h-5 w-5 text-[hsl(38,92%,50%)]" />
-                    <h3 className="text-white text-base font-semibold">Store Settings</h3>
+                    <Store className="h-5 w-5 text-primary" />
+                    <h3 className="text-foreground text-base font-semibold">Store Settings</h3>
                   </div>
                   <button
                     onClick={saveStore}
                     disabled={saveMutation.isPending}
-                    className="flex items-center gap-2 rounded-md bg-[hsl(38,92%,50%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(38,92%,40%)] transition-colors disabled:opacity-50"
+                    className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-foreground transition-colors disabled:opacity-50"
                     data-testid="button-save-store"
                   >
                     <Save className="h-4 w-4" />
@@ -438,16 +438,16 @@ export default function AdminSettings() {
                 </div>
               </div>
 
-              <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6" data-testid="card-contact-settings">
+              <div className="bg-card border border-border rounded-md p-6" data-testid="card-contact-settings">
                 <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                   <div className="flex items-center gap-3">
-                    <Mail className="h-5 w-5 text-[hsl(38,92%,50%)]" />
-                    <h3 className="text-white text-base font-semibold">Contact Information</h3>
+                    <Mail className="h-5 w-5 text-primary" />
+                    <h3 className="text-foreground text-base font-semibold">Contact Information</h3>
                   </div>
                   <button
                     onClick={saveContact}
                     disabled={saveMutation.isPending}
-                    className="flex items-center gap-2 rounded-md bg-[hsl(38,92%,50%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(38,92%,40%)] transition-colors disabled:opacity-50"
+                    className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-foreground transition-colors disabled:opacity-50"
                     data-testid="button-save-contact"
                   >
                     <Save className="h-4 w-4" />
@@ -492,16 +492,16 @@ export default function AdminSettings() {
                 </div>
               </div>
 
-              <div className="bg-[hsl(220,18%,18%)] border border-[hsl(218,18%,25%)] rounded-md p-6" data-testid="card-appearance-settings">
+              <div className="bg-card border border-border rounded-md p-6" data-testid="card-appearance-settings">
                 <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
                   <div className="flex items-center gap-3">
-                    <Layout className="h-5 w-5 text-[hsl(38,92%,50%)]" />
-                    <h3 className="text-white text-base font-semibold">Header & Footer</h3>
+                    <Layout className="h-5 w-5 text-primary" />
+                    <h3 className="text-foreground text-base font-semibold">Header & Footer</h3>
                   </div>
                   <button
                     onClick={saveAppearance}
                     disabled={saveMutation.isPending}
-                    className="flex items-center gap-2 rounded-md bg-[hsl(38,92%,50%)] px-4 py-2 text-sm font-semibold text-white hover:bg-[hsl(38,92%,40%)] transition-colors disabled:opacity-50"
+                    className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-foreground transition-colors disabled:opacity-50"
                     data-testid="button-save-appearance"
                   >
                     <Save className="h-4 w-4" />
@@ -511,8 +511,8 @@ export default function AdminSettings() {
 
                 <div className="space-y-6">
                   <div>
-                    <h4 className="text-white text-sm font-medium mb-3 flex items-center gap-2">
-                      <Type className="h-4 w-4 text-[hsl(38,92%,50%)]" />
+                    <h4 className="text-foreground text-sm font-medium mb-3 flex items-center gap-2">
+                      <Type className="h-4 w-4 text-primary" />
                       Logo
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -542,7 +542,7 @@ export default function AdminSettings() {
                       </div>
                       <div className="flex items-end gap-3 pb-0.5">
                         <div className="flex items-center gap-3">
-                          <label className="text-sm font-medium text-[hsl(215,20%,60%)]">Show Logo Icon</label>
+                          <label className="text-sm font-medium text-muted-foreground">Show Logo Icon</label>
                           <Toggle
                             value={form.showLogoIcon}
                             onToggle={() => setForm({ ...form, showLogoIcon: form.showLogoIcon === "true" ? "false" : "true" })}
@@ -554,7 +554,7 @@ export default function AdminSettings() {
                   </div>
 
                   <div>
-                    <h4 className="text-white text-sm font-medium mb-3">Navigation Links</h4>
+                    <h4 className="text-foreground text-sm font-medium mb-3">Navigation Links</h4>
                     <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                       {[
                         { key: "showNavShop", label: "Shop" },
@@ -563,8 +563,8 @@ export default function AdminSettings() {
                         { key: "showNavContact", label: "Contact" },
                         { key: "showNavReviews", label: "Reviews" },
                       ].map(nav => (
-                        <div key={nav.key} className="flex items-center justify-between gap-2 p-3 rounded-md bg-[hsl(220,20%,14%)] border border-[hsl(218,18%,25%)]">
-                          <span className="text-white text-sm">{nav.label}</span>
+                        <div key={nav.key} className="flex items-center justify-between gap-2 p-3 rounded-md bg-background border border-border">
+                          <span className="text-foreground text-sm">{nav.label}</span>
                           <Toggle
                             value={(form as any)[nav.key]}
                             onToggle={() => setForm({ ...form, [nav.key]: (form as any)[nav.key] === "true" ? "false" : "true" })}
@@ -576,15 +576,15 @@ export default function AdminSettings() {
                   </div>
 
                   <div>
-                    <h4 className="text-white text-sm font-medium mb-3">Footer Sections</h4>
+                    <h4 className="text-foreground text-sm font-medium mb-3">Footer Sections</h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
                       {[
                         { key: "showFooterNewsletter", label: "Newsletter" },
                         { key: "showFooterSocial", label: "Social Links" },
                         { key: "showFooterLinks", label: "Footer Links" },
                       ].map(sec => (
-                        <div key={sec.key} className="flex items-center justify-between gap-2 p-3 rounded-md bg-[hsl(220,20%,14%)] border border-[hsl(218,18%,25%)]">
-                          <span className="text-white text-sm">{sec.label}</span>
+                        <div key={sec.key} className="flex items-center justify-between gap-2 p-3 rounded-md bg-background border border-border">
+                          <span className="text-foreground text-sm">{sec.label}</span>
                           <Toggle
                             value={(form as any)[sec.key]}
                             onToggle={() => setForm({ ...form, [sec.key]: (form as any)[sec.key] === "true" ? "false" : "true" })}
@@ -607,8 +607,8 @@ export default function AdminSettings() {
                   </div>
 
                   <div>
-                    <h4 className="text-white text-sm font-medium mb-3 flex items-center gap-2">
-                      <Share2 className="h-4 w-4 text-[hsl(38,92%,50%)]" />
+                    <h4 className="text-foreground text-sm font-medium mb-3 flex items-center gap-2">
+                      <Share2 className="h-4 w-4 text-primary" />
                       Social Media Links
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -647,7 +647,7 @@ export default function AdminSettings() {
                       <div>
                         <label className={labelClass}>
                           <span className="flex items-center gap-1.5">
-                            <SiX className="h-3.5 w-3.5 text-white" />
+                            <SiX className="h-3.5 w-3.5 text-foreground" />
                             X / Twitter URL
                           </span>
                         </label>
@@ -679,7 +679,7 @@ export default function AdminSettings() {
                       <div>
                         <label className={labelClass}>
                           <span className="flex items-center gap-1.5">
-                            <SiTiktok className="h-3.5 w-3.5 text-white" />
+                            <SiTiktok className="h-3.5 w-3.5 text-foreground" />
                             TikTok URL
                           </span>
                         </label>

@@ -47,7 +47,7 @@ export default function ShopPage() {
                 onClick={() => setCategory(cat)}
                 className={`px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
                   category === cat
-                    ? "bg-primary text-white"
+                    ? "bg-primary text-primary-foreground"
                     : "bg-card text-muted-foreground border border-border hover:border-primary/50 hover:text-foreground"
                 }`}
                 data-testid={`button-filter-${cat.toLowerCase().replace(/\s/g, "-")}`}
@@ -79,7 +79,7 @@ export default function ShopPage() {
               {filtered?.map((product) => (
                 <div key={product.id} className="flex flex-col overflow-hidden rounded-md border border-border bg-card shadow-sm transition-all hover:shadow-md hover:border-primary/30 group" data-testid={`card-product-${product.id}`}>
                   <Link href={`/product/${product.slug}`}>
-                    <div className="relative aspect-[4/5] w-full bg-gray-800 overflow-hidden cursor-pointer">
+                    <div className="relative aspect-[4/5] w-full bg-muted overflow-hidden cursor-pointer">
                       <img
                         alt={product.name}
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-90"
@@ -111,13 +111,13 @@ export default function ShopPage() {
                     <p className="text-xs text-muted-foreground/70 mb-4">{product.category}</p>
                     <div className="flex gap-2">
                       <Link href={`/product/${product.slug}`} className="flex-1">
-                        <button className="w-full rounded-md bg-white/5 py-2 text-sm font-semibold text-foreground hover:bg-white/10 transition-colors border border-white/10" data-testid={`button-view-${product.slug}`}>
+                        <button className="w-full rounded-md bg-foreground/5 py-2 text-sm font-semibold text-foreground hover:bg-foreground/10 transition-colors border border-border" data-testid={`button-view-${product.slug}`}>
                           View Details
                         </button>
                       </Link>
                       <button
                         onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image })}
-                        className="rounded-md bg-primary py-2 px-4 text-sm font-semibold text-white transition-colors"
+                        className="rounded-md bg-primary py-2 px-4 text-sm font-semibold text-primary-foreground transition-colors"
                         data-testid={`button-add-cart-${product.slug}`}
                       >
                         Add
