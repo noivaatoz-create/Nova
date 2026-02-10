@@ -68,7 +68,7 @@ shared/
 - Revenue data can be reset to $0 via "Reset Data" button (deletes all orders)
 
 ## Database Tables
-- products: name, slug, description, price, compareAtPrice, category, badge, specs (jsonb), features, whatsInBox, images, stock, isActive
+- products: name, slug, description, price, compareAtPrice, category, badge, specs (jsonb), features, whatsInBox, images, stock, isActive, isFeatured
 - orders: orderNumber, customer info, items (jsonb), totals, status, payment provider
 - reviews: productId, customerName, rating, title, body, verified
 - subscribers: email
