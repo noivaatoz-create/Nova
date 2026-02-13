@@ -12,6 +12,9 @@ interface SettingsForm {
   stripeSecretKey: string;
   paypalEnabled: string;
   paypalEmail: string;
+  paypalClientId: string;
+  paypalClientSecret: string;
+  paypalMode: string;
   codEnabled: string;
   storeName: string;
   currency: string;
@@ -48,6 +51,9 @@ const defaultForm: SettingsForm = {
   stripeSecretKey: "",
   paypalEnabled: "false",
   paypalEmail: "",
+  paypalClientId: "",
+  paypalClientSecret: "",
+  paypalMode: "sandbox",
   codEnabled: "false",
   storeName: "",
   currency: "USD",
@@ -128,6 +134,9 @@ export default function AdminSettings() {
         stripeSecretKey: settings.stripeSecretKey || "",
         paypalEnabled: settings.paypalEnabled || "false",
         paypalEmail: settings.paypalEmail || "",
+        paypalClientId: settings.paypalClientId || "",
+        paypalClientSecret: settings.paypalClientSecret || "",
+        paypalMode: settings.paypalMode || "sandbox",
         codEnabled: settings.codEnabled || "false",
         storeName: settings.storeName || "",
         currency: settings.currency || "USD",
@@ -180,6 +189,9 @@ export default function AdminSettings() {
       stripeSecretKey: form.stripeSecretKey,
       paypalEnabled: form.paypalEnabled,
       paypalEmail: form.paypalEmail,
+      paypalClientId: form.paypalClientId,
+      paypalClientSecret: form.paypalClientSecret,
+      paypalMode: form.paypalMode,
       codEnabled: form.codEnabled,
     });
   };
@@ -315,16 +327,52 @@ export default function AdminSettings() {
                   </div>
 
                   {form.paypalEnabled === "true" && (
-                    <div className="pl-4 border-l-2 border-border ml-2">
-                      <label className={labelClass}>PayPal Email</label>
-                      <input
-                        type="email"
-                        value={form.paypalEmail}
-                        onChange={(e) => setForm({ ...form, paypalEmail: e.target.value })}
-                        className={inputClass}
-                        placeholder="payments@example.com"
-                        data-testid="input-paypal-email"
-                      />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-4 border-l-2 border-border ml-2">
+                      <div>
+                        <label className={labelClass}>PayPal Email</label>
+                        <input
+                          type="email"
+                          value={form.paypalEmail}
+                          onChange={(e) => setForm({ ...form, paypalEmail: e.target.value })}
+                          className={inputClass}
+                          placeholder="payments@example.com"
+                          data-testid="input-paypal-email"
+                        />
+                      </div>
+                      <div>
+                        <label className={labelClass}>PayPal Mode</label>
+                        <select
+                          value={form.paypalMode}
+                          onChange={(e) => setForm({ ...form, paypalMode: e.target.value })}
+                          className={inputClass}
+                          data-testid="select-paypal-mode"
+                        >
+                          <option value="sandbox">Sandbox (Testing)</option>
+                          <option value="live">Live (Production)</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className={labelClass}>PayPal Client ID</label>
+                        <input
+                          type="text"
+                          value={form.paypalClientId}
+                          onChange={(e) => setForm({ ...form, paypalClientId: e.target.value })}
+                          className={inputClass}
+                          placeholder="AZx..."
+                          data-testid="input-paypal-client-id"
+                        />
+                      </div>
+                      <div>
+                        <label className={labelClass}>PayPal Client Secret</label>
+                        <input
+                          type="password"
+                          value={form.paypalClientSecret}
+                          onChange={(e) => setForm({ ...form, paypalClientSecret: e.target.value })}
+                          className={inputClass}
+                          placeholder="EJ..."
+                          data-testid="input-paypal-client-secret"
+                        />
+                      </div>
                     </div>
                   )}
 

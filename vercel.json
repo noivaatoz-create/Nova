@@ -1,13 +1,14 @@
 {
     "version": 2,
+    "rewrites": [
+        {
+            "source": "/((?!api/).*)",
+            "destination": "/index.html"
+        }
+    ],
     "buildCommand": "npm run build",
     "devCommand": "npm run dev",
     "installCommand": "npm install",
     "framework": null,
-    "outputDirectory": "dist/public",
-    "env": {
-        "DATABASE_URL": "@database_url",
-        "SESSION_SECRET": "@session_secret",
-        "NODE_ENV": "production"
-    }
+    "outputDirectory": "dist/public"
 }

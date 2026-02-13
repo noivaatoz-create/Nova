@@ -24,6 +24,7 @@ import AdminProducts from "@/pages/admin/products";
 import AdminOrders from "@/pages/admin/orders";
 import AdminSettings from "@/pages/admin/settings";
 import AdminMessages from "@/pages/admin/messages";
+import AdminGallery from "@/pages/admin/gallery";
 import AdminLogin from "@/pages/admin/login";
 import { AdminGuard } from "@/lib/admin-auth";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -87,6 +88,9 @@ function Router() {
       </Route>
       <Route path="/admin/orders">
         {() => <AdminGuard><AdminOrders /></AdminGuard>}
+      </Route>
+      <Route path="/admin/gallery">
+        {() => <AdminGuard><AdminGallery /></AdminGuard>}
       </Route>
       <Route path="/admin/settings">
         {() => <AdminGuard><AdminSettings /></AdminGuard>}

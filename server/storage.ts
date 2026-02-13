@@ -1,4 +1,4 @@
-import { db } from "./db";
+import { db } from "./db.js";
 import { eq } from "drizzle-orm";
 import {
   products, orders, reviews, subscribers, siteSettings, contactSubmissions,
@@ -8,7 +8,7 @@ import {
   type Subscriber, type InsertSubscriber,
   type SiteSetting, type InsertSiteSetting,
   type ContactSubmission, type InsertContactSubmission,
-} from "@shared/schema";
+} from "../shared/schema.js";
 
 export interface IStorage {
   getProducts(): Promise<Product[]>;

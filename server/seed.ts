@@ -1,5 +1,5 @@
-import { db } from "./db";
-import { products, reviews, orders } from "@shared/schema";
+import { db } from "./db.js";
+import { products, reviews, orders } from "../shared/schema.js";
 import { sql } from "drizzle-orm";
 
 async function seed() {

@@ -1,9 +1,9 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { AdminSidebar, AdminHeader } from "./dashboard";
-import type { Product } from "@shared/schema";
+import type { ProductWithColorVariants, ProductColorVariant } from "@shared/color-variants";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Edit, Trash2, Package, X, List, Image, Box, Wrench, ToggleLeft, ToggleRight, Upload, Link, Star } from "lucide-react";
+import { Plus, Edit, Trash2, Package, X, List, Image, Box, Wrench, ToggleLeft, ToggleRight, Upload, Link, Star, Palette, ArrowUp, ArrowDown } from "lucide-react";
 import { useState, useRef, useCallback } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
@@ -12,9 +12,9 @@ import { Button } from "@/components/ui/button";
 const inputClass = "w-full rounded-md border border-border bg-background px-3 py-2 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-ring";
 
 export default function AdminProducts() {
-  const { data: products, isLoading } = useQuery<Product[]>({ queryKey: ["/api/products"] });
+  const { data: products, isLoading } = useQuery<ProductWithColorVariants[]>({ queryKey: ["/api/products"] });
   const { toast } = useToast();
-  const [editProduct, setEditProduct] = useState<Product | null>(null);
+  const [editProduct, setEditProduct] = useState<ProductWithColorVariants | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({
     name: "", slug: "", shortDescription: "", longDescription: "",
@@ -24,18 +24,27 @@ export default function AdminProducts() {
     specs: {} as Record<string, string>,
     whatsInBox: [] as string[],
     images: [] as string[],
+    colorVariants: [] as ProductColorVariant[],
   });
   const [specEntries, setSpecEntries] = useState<{key: string, value: string}[]>([]);
   const [deleteProductId, setDeleteProductId] = useState<number | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [uploadingIdx, setUploadingIdx] = useState<number | null>(null);
+  const [uploadingKey, setUploadingKey] = useState<string | null>(null);
   const mainImageRef = useRef<HTMLInputElement>(null);
   const additionalImageRefs = useRef<Map<number, HTMLInputElement>>(new Map());
+  const colorImageRefs = useRef<Map<string, HTMLInputElement>>(new Map());
   const setAdditionalImageRef = useCallback((index: number, el: HTMLInputElement | null) => {
     if (el) {
       additionalImageRefs.current.set(index, el);
     } else {
       additionalImageRefs.current.delete(index);
+    }
+  }, []);
+  const setColorImageRef = useCallback((key: string, el: HTMLInputElement | null) => {
+    if (el) {
+      colorImageRefs.current.set(key, el);
+    } else {
+      colorImageRefs.current.delete(key);
     }
   }, []);
 
@@ -85,11 +94,12 @@ export default function AdminProducts() {
       price: "", compareAtPrice: "", category: "Best Sellers", badge: "",
       image: "", stock: "100", isActive: true, isFeatured: false,
       features: [], specs: {}, whatsInBox: [], images: [],
+      colorVariants: [],
     });
     setSpecEntries([]);
   };
 
-  const openEdit = (p: Product) => {
+  const openEdit = (p: ProductWithColorVariants) => {
     setEditProduct(p);
     setForm({
       name: p.name, slug: p.slug,
@@ -103,6 +113,7 @@ export default function AdminProducts() {
       specs: p.specs || {},
       whatsInBox: p.whatsInBox || [],
       images: p.images || [],
+      colorVariants: p.colorVariants || [],
     });
     setSpecEntries(Object.entries(p.specs || {}).map(([key, value]) => ({ key, value })));
     setShowForm(true);
@@ -130,6 +141,13 @@ export default function AdminProducts() {
       specs: Object.fromEntries(specEntries.filter(e => e.key.trim()).map(e => [e.key, e.value])),
       whatsInBox: form.whatsInBox.filter(w => w.trim()),
       images: form.images.filter(i => i.trim()),
+      colorVariants: form.colorVariants
+        .map((variant) => ({
+          name: variant.name.trim(),
+          swatch: variant.swatch.trim(),
+          images: variant.images.map((image) => image.trim()).filter(Boolean),
+        }))
+        .filter((variant) => variant.name && variant.images.length > 0),
     });
   };
 
@@ -527,7 +545,7 @@ export default function AdminProducts() {
                       onChange={async (e) => {
                         const file = e.target.files?.[0];
                         if (!file) return;
-                        setUploadingIdx(i);
+                        setUploadingKey(`additional:${i}`);
                         try {
                           await handleImageUpload(file, (url) => {
                             setForm(prev => {
@@ -537,11 +555,11 @@ export default function AdminProducts() {
                             });
                           });
                         } finally {
-                          setUploadingIdx(null);
+                          setUploadingKey(null);
                           e.target.value = "";
                         }
                       }} />
-                    <Button type="button" variant="outline" size="icon" disabled={uploadingIdx === i}
+                    <Button type="button" variant="outline" size="icon" disabled={uploadingKey === `additional:${i}`}
                       onClick={() => additionalImageRefs.current.get(i)?.click()}
                       className="bg-background text-muted-foreground"
                       data-testid={`button-upload-image-${i}`}
@@ -573,6 +591,193 @@ export default function AdminProducts() {
                   data-testid="button-add-image"
                 >
                   <Plus className="h-4 w-4" /> Add Image
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2 pt-4 pb-2 border-t border-border">
+                <Palette className="h-4 w-4 text-primary" />
+                <h3 className="text-sm font-semibold text-foreground">Color Variants (with images)</h3>
+              </div>
+              <div className="space-y-4">
+                {form.colorVariants.map((variant, variantIndex) => (
+                  <div key={variantIndex} className="rounded-md border border-border p-3 bg-background/30 space-y-3" data-testid={`variant-${variantIndex}`}>
+                    <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-2 items-end">
+                      <div>
+                        <label className="block text-xs text-muted-foreground mb-1">Color Name</label>
+                        <input
+                          value={variant.name}
+                          onChange={(e) => {
+                            const updated = [...form.colorVariants];
+                            updated[variantIndex] = { ...updated[variantIndex], name: e.target.value };
+                            setForm({ ...form, colorVariants: updated });
+                          }}
+                          className={inputClass}
+                          placeholder="e.g. White / Midnight Black"
+                          data-testid={`input-variant-name-${variantIndex}`}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs text-muted-foreground mb-1">Swatch</label>
+                        <input
+                          type="color"
+                          value={variant.swatch || "#272c40"}
+                          onChange={(e) => {
+                            const updated = [...form.colorVariants];
+                            updated[variantIndex] = { ...updated[variantIndex], swatch: e.target.value };
+                            setForm({ ...form, colorVariants: updated });
+                          }}
+                          className="h-10 w-14 rounded border border-border bg-background p-1"
+                          data-testid={`input-variant-swatch-${variantIndex}`}
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = form.colorVariants.filter((_, idx) => idx !== variantIndex);
+                          setForm({ ...form, colorVariants: updated });
+                        }}
+                        className="rounded-md border border-border px-3 h-10 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                        data-testid={`button-remove-variant-${variantIndex}`}
+                      >
+                        Remove Color
+                      </button>
+                    </div>
+
+                    <div className="space-y-2">
+                      {variant.images.map((variantImage, imageIndex) => {
+                        const refKey = `${variantIndex}:${imageIndex}`;
+                        return (
+                          <div key={imageIndex} className="flex items-center gap-2">
+                            <input
+                              value={variantImage}
+                              onChange={(e) => {
+                                const updated = [...form.colorVariants];
+                                const images = [...updated[variantIndex].images];
+                                images[imageIndex] = e.target.value;
+                                updated[variantIndex] = { ...updated[variantIndex], images };
+                                setForm({ ...form, colorVariants: updated });
+                              }}
+                              className={`flex-1 ${inputClass}`}
+                              placeholder="Color specific image URL"
+                              data-testid={`input-variant-image-${variantIndex}-${imageIndex}`}
+                            />
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              ref={(el) => setColorImageRef(refKey, el)}
+                              onChange={async (e) => {
+                                const file = e.target.files?.[0];
+                                if (!file) return;
+                                setUploadingKey(`variant:${variantIndex}:${imageIndex}`);
+                                try {
+                                  await handleImageUpload(file, (url) => {
+                                    setForm((prev) => {
+                                      const updated = [...prev.colorVariants];
+                                      const images = [...updated[variantIndex].images];
+                                      images[imageIndex] = url;
+                                      updated[variantIndex] = { ...updated[variantIndex], images };
+                                      return { ...prev, colorVariants: updated };
+                                    });
+                                  });
+                                } finally {
+                                  setUploadingKey(null);
+                                  e.target.value = "";
+                                }
+                              }}
+                              data-testid={`file-variant-image-${variantIndex}-${imageIndex}`}
+                            />
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="icon"
+                              disabled={uploadingKey === `variant:${variantIndex}:${imageIndex}`}
+                              onClick={() => colorImageRefs.current.get(refKey)?.click()}
+                              className="bg-background text-muted-foreground"
+                              data-testid={`button-upload-variant-image-${variantIndex}-${imageIndex}`}
+                            >
+                              <Upload className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="icon"
+                              onClick={() => {
+                                if (imageIndex === 0) return;
+                                const updated = [...form.colorVariants];
+                                const images = [...updated[variantIndex].images];
+                                [images[imageIndex - 1], images[imageIndex]] = [images[imageIndex], images[imageIndex - 1]];
+                                updated[variantIndex] = { ...updated[variantIndex], images };
+                                setForm({ ...form, colorVariants: updated });
+                              }}
+                              disabled={imageIndex === 0}
+                              className="bg-background text-muted-foreground"
+                              data-testid={`button-variant-image-up-${variantIndex}-${imageIndex}`}
+                            >
+                              <ArrowUp className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="icon"
+                              onClick={() => {
+                                if (imageIndex === variant.images.length - 1) return;
+                                const updated = [...form.colorVariants];
+                                const images = [...updated[variantIndex].images];
+                                [images[imageIndex + 1], images[imageIndex]] = [images[imageIndex], images[imageIndex + 1]];
+                                updated[variantIndex] = { ...updated[variantIndex], images };
+                                setForm({ ...form, colorVariants: updated });
+                              }}
+                              disabled={imageIndex === variant.images.length - 1}
+                              className="bg-background text-muted-foreground"
+                              data-testid={`button-variant-image-down-${variantIndex}-${imageIndex}`}
+                            >
+                              <ArrowDown className="h-4 w-4" />
+                            </Button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = [...form.colorVariants];
+                                const images = updated[variantIndex].images.filter((_, idx) => idx !== imageIndex);
+                                updated[variantIndex] = { ...updated[variantIndex], images };
+                                setForm({ ...form, colorVariants: updated });
+                              }}
+                              className="p-1.5 rounded-md hover:bg-red-500/10 text-muted-foreground hover:text-red-400"
+                              data-testid={`button-remove-variant-image-${variantIndex}-${imageIndex}`}
+                            >
+                              <X className="h-4 w-4" />
+                            </button>
+                          </div>
+                        );
+                      })}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = [...form.colorVariants];
+                          updated[variantIndex] = { ...updated[variantIndex], images: [...updated[variantIndex].images, ""] };
+                          setForm({ ...form, colorVariants: updated });
+                        }}
+                        className="flex items-center gap-1 text-primary text-sm hover:opacity-80"
+                        data-testid={`button-add-variant-image-${variantIndex}`}
+                      >
+                        <Plus className="h-4 w-4" /> Add Color Image
+                      </button>
+                    </div>
+                  </div>
+                ))}
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setForm({
+                      ...form,
+                      colorVariants: [...form.colorVariants, { name: "", swatch: "#272c40", images: [""] }],
+                    });
+                  }}
+                  className="flex items-center gap-1 text-primary text-sm hover:opacity-80"
+                  data-testid="button-add-color-variant"
+                >
+                  <Plus className="h-4 w-4" /> Add Color Variant
                 </button>
               </div>
 

@@ -1,66 +1,67 @@
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, Droplets, Waves, VolumeX, ShieldCheck, CheckCircle, XCircle, Minus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, Droplets, Waves, VolumeX, CheckCircle, XCircle, Minus } from "lucide-react";
 import { useCartStore } from "@/lib/cart-store";
+import { HOME_GALLERY_SETTINGS_KEY, parseHomeGalleryImages } from "@/lib/home-gallery";
 import type { Product, Review } from "@shared/schema";
 
 function HeroSection() {
   return (
-    <section className="relative overflow-hidden py-20 sm:py-32 lg:pb-32 xl:pb-36" data-testid="section-hero">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/20 rounded-full blur-[120px] -z-10" />
+    <section className="relative overflow-hidden py-24 sm:py-36 lg:py-44" data-testid="section-hero">
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-primary/8 rounded-full blur-[140px] -z-10" />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="flex flex-col gap-6 max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary w-fit" data-testid="badge-new-release">
-              <span className="relative flex h-2 w-2">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="flex flex-col gap-8 max-w-2xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium tracking-wider uppercase text-primary w-fit" data-testid="badge-new-release">
+              <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
               </span>
-              New JetClean Pro Released
+              New Release
             </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] text-foreground">
-              The Future of <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-foreground">
-                Oral Care
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-normal tracking-tight leading-[1.15] text-foreground">
+              The Art of <br />
+              <span className="text-primary italic">
+                Daily Care
               </span>
             </h1>
-            <p className="text-lg text-muted-foreground max-w-lg leading-relaxed">
-              Experience the precision of the JetClean Pro. Clinical-grade hygiene in a cyber-minimalist shell designed for the modern bathroom.
+            <p className="text-base text-muted-foreground max-w-md leading-relaxed">
+              Experience clinical-grade oral hygiene wrapped in a design that belongs on your vanity. Precision-engineered for those who appreciate the finer details.
             </p>
-            <div className="flex flex-wrap gap-4 pt-4">
+            <div className="flex flex-wrap gap-3 pt-2">
               <Link href="/shop">
-                <button className="flex items-center justify-center rounded-md bg-primary h-12 px-8 text-base font-bold text-primary-foreground transition-all hover:scale-[1.02] shadow-[0_0_20px_hsl(var(--primary)/0.4)]" data-testid="button-shop-hero">
-                  Shop the Future
+                <button className="flex items-center justify-center gap-2 rounded-full bg-foreground h-11 px-7 text-sm font-medium tracking-wide text-background transition-all hover:bg-foreground/90" data-testid="button-shop-hero">
+                  Explore Collection
+                  <ArrowRight className="h-3.5 w-3.5" />
                 </button>
               </Link>
               <Link href="/product/jetclean-pro">
-                <button className="flex items-center justify-center rounded-md border border-border bg-card/50 h-12 px-8 text-base font-medium text-foreground transition-all hover:bg-card hover:border-primary/50" data-testid="button-watch-demo">
-                  View Details
+                <button className="flex items-center justify-center rounded-full border border-border h-11 px-7 text-sm font-medium tracking-wide text-foreground transition-all hover:bg-accent/50" data-testid="button-watch-demo">
+                  Learn More
                 </button>
               </Link>
             </div>
           </div>
-          <div className="relative lg:h-[600px] flex items-center justify-center">
-            <div className="absolute w-[400px] h-[400px] border border-primary/20 rounded-full animate-[spin_10s_linear_infinite]" />
-            <div className="absolute w-[500px] h-[500px] border border-border/10 rounded-full" />
-            <div className="relative z-10 w-full max-w-md aspect-[3/4] rounded-2xl bg-gradient-to-b from-muted to-card p-1 shadow-2xl ring-1 ring-border/20">
-              <div className="h-full w-full rounded-xl bg-card overflow-hidden relative">
+          <div className="relative lg:h-[550px] flex items-center justify-center">
+            <div className="absolute w-[380px] h-[380px] border border-primary/10 rounded-full" />
+            <div className="absolute w-[480px] h-[480px] border border-border/30 rounded-full" />
+            <div className="relative z-10 w-full max-w-md aspect-[3/4] rounded-3xl bg-gradient-to-b from-accent/50 to-card p-1 shadow-xl">
+              <div className="h-full w-full rounded-[22px] bg-card overflow-hidden relative">
                 <img
                   alt="Novaatoz JetClean Pro Water Flosser"
-                  className="h-full w-full object-cover opacity-90"
+                  className="h-full w-full object-cover"
                   src="/images/hero-product.png"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                 <div className="absolute bottom-8 left-8 right-8">
                   <div className="flex justify-between items-end gap-4">
                     <div>
-                      <p className="text-primary text-sm font-bold tracking-widest uppercase">Series X</p>
-                      <h3 className="text-white text-2xl font-bold">JetClean Pro</h3>
+                      <p className="text-white/70 text-xs font-medium tracking-[0.2em] uppercase">Flagship</p>
+                      <h3 className="text-white text-xl font-serif">JetClean Pro</h3>
                     </div>
                     <Link href="/product/jetclean-pro">
-                      <div className="h-10 w-10 rounded-full bg-white/10 backdrop-blur flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer" data-testid="button-hero-product-link">
-                        <ArrowRight className="h-5 w-5 text-white" />
+                      <div className="h-9 w-9 rounded-full bg-white/15 backdrop-blur flex items-center justify-center hover:bg-white/25 transition-colors cursor-pointer" data-testid="button-hero-product-link">
+                        <ArrowRight className="h-4 w-4 text-white" />
                       </div>
                     </Link>
                   </div>
@@ -82,25 +83,26 @@ function ValuePropsSection() {
   ];
 
   return (
-    <section className="py-24 bg-background relative" data-testid="section-value-props">
+    <section className="py-28 bg-background relative" data-testid="section-value-props">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16 md:flex md:items-end md:justify-between gap-4">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">Why Novaatoz?</h2>
-            <p className="text-muted-foreground text-lg">Advanced engineering for a superior clean. We've stripped away the unnecessary to focus on pure performance.</p>
+          <div className="max-w-xl">
+            <p className="text-primary text-xs font-medium tracking-[0.2em] uppercase mb-3">Why Novaatoz</p>
+            <h2 className="text-3xl font-serif tracking-tight text-foreground sm:text-4xl mb-4">Crafted with Purpose</h2>
+            <p className="text-muted-foreground leading-relaxed">Advanced engineering meets thoughtful design. We stripped away the unnecessary to focus on what truly matters.</p>
           </div>
-          <Link href="/shop" className="hidden md:flex items-center gap-1 text-primary font-medium mt-4 md:mt-0" data-testid="link-full-specs">
-            View full specs <ArrowRight className="h-4 w-4" />
+          <Link href="/shop" className="hidden md:flex items-center gap-2 text-sm font-medium tracking-wide text-foreground mt-4 md:mt-0 hover:text-primary transition-colors" data-testid="link-full-specs">
+            View all products <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {features.map((f, i) => (
-            <div key={i} className="group relative overflow-visible rounded-md border border-border bg-card p-8 transition-all hover:border-primary/50 hover:shadow-lg" data-testid={`card-feature-${i}`}>
-              <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-md bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                <f.icon className="h-6 w-6" />
+            <div key={i} className="group relative overflow-visible rounded-2xl border border-border/60 bg-card/50 p-8 transition-all hover:border-primary/30 hover:shadow-md" data-testid={`card-feature-${i}`}>
+              <div className="mb-6 inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary/8 text-primary">
+                <f.icon className="h-5 w-5" />
               </div>
-              <h3 className="mb-2 text-xl font-bold text-foreground">{f.title}</h3>
-              <p className="text-muted-foreground">{f.desc}</p>
+              <h3 className="mb-2 text-lg font-medium text-foreground">{f.title}</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">{f.desc}</p>
             </div>
           ))}
         </div>
@@ -109,53 +111,39 @@ function ValuePropsSection() {
   );
 }
 
-const galleryImages = [
-  "/gallery/ezgif-frame-001_1770676967743.jpg",
-  "/gallery/gallery-021.png",
-  "/gallery/gallery-042.png",
-  "/gallery/gallery-023.png",
-  "/gallery/gallery-043.png",
-  "/gallery/ezgif-frame-015_1770676967744.jpg",
-  "/gallery/gallery-044.png",
-  "/gallery/gallery-026.png",
-  "/gallery/gallery-045.png",
-  "/gallery/gallery-034.png",
-  "/gallery/gallery-022.png",
-  "/gallery/gallery-028.png",
-  "/gallery/gallery-041.png",
-  "/gallery/ezgif-frame-020_1770676967744.jpg",
-  "/gallery/gallery-046.png",
-  "/gallery/gallery-024.png",
-  "/gallery/gallery-033.png",
-  "/gallery/gallery-047.png",
-  "/gallery/gallery-038.png",
-  "/gallery/gallery-040.png",
-];
-
 function GalleryMarqueeSection() {
-  const row1 = galleryImages.slice(0, 10);
-  const row2 = galleryImages.slice(10, 20);
+  const { data: settings } = useQuery<Record<string, string>>({
+    queryKey: ["/api/settings"],
+  });
+  const galleryImages = parseHomeGalleryImages(settings?.[HOME_GALLERY_SETTINGS_KEY]);
+
+  const midpoint = Math.ceil(galleryImages.length / 2);
+  const row1 = galleryImages.slice(0, midpoint);
+  const row2 = galleryImages.slice(midpoint);
+  const marqueeRow1 = row1.length > 0 ? row1 : galleryImages;
+  const marqueeRow2 = row2.length > 0 ? row2 : marqueeRow1;
 
   return (
-    <section className="py-20 bg-section-alt border-t border-border/50 overflow-hidden" data-testid="section-gallery">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-12">
-        <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">Designed for Perfection</h2>
-          <p className="text-muted-foreground text-lg">Every angle, every detail - crafted with precision engineering and premium materials.</p>
+    <section className="py-24 bg-section-alt border-t border-border/40 overflow-hidden" data-testid="section-gallery">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-14">
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="text-primary text-xs font-medium tracking-[0.2em] uppercase mb-3">Gallery</p>
+          <h2 className="text-3xl font-serif tracking-tight text-foreground sm:text-4xl mb-4">Designed for Perfection</h2>
+          <p className="text-muted-foreground leading-relaxed">Every angle, every detail - crafted with precision engineering and premium materials.</p>
         </div>
       </div>
-      <div className="space-y-4">
+      <div className="space-y-3">
         <div className="flex animate-marquee-left">
-          {[...row1, ...row1, ...row1].map((src, i) => (
-            <div key={i} className="flex-shrink-0 w-[300px] h-[200px] mx-2 rounded-md overflow-hidden border border-border/50">
-              <img src={src} alt={`Product showcase ${(i % 10) + 1}`} className="w-full h-full object-cover" loading="lazy" />
+          {[...marqueeRow1, ...marqueeRow1, ...marqueeRow1].map((src, i) => (
+            <div key={i} className="flex-shrink-0 w-[300px] h-[200px] mx-2 rounded-2xl overflow-hidden border border-border/40">
+              <img src={src} alt={`Product showcase ${(i % marqueeRow1.length) + 1}`} className="w-full h-full object-cover" loading="lazy" />
             </div>
           ))}
         </div>
         <div className="flex animate-marquee-right">
-          {[...row2, ...row2, ...row2].map((src, i) => (
-            <div key={i} className="flex-shrink-0 w-[300px] h-[200px] mx-2 rounded-md overflow-hidden border border-border/50">
-              <img src={src} alt={`Product showcase ${(i % 10) + 11}`} className="w-full h-full object-cover" loading="lazy" />
+          {[...marqueeRow2, ...marqueeRow2, ...marqueeRow2].map((src, i) => (
+            <div key={i} className="flex-shrink-0 w-[300px] h-[200px] mx-2 rounded-2xl overflow-hidden border border-border/40">
+              <img src={src} alt={`Product showcase ${(i % marqueeRow2.length) + marqueeRow1.length + 1}`} className="w-full h-full object-cover" loading="lazy" />
             </div>
           ))}
         </div>
@@ -165,16 +153,23 @@ function GalleryMarqueeSection() {
 }
 
 function FeaturedProductsSection() {
-  const { data: products, isLoading } = useQuery<Product[]>({ queryKey: ["/api/products"] });
+  const { data: products, isLoading } = useQuery<Product[]>({
+    queryKey: ["/api/products"],
+    staleTime: 0,
+    refetchOnMount: "always",
+  });
   const { addItem } = useCartStore();
 
   return (
-    <section className="py-24 border-t border-border/50 bg-section-alt" data-testid="section-featured-products">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-10">
+    <section className="py-28 border-t border-border/40 bg-section-alt" data-testid="section-featured-products">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-12">
         <div className="flex items-end justify-between gap-4">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Featured Products</h2>
-          <Link href="/shop" className="text-primary font-medium hidden sm:flex items-center gap-1" data-testid="link-view-all-products">
-            View All <ArrowRight className="h-4 w-4" />
+          <div>
+            <p className="text-primary text-xs font-medium tracking-[0.2em] uppercase mb-3">Collection</p>
+            <h2 className="text-3xl font-serif tracking-tight text-foreground sm:text-4xl">Featured Products</h2>
+          </div>
+          <Link href="/shop" className="text-sm font-medium tracking-wide text-foreground hidden sm:flex items-center gap-2 hover:text-primary transition-colors" data-testid="link-view-all-products">
+            View All <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
       </div>
@@ -182,50 +177,45 @@ function FeaturedProductsSection() {
         <div className="flex gap-6 mx-auto max-w-7xl min-w-max">
           {isLoading
             ? Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="w-[320px] rounded-md border border-border bg-card overflow-hidden">
+                <div key={i} className="w-[300px] rounded-2xl border border-border/60 bg-card overflow-hidden">
                   <div className="aspect-[4/5] bg-muted animate-pulse" />
-                  <div className="p-5 space-y-3">
+                  <div className="p-6 space-y-3">
                     <div className="h-4 bg-muted rounded animate-pulse w-2/3" />
                     <div className="h-3 bg-muted rounded animate-pulse" />
                   </div>
                 </div>
               ))
             : products?.filter(p => p.isFeatured)?.map((product) => (
-                <div key={product.id} className="flex w-[320px] flex-col overflow-hidden rounded-md border border-border bg-card shadow-sm transition-all hover:shadow-md hover:border-primary/30 group" data-testid={`card-product-${product.id}`}>
+                <div key={product.id} className="flex w-[300px] flex-col overflow-hidden rounded-2xl border border-border/60 bg-card shadow-sm transition-all hover:shadow-lg hover:border-primary/20 group" data-testid={`card-product-${product.id}`}>
                   <Link href={`/product/${product.slug}`}>
                     <div className="relative aspect-[4/5] w-full bg-muted overflow-hidden cursor-pointer">
                       <img
                         alt={product.name}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-90"
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                         src={product.image}
                       />
                       {product.badge && (
-                        <div className={`absolute top-3 left-3 rounded-md px-2 py-1 text-xs font-bold text-white uppercase tracking-wider ${
-                          product.badge === "Flagship" ? "bg-primary" :
-                          product.badge === "Best Seller" ? "bg-emerald-500" :
-                          product.badge === "Family" ? "bg-violet-500" :
-                          "bg-amber-500"
-                        }`} data-testid={`badge-${product.slug}`}>
+                        <div className="absolute top-4 left-4 rounded-full px-3 py-1 text-[10px] font-medium tracking-wider uppercase bg-background/90 backdrop-blur text-foreground border border-border/50" data-testid={`badge-${product.slug}`}>
                           {product.badge}
                         </div>
                       )}
                     </div>
                   </Link>
-                  <div className="flex flex-1 flex-col p-5">
+                  <div className="flex flex-1 flex-col p-6">
                     <div className="flex justify-between items-start mb-2 gap-2 flex-wrap">
-                      <h3 className="text-lg font-bold text-foreground">{product.name}</h3>
-                      <span className="text-primary font-bold">${product.price}</span>
+                      <h3 className="text-base font-medium text-foreground">{product.name}</h3>
+                      <span className="text-foreground font-medium">${product.price}</span>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-4 flex-1">{product.shortDescription}</p>
+                    <p className="text-sm text-muted-foreground mb-5 flex-1 leading-relaxed">{product.shortDescription}</p>
                     <div className="flex gap-2">
                       <Link href={`/product/${product.slug}`} className="flex-1">
-                        <button className="w-full rounded-md bg-foreground/5 py-2 text-sm font-semibold text-foreground hover:bg-foreground/10 transition-colors border border-border" data-testid={`button-view-${product.slug}`}>
+                        <button className="w-full rounded-full border border-border py-2 text-sm font-medium text-foreground hover:bg-accent/50 transition-colors" data-testid={`button-view-${product.slug}`}>
                           View Details
                         </button>
                       </Link>
                       <button
                         onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image })}
-                        className="rounded-md bg-primary py-2 px-4 text-sm font-semibold text-primary-foreground transition-colors"
+                        className="rounded-full bg-foreground py-2 px-5 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
                         data-testid={`button-add-cart-${product.slug}`}
                       >
                         Add
@@ -250,59 +240,60 @@ function ComparisonSection() {
   ];
 
   return (
-    <section className="py-24 bg-background relative overflow-hidden" data-testid="section-comparison">
-      <div className="absolute right-0 top-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -z-10" />
+    <section className="py-28 bg-background relative overflow-hidden" data-testid="section-comparison">
+      <div className="absolute right-0 top-1/4 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[120px] -z-10" />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">Novaatoz vs. The Past</h2>
-          <p className="text-muted-foreground">Why settle for string when you can have a stream? See how we stack up against traditional methods.</p>
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <p className="text-primary text-xs font-medium tracking-[0.2em] uppercase mb-3">Comparison</p>
+          <h2 className="text-3xl font-serif tracking-tight text-foreground sm:text-4xl mb-4">Novaatoz vs. Traditional</h2>
+          <p className="text-muted-foreground leading-relaxed">See how modern hydro-technology compares to traditional methods.</p>
         </div>
-        <div className="rounded-2xl overflow-hidden border border-border bg-card/60 backdrop-blur-xl">
+        <div className="rounded-2xl overflow-hidden border border-border/60 bg-card/40 backdrop-blur-xl">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-border/50">
-                  <th className="p-6 text-sm font-medium text-muted-foreground w-1/3">Feature</th>
-                  <th className="p-6 text-lg font-bold text-primary w-1/3 text-center bg-primary/5">
+                  <th className="p-6 text-xs font-medium tracking-wider uppercase text-muted-foreground w-1/3">Feature</th>
+                  <th className="p-6 text-base font-medium text-primary w-1/3 text-center bg-primary/5">
                     <div className="flex flex-col items-center gap-1">
-                      <Droplets className="h-6 w-6" />
+                      <Droplets className="h-5 w-5" />
                       <span>Novaatoz</span>
                     </div>
                   </th>
-                  <th className="p-6 text-lg font-bold text-slate-400 w-1/3 text-center">
+                  <th className="p-6 text-base font-medium text-muted-foreground w-1/3 text-center">
                     <div className="flex flex-col items-center gap-1">
-                      <Minus className="h-6 w-6" />
+                      <Minus className="h-5 w-5" />
                       <span>String Floss</span>
                     </div>
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border/50">
+              <tbody className="divide-y divide-border/40">
                 {rows.map((row, i) => (
                   <tr key={i}>
-                    <td className="p-6 text-foreground font-medium">{row.feature}</td>
+                    <td className="p-6 text-foreground text-sm font-medium">{row.feature}</td>
                     <td className="p-6 text-center bg-primary/5">
                       {row.nova ? (
-                        <span className="inline-flex items-center rounded-md bg-green-500/10 px-2 py-1 text-sm font-medium text-green-400 ring-1 ring-inset ring-green-500/20">
+                        <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
                           {row.nova}
                         </span>
                       ) : row.novaGood ? (
                         <>
-                          <CheckCircle className="h-5 w-5 text-green-400 mx-auto" />
+                          <CheckCircle className="h-5 w-5 text-primary mx-auto" />
                           {row.novaExtra && <span className="block text-xs text-muted-foreground mt-1">{row.novaExtra}</span>}
                         </>
                       ) : null}
                     </td>
                     <td className="p-6 text-center text-muted-foreground">
                       {row.floss ? (
-                        <span>{row.floss}</span>
+                        <span className="text-sm">{row.floss}</span>
                       ) : row.flossGood === false ? (
                         <>
-                          <XCircle className="h-5 w-5 text-red-400 mx-auto" />
+                          <XCircle className="h-5 w-5 text-destructive/60 mx-auto" />
                           {row.flossExtra && <span className="block text-xs text-muted-foreground mt-1">{row.flossExtra}</span>}
                         </>
                       ) : (
-                        <Minus className="h-5 w-5 text-slate-600 mx-auto" />
+                        <Minus className="h-5 w-5 text-muted-foreground/40 mx-auto" />
                       )}
                     </td>
                   </tr>
@@ -321,36 +312,37 @@ function ReviewsPreviewSection() {
   const displayReviews = reviews?.slice(0, 3) || [];
 
   return (
-    <section className="py-24 bg-section-alt border-t border-border/50" data-testid="section-reviews-preview">
+    <section className="py-28 bg-section-alt border-t border-border/40" data-testid="section-reviews-preview">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between gap-4 mb-12">
+        <div className="flex items-end justify-between gap-4 mb-14">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">What Our Customers Say</h2>
-            <p className="text-muted-foreground text-lg">Real reviews from real customers who made the switch.</p>
+            <p className="text-primary text-xs font-medium tracking-[0.2em] uppercase mb-3">Testimonials</p>
+            <h2 className="text-3xl font-serif tracking-tight text-foreground sm:text-4xl mb-3">What Our Customers Say</h2>
+            <p className="text-muted-foreground leading-relaxed">Real reviews from real customers who made the switch.</p>
           </div>
-          <Link href="/reviews" className="hidden md:flex items-center gap-1 text-primary font-medium" data-testid="link-all-reviews">
-            All Reviews <ArrowRight className="h-4 w-4" />
+          <Link href="/reviews" className="hidden md:flex items-center gap-2 text-sm font-medium tracking-wide text-foreground hover:text-primary transition-colors" data-testid="link-all-reviews">
+            All Reviews <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {displayReviews.map((review) => (
-            <div key={review.id} className="rounded-md border border-border bg-card p-6" data-testid={`card-review-${review.id}`}>
-              <div className="flex gap-1 mb-3">
+            <div key={review.id} className="rounded-2xl border border-border/60 bg-card/50 p-7" data-testid={`card-review-${review.id}`}>
+              <div className="flex gap-0.5 mb-4">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <svg key={i} className={`h-4 w-4 ${i < review.rating ? "text-amber-400" : "text-muted"}`} fill="currentColor" viewBox="0 0 20 20">
+                  <svg key={i} className={`h-4 w-4 ${i < review.rating ? "text-amber-400" : "text-muted/60"}`} fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
                 ))}
               </div>
-              <h4 className="text-foreground font-semibold mb-2">{review.title}</h4>
-              <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{review.body}</p>
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-violet-500 flex items-center justify-center text-xs font-bold text-white">
+              <h4 className="text-foreground font-medium mb-2">{review.title}</h4>
+              <p className="text-muted-foreground text-sm mb-5 leading-relaxed">{review.body}</p>
+              <div className="flex items-center gap-3">
+                <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center text-xs font-medium text-primary">
                   {review.customerName.split(" ").map(n => n[0]).join("")}
                 </div>
                 <div>
                   <p className="text-foreground text-sm font-medium">{review.customerName}</p>
-                  {review.verified && <p className="text-emerald-400 text-xs">Verified Purchase</p>}
+                  {review.verified && <p className="text-primary text-xs">Verified Purchase</p>}
                 </div>
               </div>
             </div>
@@ -363,22 +355,23 @@ function ReviewsPreviewSection() {
 
 function CTASection() {
   return (
-    <section className="py-24 bg-background relative overflow-hidden" data-testid="section-cta">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-primary/5" />
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">Ready to Transform Your Routine?</h2>
-        <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
+    <section className="py-28 bg-background relative overflow-hidden" data-testid="section-cta">
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/30" />
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <p className="text-primary text-xs font-medium tracking-[0.2em] uppercase mb-4">Get Started</p>
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-foreground mb-6 leading-tight">Ready to Elevate Your Routine?</h2>
+        <p className="text-muted-foreground text-base mb-10 max-w-xl mx-auto leading-relaxed">
           Join thousands who've already upgraded their oral care. Free shipping on orders over $75. 1-year warranty on all devices.
         </p>
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="flex flex-wrap justify-center gap-3">
           <Link href="/shop">
-            <button className="rounded-md bg-primary h-12 px-8 text-base font-bold text-primary-foreground transition-all hover:scale-[1.02] shadow-[0_0_20px_hsl(var(--primary)/0.4)]" data-testid="button-shop-cta">
-              Shop Now
+            <button className="rounded-full bg-foreground h-11 px-8 text-sm font-medium tracking-wide text-background transition-all hover:bg-foreground/90" data-testid="button-shop-cta">
+              Shop Collection
             </button>
           </Link>
           <Link href="/about">
-            <button className="rounded-md border border-border bg-card/50 h-12 px-8 text-base font-medium text-foreground transition-all hover:bg-card hover:border-primary/50" data-testid="button-learn-more-cta">
-              Learn More
+            <button className="rounded-full border border-border h-11 px-8 text-sm font-medium tracking-wide text-foreground transition-all hover:bg-accent/50" data-testid="button-learn-more-cta">
+              Our Story
             </button>
           </Link>
         </div>
