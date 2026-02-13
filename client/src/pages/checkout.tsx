@@ -342,7 +342,7 @@ export default function CheckoutPage() {
                 {paymentMethod === "paypal" && (
                   <div className="mt-5 rounded-xl border border-border/60 bg-background p-5 space-y-3">
                     {!paypalConfig?.enabled ? (
-                      <p className="text-sm text-amber-600 dark:text-amber-400">
+                      <p className="text-sm text-amber-400">
                         PayPal is not configured. Please set up PayPal credentials in Admin Settings.
                       </p>
                     ) : (

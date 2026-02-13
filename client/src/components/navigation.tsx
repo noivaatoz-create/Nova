@@ -29,7 +29,7 @@ export function Navigation() {
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/90 backdrop-blur-xl" data-testid="nav-header">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2.5" data-testid="link-home">
-          {settings?.showLogoIcon !== "false" && <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-8 w-8 object-contain dark:invert" />}
+          {settings?.showLogoIcon !== "false" && <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-8 w-8 object-contain invert" />}
           <span className="font-serif text-xl tracking-wide text-foreground">{logoText}</span>
         </Link>
 
@@ -84,7 +84,7 @@ export function Navigation() {
             <SheetContent side="right" className="bg-background border-border w-[280px]">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2 font-serif text-foreground">
-                  {settings?.showLogoIcon !== "false" && <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-7 w-7 object-contain dark:invert" />}
+                  {settings?.showLogoIcon !== "false" && <img src="/images/novaatoz-logo.png" alt="Novaatoz" className="h-7 w-7 object-contain invert" />}
                   {logoText}
                 </SheetTitle>
               </SheetHeader>
