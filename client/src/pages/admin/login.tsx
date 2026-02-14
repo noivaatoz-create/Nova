@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation, Link } from "wouter";
 import { Lock, User, LogIn, ArrowLeft } from "lucide-react";
-import { apiRequest } from "@/lib/queryClient";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
 export default function AdminLogin() {
@@ -15,15 +15,21 @@ export default function AdminLogin() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await apiRequest("POST", "/api/admin/login", { username, password });
+      const res = await apiRequest("POST", "/api/admin/login", { username, password }, { timeout: 15000 });
       const data = await res.json();
       if (data.success) {
+        // Invalidate cached session query so AdminGuard re-fetches fresh data
+        await queryClient.invalidateQueries({ queryKey: ["/api/admin/session"] });
         setLocation("/admin");
       }
     } catch (error: any) {
+      const isTimeout = error?.name === "AbortError";
+      const isNetwork = error?.message?.includes("Failed to fetch") || error?.message?.includes("NetworkError");
       toast({
         title: "Login Failed",
-        description: "Invalid username or password",
+        description: isTimeout || isNetwork
+          ? "Server not responding. Make sure the server is running (npm run dev)."
+          : "Invalid username or password",
         variant: "destructive",
       });
     } finally {

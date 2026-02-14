@@ -7,6 +7,7 @@ export function AdminGuard({ children }: { children: React.ReactNode }) {
   const { data, isLoading } = useQuery<{ isAdmin: boolean }>({
     queryKey: ["/api/admin/session"],
     refetchOnWindowFocus: true,
+    staleTime: 0, // Always refetch session status — never use stale cached auth data
   });
 
   useEffect(() => {
