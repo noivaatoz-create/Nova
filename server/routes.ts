@@ -149,7 +149,7 @@ export async function registerRoutes(
   app.post("/api/admin/login", loginRateLimit, (req, res) => {
     const { username, password } = req.body;
     const adminUser = process.env.ADMIN_USERNAME || "adminpokemon";
-    const adminPass = process.env.ADMIN_PASSWORD || "pokemonadmin";
+    const adminPass = process.env.ADMIN_PASSWORD || "Nova@2025";
     if (username === adminUser && password === adminPass) {
       loginAttempts.delete(req.ip || req.connection.remoteAddress || "unknown");
       req.session!.isAdmin = true;
