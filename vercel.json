@@ -10,5 +10,11 @@
     "devCommand": "npm run dev",
     "installCommand": "npm install",
     "framework": null,
-    "outputDirectory": "dist/public"
+    "outputDirectory": "dist/public",
+    "functions": {
+        "api/[...path].ts": {
+            "memory": 1024,
+            "maxDuration": 30
+        }
+    }
 }
