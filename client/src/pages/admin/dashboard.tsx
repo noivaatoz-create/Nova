@@ -4,7 +4,7 @@ import { Link, useLocation } from "wouter";
 import type { Product, Order } from "@shared/schema";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { LayoutDashboard, Package, ShoppingCart, Settings, LogOut, Bell, HelpCircle, Search, AlertTriangle, Calendar, Trash2, RefreshCw, MessageSquare, Images } from "lucide-react";
+import { LayoutDashboard, Package, ShoppingCart, Settings, LogOut, Bell, HelpCircle, Search, AlertTriangle, Calendar, Trash2, RefreshCw, MessageSquare, Images, Home, Sun, Moon } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,6 +15,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useTheme } from "@/components/theme-provider";
 
 function AdminSidebar({ active }: { active: string }) {
   const [, setLocation] = useLocation();
@@ -80,6 +81,7 @@ function AdminSidebar({ active }: { active: string }) {
 }
 
 function AdminHeader({ title }: { title: string }) {
+  const { theme, toggleTheme } = useTheme();
   return (
     <header className="flex items-center justify-between border-b border-border bg-section-alt/95 backdrop-blur-md px-6 py-4 sticky top-0 z-10" data-testid="admin-header">
       <div className="flex items-center gap-3">
@@ -87,6 +89,22 @@ function AdminHeader({ title }: { title: string }) {
         <h2 className="text-foreground text-lg font-semibold tracking-tight">{title}</h2>
       </div>
       <div className="flex items-center gap-4">
+        <Link
+          href="/"
+          className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-colors text-sm font-medium"
+          data-testid="link-admin-home"
+        >
+          <Home className="h-4 w-4" />
+          Home
+        </Link>
+        <button
+          onClick={toggleTheme}
+          className="p-2 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+          title={theme === "dark" ? "Light mode" : "Dark mode"}
+          data-testid="button-admin-theme-toggle"
+        >
+          {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+        </button>
         <div className="relative hidden md:block">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input

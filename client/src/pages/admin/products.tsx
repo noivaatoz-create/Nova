@@ -51,13 +51,27 @@ export default function AdminProducts() {
   const handleImageUpload = async (file: File, onSuccess: (url: string) => void) => {
     const formData = new FormData();
     formData.append("image", file);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000);
     try {
-      const res = await fetch("/api/upload", { method: "POST", body: formData, credentials: "include" });
-      if (!res.ok) throw new Error("Upload failed");
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
       const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Upload failed");
+      }
       onSuccess(data.url);
-    } catch {
-      toast({ title: "Upload Failed", description: "Could not upload image. Try again.", variant: "destructive" });
+    } catch (err: any) {
+      clearTimeout(timeoutId);
+      const msg = err?.message?.includes("BLOB_READ_WRITE_TOKEN")
+        ? "Vercel pe Blob Storage configure karo (Storage → Blob)"
+        : "Could not upload image. Try again.";
+      toast({ title: "Upload Failed", description: msg, variant: "destructive" });
     }
   };
 

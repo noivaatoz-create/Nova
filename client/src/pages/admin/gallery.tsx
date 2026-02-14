@@ -96,6 +96,8 @@ export default function AdminGallery() {
   const uploadImage = async (file: File, index: number) => {
     const formData = new FormData();
     formData.append("image", file);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000);
 
     setUploadingIndex(index);
     try {
@@ -103,18 +105,18 @@ export default function AdminGallery() {
         method: "POST",
         body: formData,
         credentials: "include",
+        signal: controller.signal,
       });
-      if (!response.ok) {
-        throw new Error("Upload failed");
-      }
+      clearTimeout(timeoutId);
       const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Upload failed");
       updateImage(index, data.url);
-    } catch {
-      toast({
-        title: "Upload failed",
-        description: "Image upload nahi ho paya, dobara try karo.",
-        variant: "destructive",
-      });
+    } catch (err: any) {
+      clearTimeout(timeoutId);
+      const msg = err?.message?.includes("BLOB_READ_WRITE_TOKEN")
+        ? "Vercel pe Blob Storage configure karo (Storage → Blob)"
+        : "Image upload nahi ho paya, dobara try karo.";
+      toast({ title: "Upload failed", description: msg, variant: "destructive" });
     } finally {
       setUploadingIndex(null);
     }
