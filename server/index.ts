@@ -1,27 +1,18 @@
 import express, { type Request, Response, NextFunction } from "express";
-import session from "express-session";
-import pgSession from "connect-pg-simple";
+import cookieSession from "cookie-session";
 import { registerRoutes } from "./routes.js";
 import { serveStatic } from "./static.js";
 import { createServer } from "http";
-import { pool } from "./db.js";
-
-declare module "express-session" {
-  interface SessionData {
-    isAdmin: boolean;
-  }
-}
-
-const app = express();
-app.set("trust proxy", 1);
-const httpServer = createServer(app);
-const PgSessionStore = pgSession(session);
 
 declare module "http" {
   interface IncomingMessage {
     rawBody: unknown;
   }
 }
+
+const app = express();
+app.set("trust proxy", 1);
+const httpServer = createServer(app);
 
 app.use(
   express.json({
@@ -34,21 +25,13 @@ app.use(
 app.use(express.urlencoded({ extended: false }));
 
 app.use(
-  session({
-    store: new PgSessionStore({
-      pool,
-      tableName: 'session',
-      createTableIfMissing: true
-    }),
-    secret: process.env.SESSION_SECRET || "novaatoz-admin-secret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 24 * 60 * 60 * 1000,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-    },
+  cookieSession({
+    name: "session",
+    keys: [process.env.SESSION_SECRET || "novaatoz-admin-secret"],
+    maxAge: 24 * 60 * 60 * 1000,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax" as const,
   })
 );
 

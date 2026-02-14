@@ -50,7 +50,7 @@ const upload = multer({
 });
 
 function requireAdmin(req: any, res: any, next: any) {
-  if (req.session?.isAdmin) {
+  if (req.session && req.session.isAdmin) {
     next();
   } else {
     res.status(401).json({ error: "Unauthorized" });
@@ -152,13 +152,8 @@ export async function registerRoutes(
     const adminPass = process.env.ADMIN_PASSWORD || "pokemonadmin";
     if (username === adminUser && password === adminPass) {
       loginAttempts.delete(req.ip || req.connection.remoteAddress || "unknown");
-      req.session.isAdmin = true;
-      req.session.save((err) => {
-        if (err) {
-          console.error("Session save error:", err);
-        }
-        res.json({ success: true });
-      });
+      req.session!.isAdmin = true;
+      res.json({ success: true });
     } else {
       const ip = req.ip || req.connection.remoteAddress || "unknown";
       const record = loginAttempts.get(ip) || { count: 0, lastAttempt: 0 };
@@ -170,13 +165,12 @@ export async function registerRoutes(
   });
 
   app.get("/api/admin/session", (req, res) => {
-    res.json({ isAdmin: req.session.isAdmin === true });
+    res.json({ isAdmin: req.session?.isAdmin === true });
   });
 
   app.post("/api/admin/logout", (req, res) => {
-    req.session.destroy(() => {
-      res.json({ success: true });
-    });
+    req.session = null;
+    res.json({ success: true });
   });
 
   app.post("/api/upload", requireAdmin, upload.single("image"), (req, res) => {
