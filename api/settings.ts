@@ -30,7 +30,8 @@ app.get("/api/settings", async (_req: any, res: any) => {
     res.json(obj);
   } catch (err) {
     console.error("Settings GET error:", err);
-    res.status(500).json({});
+    // Return 200 with empty object so Settings page loads (user may need to set DATABASE_URL)
+    res.status(200).json({});
   }
 });
 
