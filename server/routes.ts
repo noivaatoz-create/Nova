@@ -57,21 +57,6 @@ function requireAdmin(req: any, res: any, next: any) {
   }
 }
 
-const loginAttempts = new Map<string, { count: number; lastAttempt: number }>();
-
-function loginRateLimit(req: any, res: any, next: any) {
-  const ip = req.ip || req.connection.remoteAddress || "unknown";
-  const now = Date.now();
-  const record = loginAttempts.get(ip);
-  if (record) {
-    if (now - record.lastAttempt > 15 * 60 * 1000) {
-      loginAttempts.delete(ip);
-    } else if (record.count >= 5) {
-      return res.status(429).json({ error: "Too many login attempts. Try again in 15 minutes." });
-    }
-  }
-  next();
-}
 
 async function getProductColorVariantsMap(): Promise<Map<number, ProductColorVariant[]>> {
   const settings = await storage.getSettings();
@@ -146,21 +131,22 @@ export async function registerRoutes(
   app: Express
 ): Promise<Server> {
 
-  app.post("/api/admin/login", loginRateLimit, (req, res) => {
-    const { username, password } = req.body;
-    const adminUser = process.env.ADMIN_USERNAME || "adminpokemon";
-    const adminPass = process.env.ADMIN_PASSWORD || "Nova@2025";
-    if (username === adminUser && password === adminPass) {
-      loginAttempts.delete(req.ip || req.connection.remoteAddress || "unknown");
-      req.session!.isAdmin = true;
-      res.json({ success: true });
-    } else {
-      const ip = req.ip || req.connection.remoteAddress || "unknown";
-      const record = loginAttempts.get(ip) || { count: 0, lastAttempt: 0 };
-      record.count += 1;
-      record.lastAttempt = Date.now();
-      loginAttempts.set(ip, record);
-      res.status(401).json({ error: "Invalid credentials" });
+  app.post("/api/admin/login", (req, res) => {
+    try {
+      const { username, password } = req.body;
+      const adminUser = process.env.ADMIN_USERNAME || "adminpokemon";
+      const adminPass = process.env.ADMIN_PASSWORD || "Nova@2025";
+      if (username === adminUser && password === adminPass) {
+        if (req.session) {
+          req.session.isAdmin = true;
+        }
+        return res.json({ success: true });
+      } else {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      return res.status(500).json({ error: "Login failed" });
     }
   });
 
