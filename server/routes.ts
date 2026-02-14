@@ -134,8 +134,8 @@ export async function registerRoutes(
   app.post("/api/admin/login", (req, res) => {
     try {
       const { username, password } = req.body;
-      const adminUser = process.env.ADMIN_USERNAME || "adminpokemon";
-      const adminPass = process.env.ADMIN_PASSWORD || "Nova@2025";
+      const adminUser = process.env.ADMIN_USERNAME || "admin";
+      const adminPass = process.env.ADMIN_PASSWORD || "admin";
       if (username === adminUser && password === adminPass) {
         if (req.session) {
           req.session.isAdmin = true;
