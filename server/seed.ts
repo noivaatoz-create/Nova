@@ -11,7 +11,7 @@ async function seed() {
     return;
   }
 
-  const productData = [
+  const productData: Array<typeof products.$inferInsert> = [
     {
       name: "JetClean Pro",
       slug: "jetclean-pro",

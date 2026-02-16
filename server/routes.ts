@@ -331,6 +331,11 @@ export async function registerRoutes(
     const parsed = insertOrderSchema.safeParse(orderData);
     if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
     const order = await storage.createOrder(parsed.data);
+
+    // Simulate sending an email invoice
+    console.log(`[EMAIL] Sending invoice for order ${order.orderNumber} to ${order.customerEmail}`);
+    console.log(`[EMAIL] Details: ${order.items.length} items, Total: ${order.total}`);
+
     res.status(201).json(order);
   });
 

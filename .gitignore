@@ -12,3 +12,6 @@ vite.config.ts.*
 
 # Vercel
 .vercel
+
+# Local Uploads
+client/public/uploads

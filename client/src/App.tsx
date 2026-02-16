@@ -19,6 +19,7 @@ import PrivacyPolicyPage from "@/pages/privacy-policy";
 import TermsPage from "@/pages/terms";
 import ShippingReturnsPage from "@/pages/shipping-returns";
 import TrackOrderPage from "@/pages/track-order";
+import SuccessPage from "@/pages/success";
 import AdminDashboard from "@/pages/admin/dashboard";
 import AdminProducts from "@/pages/admin/products";
 import AdminOrders from "@/pages/admin/orders";
@@ -54,6 +55,9 @@ function Router() {
       </Route>
       <Route path="/checkout">
         {() => <CustomerLayout><CheckoutPage /></CustomerLayout>}
+      </Route>
+      <Route path="/checkout/success">
+        {() => <CustomerLayout><SuccessPage /></CustomerLayout>}
       </Route>
       <Route path="/about">
         {() => <CustomerLayout><AboutPage /></CustomerLayout>}

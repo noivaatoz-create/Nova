@@ -200,10 +200,11 @@ export default function CheckoutPage() {
         status: paymentMethod === "paypal" ? "paid" : "pending",
       };
 
-      await apiRequest("POST", "/api/orders", orderData);
+      const res = await apiRequest("POST", "/api/orders", orderData);
+      const order = await res.json();
       clearCart();
       toast({ title: "Order placed successfully", description: "Thank you for your purchase. You'll receive a confirmation email shortly." });
-      navigate("/");
+      navigate(`/checkout/success?order=${order.orderNumber}`);
     } catch (error) {
       toast({ title: "Error", description: "Failed to place order. Please try again.", variant: "destructive" });
     } finally {
@@ -297,11 +298,10 @@ export default function CheckoutPage() {
                     <button
                       type="button"
                       onClick={() => setPaymentMethod("stripe")}
-                      className={`flex items-center justify-center gap-3 p-4 rounded-xl border transition-all ${
-                        paymentMethod === "stripe"
+                      className={`flex items-center justify-center gap-3 p-4 rounded-xl border transition-all ${paymentMethod === "stripe"
                           ? "border-primary bg-primary/5"
                           : "border-border/60 hover:border-foreground/20"
-                      }`}
+                        }`}
                       data-testid="button-payment-stripe"
                     >
                       <SiStripe className="h-5 w-5 text-[#635BFF]" />
@@ -312,11 +312,10 @@ export default function CheckoutPage() {
                     <button
                       type="button"
                       onClick={() => setPaymentMethod("paypal")}
-                      className={`flex items-center justify-center gap-3 p-4 rounded-xl border transition-all ${
-                        paymentMethod === "paypal"
+                      className={`flex items-center justify-center gap-3 p-4 rounded-xl border transition-all ${paymentMethod === "paypal"
                           ? "border-primary bg-primary/5"
                           : "border-border/60 hover:border-foreground/20"
-                      }`}
+                        }`}
                       data-testid="button-payment-paypal"
                     >
                       <SiPaypal className="h-5 w-5 text-[#00457C]" />
@@ -327,11 +326,10 @@ export default function CheckoutPage() {
                     <button
                       type="button"
                       onClick={() => setPaymentMethod("cod")}
-                      className={`flex items-center justify-center gap-3 p-4 rounded-xl border transition-all ${
-                        paymentMethod === "cod"
+                      className={`flex items-center justify-center gap-3 p-4 rounded-xl border transition-all ${paymentMethod === "cod"
                           ? "border-primary bg-primary/5"
                           : "border-border/60 hover:border-foreground/20"
-                      }`}
+                        }`}
                       data-testid="button-payment-cod"
                     >
                       <Banknote className="h-5 w-5 text-primary" />

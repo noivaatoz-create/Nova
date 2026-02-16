@@ -81,13 +81,16 @@ export const contactSubmissions = pgTable("contact_submissions", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
-export const insertSiteSettingSchema = createInsertSchema(siteSettings).omit({ id: true });
-export const insertProductSchema = createInsertSchema(products).omit({ id: true });
-export const insertCartItemSchema = createInsertSchema(cartItems).omit({ id: true });
-export const insertOrderSchema = createInsertSchema(orders).omit({ id: true, createdAt: true });
-export const insertReviewSchema = createInsertSchema(reviews).omit({ id: true, createdAt: true });
-export const insertSubscriberSchema = createInsertSchema(subscribers).omit({ id: true, createdAt: true });
-export const insertContactSubmissionSchema = createInsertSchema(contactSubmissions).omit({ id: true, createdAt: true });
+// `createInsertSchema()` already marks generated/default columns as optional/excluded
+// based on the table definition. Avoid `.omit()` here because keys may not exist
+// on the generated schema (e.g. identity columns), which causes TS errors on build.
+export const insertSiteSettingSchema = createInsertSchema(siteSettings);
+export const insertProductSchema = createInsertSchema(products);
+export const insertCartItemSchema = createInsertSchema(cartItems);
+export const insertOrderSchema = createInsertSchema(orders);
+export const insertReviewSchema = createInsertSchema(reviews);
+export const insertSubscriberSchema = createInsertSchema(subscribers);
+export const insertContactSubmissionSchema = createInsertSchema(contactSubmissions);
 
 export type Product = typeof products.$inferSelect;
 export type InsertProduct = z.infer<typeof insertProductSchema>;
