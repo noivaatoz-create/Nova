@@ -12,32 +12,10 @@ import {
 import { randomUUID } from "crypto";
 import multer from "multer";
 import path from "path";
-import fs from "fs";
-
-const uploadsDir =
-  process.env.VERCEL || process.env.NODE_ENV === "production"
-    ? path.join("/tmp", "uploads")
-    : path.join(process.cwd(), "client", "public", "uploads");
-
-try {
-  if (!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir, { recursive: true });
-  }
-} catch (error) {
-  console.error("Failed to initialize uploads directory", { uploadsDir, error });
-}
-
-const uploadStorage = multer.diskStorage({
-  destination: (_req, _file, cb) => cb(null, uploadsDir),
-  filename: (_req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const name = `${Date.now()}-${randomUUID().slice(0, 8)}${ext}`;
-    cb(null, name);
-  },
-});
+import { createClient } from "@supabase/supabase-js";
 
 const upload = multer({
-  storage: uploadStorage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: (_req, file, cb) => {
     const allowed = /\.(jpg|jpeg|png|gif|webp)$/i;
@@ -159,12 +137,35 @@ export async function registerRoutes(
     res.json({ success: true });
   });
 
-  app.post("/api/upload", requireAdmin, upload.single("image"), (req, res) => {
+  app.post("/api/upload", requireAdmin, upload.single("image"), async (req, res) => {
     if (!req.file) {
       return res.status(400).json({ error: "No image file provided" });
     }
-    const url = `/uploads/${req.file.filename}`;
-    res.json({ url });
+
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_ANON_KEY;
+    if (!supabaseUrl || !supabaseKey) {
+      return res.status(503).json({ error: "Upload not configured. Set SUPABASE_URL and SUPABASE_ANON_KEY." });
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    const ext = path.extname(req.file.originalname);
+    const name = `${Date.now()}-${randomUUID().slice(0, 8)}${ext}`;
+
+    const { error } = await supabase.storage
+      .from("uploads")
+      .upload(name, req.file.buffer, {
+        contentType: req.file.mimetype,
+        upsert: false,
+      });
+
+    if (error) {
+      console.error("Supabase upload error:", error);
+      return res.status(500).json({ error: "Upload failed" });
+    }
+
+    const { data: urlData } = supabase.storage.from("uploads").getPublicUrl(name);
+    res.json({ url: urlData.publicUrl });
   });
 
   app.get("/api/paypal/config", async (_req, res) => {

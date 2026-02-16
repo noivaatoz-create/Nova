@@ -1,4 +1,4 @@
-import { put } from "@vercel/blob";
+import { createClient } from "@supabase/supabase-js";
 import cookieSession from "cookie-session";
 import express from "express";
 import multer from "multer";
@@ -38,16 +38,32 @@ app.post("/api/upload", requireAdmin, upload.single("image"), async (req: any, r
   try {
     if (!req.file) return res.status(400).json({ error: "No image file provided" });
 
-    const token = process.env.BLOB_READ_WRITE_TOKEN;
-    if (!token) {
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_ANON_KEY;
+    if (!supabaseUrl || !supabaseKey) {
       return res.status(503).json({
-        error: "Upload not configured. Add BLOB_READ_WRITE_TOKEN in Vercel → Storage → Blob.",
+        error: "Upload not configured. Set SUPABASE_URL and SUPABASE_ANON_KEY.",
       });
     }
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
     const ext = path.extname(req.file.originalname);
-    const name = `uploads/${Date.now()}-${randomUUID().slice(0, 8)}${ext}`;
-    const blob = await put(name, req.file.buffer, { access: "public", addRandomSuffix: false });
-    return res.json({ url: blob.url });
+    const name = `${Date.now()}-${randomUUID().slice(0, 8)}${ext}`;
+
+    const { error } = await supabase.storage
+      .from("uploads")
+      .upload(name, req.file.buffer, {
+        contentType: req.file.mimetype,
+        upsert: false,
+      });
+
+    if (error) {
+      console.error("Supabase upload error:", error);
+      return res.status(500).json({ error: "Upload failed" });
+    }
+
+    const { data: urlData } = supabase.storage.from("uploads").getPublicUrl(name);
+    return res.json({ url: urlData.publicUrl });
   } catch (err) {
     console.error("Upload error:", err);
     res.status(500).json({ error: "Upload failed" });

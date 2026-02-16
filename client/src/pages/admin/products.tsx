@@ -68,9 +68,7 @@ export default function AdminProducts() {
       onSuccess(data.url);
     } catch (err: any) {
       clearTimeout(timeoutId);
-      const msg = err?.message?.includes("BLOB_READ_WRITE_TOKEN")
-        ? "Vercel pe Blob Storage configure karo (Storage → Blob)"
-        : "Could not upload image. Try again.";
+      const msg = "Could not upload image. Try again.";
       toast({ title: "Upload Failed", description: msg, variant: "destructive" });
     }
   };

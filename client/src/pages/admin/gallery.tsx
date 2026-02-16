@@ -113,9 +113,7 @@ export default function AdminGallery() {
       updateImage(index, data.url);
     } catch (err: any) {
       clearTimeout(timeoutId);
-      const msg = err?.message?.includes("BLOB_READ_WRITE_TOKEN")
-        ? "Vercel pe Blob Storage configure karo (Storage → Blob)"
-        : "Image upload nahi ho paya, dobara try karo.";
+      const msg = "Image upload nahi ho paya, dobara try karo.";
       toast({ title: "Upload failed", description: msg, variant: "destructive" });
     } finally {
       setUploadingIndex(null);

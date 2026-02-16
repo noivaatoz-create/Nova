@@ -1,6 +1,10 @@
+import dns from "dns";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schema from "../shared/schema.js";
+
+// Force IPv4 to avoid ECONNREFUSED on IPv6 addresses
+dns.setDefaultResultOrder("ipv4first");
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL must be set. Did you forget to provision a database?");
