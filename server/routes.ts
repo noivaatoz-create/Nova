@@ -286,34 +286,44 @@ export async function registerRoutes(
   });
 
   app.post("/api/products", requireAdmin, async (req, res) => {
-    const parsed = insertProductSchema.safeParse(req.body);
-    if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+    try {
+      const parsed = insertProductSchema.safeParse(req.body);
+      if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
 
-    const colorVariants = sanitizeProductColorVariants(req.body?.colorVariants);
-    const product = await storage.createProduct(parsed.data);
-    await saveProductColorVariants(product.id, colorVariants);
+      const colorVariants = sanitizeProductColorVariants(req.body?.colorVariants);
+      const product = await storage.createProduct(parsed.data);
+      await saveProductColorVariants(product.id, colorVariants);
 
-    res.status(201).json({ ...product, colorVariants });
+      res.status(201).json({ ...product, colorVariants });
+    } catch (err) {
+      console.error("Failed to create product:", err);
+      res.status(500).json({ error: "Failed to save product" });
+    }
   });
 
   app.patch("/api/products/:id", requireAdmin, async (req, res) => {
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
+    try {
+      const id = parseInt(req.params.id, 10);
+      if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
 
-    const updateData = { ...(req.body as Record<string, unknown>) };
-    const hasColorVariants = Object.prototype.hasOwnProperty.call(updateData, "colorVariants");
-    delete updateData.colorVariants;
+      const updateData = { ...(req.body as Record<string, unknown>) };
+      const hasColorVariants = Object.prototype.hasOwnProperty.call(updateData, "colorVariants");
+      delete updateData.colorVariants;
 
-    const product = await storage.updateProduct(id, updateData as any);
-    if (!product) return res.status(404).json({ error: "Product not found" });
+      const product = await storage.updateProduct(id, updateData as any);
+      if (!product) return res.status(404).json({ error: "Product not found" });
 
-    let colorVariants = await getProductColorVariants(id);
-    if (hasColorVariants) {
-      colorVariants = sanitizeProductColorVariants(req.body?.colorVariants);
-      await saveProductColorVariants(id, colorVariants);
+      let colorVariants = await getProductColorVariants(id);
+      if (hasColorVariants) {
+        colorVariants = sanitizeProductColorVariants(req.body?.colorVariants);
+        await saveProductColorVariants(id, colorVariants);
+      }
+
+      res.json({ ...product, colorVariants });
+    } catch (err) {
+      console.error("Failed to update product:", err);
+      res.status(500).json({ error: "Failed to update product" });
     }
-
-    res.json({ ...product, colorVariants });
   });
 
   app.delete("/api/products/:id", requireAdmin, async (req, res) => {

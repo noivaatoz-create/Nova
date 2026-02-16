@@ -12,9 +12,10 @@ if (!process.env.DATABASE_URL) {
 
 export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
-  connectionTimeoutMillis: 5000,
-  max: 5,
+  ssl: { rejectUnauthorized: false },
+  connectionTimeoutMillis: 10000,
+  query_timeout: 15000,
+  max: 3,
 });
 
 export const db = drizzle(pool, { schema });
