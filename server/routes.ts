@@ -146,9 +146,9 @@ export async function registerRoutes(
     }
 
     const supabaseUrl = process.env.SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_ANON_KEY;
+    const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
     if (!supabaseUrl || !supabaseKey) {
-      return res.status(503).json({ error: "Upload not configured. Set SUPABASE_URL and SUPABASE_ANON_KEY." });
+      return res.status(503).json({ error: "Upload not configured. Set SUPABASE_URL and SUPABASE_SERVICE_KEY." });
     }
 
     const supabase = createClient(supabaseUrl, supabaseKey);

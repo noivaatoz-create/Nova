@@ -39,10 +39,10 @@ app.post("/api/upload", requireAdmin, upload.single("image"), async (req: any, r
     if (!req.file) return res.status(400).json({ error: "No image file provided" });
 
     const supabaseUrl = process.env.SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_ANON_KEY;
+    const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
     if (!supabaseUrl || !supabaseKey) {
       return res.status(503).json({
-        error: "Upload not configured. Set SUPABASE_URL and SUPABASE_ANON_KEY.",
+        error: "Upload not configured. Set SUPABASE_URL and SUPABASE_SERVICE_KEY.",
       });
     }
 
