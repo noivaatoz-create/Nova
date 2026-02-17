@@ -45,13 +45,30 @@ export async function apiRequest(
     return res;
   } catch (err) {
     if (timeoutId) clearTimeout(timeoutId);
+    if (isAbortLikeError(err)) {
+      throw new Error("Request timed out. Server took too long to respond.");
+    }
     throw err;
   }
 }
 
 type UnauthorizedBehavior = "returnNull" | "throw";
 const DEFAULT_QUERY_TIMEOUT = 15000;
-const DEFAULT_MUTATION_TIMEOUT = 20000;
+const DEFAULT_MUTATION_TIMEOUT = 45000;
+
+function isAbortLikeError(error: unknown): boolean {
+  if (!error) return false;
+  const err = error as { name?: string; message?: string };
+  const name = (err.name || "").toLowerCase();
+  const message = (err.message || "").toLowerCase();
+  return (
+    name.includes("abort") ||
+    name.includes("timeout") ||
+    message.includes("aborted") ||
+    message.includes("aborterror") ||
+    message.includes("signal is aborted")
+  );
+}
 
 export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;

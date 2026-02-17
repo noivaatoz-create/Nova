@@ -76,9 +76,9 @@ export default function AdminProducts() {
   const saveMutation = useMutation({
     mutationFn: async (data: any) => {
       if (editProduct) {
-        return apiRequest("PATCH", `/api/products/${editProduct.id}`, data, { timeout: 20000 });
+        return apiRequest("PATCH", `/api/products/${editProduct.id}`, data, { timeout: 45000 });
       }
-      return apiRequest("POST", "/api/products", data, { timeout: 20000 });
+      return apiRequest("POST", "/api/products", data, { timeout: 45000 });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/products"] });
@@ -88,10 +88,13 @@ export default function AdminProducts() {
       resetForm();
     },
     onError: (error: unknown) => {
-      const description =
-        error instanceof Error && error.message
-          ? error.message.replace(/^\d+:\s*/, "")
-          : "Failed to save product";
+      const msg = error instanceof Error ? error.message : String(error ?? "");
+      const isTimeout =
+        /abort|timeout|failed to fetch|network error/i.test(msg) ||
+        (error instanceof Error && error.name === "AbortError");
+      const description = isTimeout
+        ? "Request timed out. Check your connection and try again."
+        : msg.replace(/^\d+:\s*/, "") || "Failed to save product";
       toast({ title: "Error", description, variant: "destructive" });
     },
   });
@@ -137,8 +140,31 @@ export default function AdminProducts() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.name.trim()) {
+      toast({ title: "Error", description: "Product name is required.", variant: "destructive" });
+      return;
+    }
+    if (!form.shortDescription.trim()) {
+      toast({ title: "Error", description: "Short description is required.", variant: "destructive" });
+      return;
+    }
+    if (!form.longDescription.trim()) {
+      toast({ title: "Error", description: "Long description is required.", variant: "destructive" });
+      return;
+    }
+    if (!form.image.trim()) {
+      toast({ title: "Error", description: "Main image URL or upload is required.", variant: "destructive" });
+      return;
+    }
+    if (!form.price.trim()) {
+      toast({ title: "Error", description: "Price is required.", variant: "destructive" });
+      return;
+    }
     const stockNum = parseInt(form.stock);
-    if (isNaN(stockNum) || stockNum < 0) return;
+    if (isNaN(stockNum) || stockNum < 0) {
+      toast({ title: "Error", description: "Stock must be a valid number (0 or more).", variant: "destructive" });
+      return;
+    }
     const slug = form.slug || form.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
     saveMutation.mutate({
       name: form.name,
