@@ -1,5 +1,5 @@
 import { useCartStore } from "@/lib/cart-store";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -49,6 +49,11 @@ export default function CheckoutPage() {
   const shipping = total >= freeShippingThreshold ? 0 : shippingFlatRate;
   const tax = total * taxRate;
   const grandTotal = total + shipping + tax;
+
+  const grandTotalRef = useRef(grandTotal);
+  const currencyRef = useRef(settings?.currency || "USD");
+  grandTotalRef.current = grandTotal;
+  currencyRef.current = settings?.currency || "USD";
 
   const stripeEnabled = settings?.stripeEnabled === "true";
   const paypalEnabled = settings?.paypalEnabled === "true" || paypalConfig?.enabled === true;
@@ -100,9 +105,11 @@ export default function CheckoutPage() {
             height: 44,
           },
           createOrder: async () => {
+            const amount = grandTotalRef.current.toFixed(2);
+            const currency = currencyRef.current;
             const response = await apiRequest("POST", "/api/paypal/create-order", {
-              amount: grandTotal.toFixed(2),
-              currency: settings?.currency || "USD",
+              amount,
+              currency,
             });
             const data = await response.json();
             return data.id;
@@ -164,7 +171,7 @@ export default function CheckoutPage() {
     return () => {
       cancelled = true;
     };
-  }, [paymentMethod, showPaypal, paypalConfig?.enabled, paypalConfig?.clientId, grandTotal, settings?.currency, toast]);
+  }, [paymentMethod, showPaypal, paypalConfig?.enabled, paypalConfig?.clientId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -339,23 +346,24 @@ export default function CheckoutPage() {
                 </div>
                 {paymentMethod === "paypal" && (
                   <div className="mt-5 rounded-xl border border-border/60 bg-background p-5 space-y-3">
-                    {!paypalConfig?.enabled ? (
+                    {!paypalConfig?.enabled || !paypalConfig?.clientId ? (
                       <p className="text-sm text-amber-400">
-                        PayPal is not configured. Please set up PayPal credentials in Admin Settings.
+                        PayPal is not configured. Add PayPal Client ID in Admin → Settings to enable PayPal checkout.
                       </p>
                     ) : (
                       <>
-                        <div id="paypal-button-container" data-testid="paypal-button-container" />
+                        <p className="text-xs text-muted-foreground">Click the button below to pay with PayPal.</p>
+                        <div id="paypal-button-container" data-testid="paypal-button-container" className="min-h-[44px]" />
                         {paypalLoading && (
                           <p className="text-xs text-muted-foreground">Processing payment...</p>
                         )}
                         {paypalApproved ? (
                           <p className="text-xs text-primary font-medium" data-testid="text-paypal-approved">
-                            Payment approved. Click "Place Order" to complete your purchase.
+                            Payment approved. Click &quot;Place Order&quot; below to complete your purchase.
                           </p>
                         ) : (
                           <p className="text-xs text-muted-foreground">
-                            Complete payment through PayPal, then place your order.
+                            After paying with PayPal, click &quot;Place Order&quot; to confirm.
                           </p>
                         )}
                       </>
