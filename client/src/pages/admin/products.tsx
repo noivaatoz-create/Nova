@@ -76,9 +76,9 @@ export default function AdminProducts() {
   const saveMutation = useMutation({
     mutationFn: async (data: any) => {
       if (editProduct) {
-        return apiRequest("PATCH", `/api/products/${editProduct.id}`, data, { timeout: 45000 });
+        return apiRequest("PATCH", `/api/products/${editProduct.id}`, data, { timeout: 20000 });
       }
-      return apiRequest("POST", "/api/products", data, { timeout: 45000 });
+      return apiRequest("POST", "/api/products", data, { timeout: 20000 });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/products"] });
@@ -135,6 +135,7 @@ export default function AdminProducts() {
       colorVariants: p.colorVariants || [],
     });
     setSpecEntries(Object.entries(p.specs || {}).map(([key, value]) => ({ key, value })));
+    saveMutation.reset();
     setShowForm(true);
   };
 
@@ -204,7 +205,7 @@ export default function AdminProducts() {
               <h3 className="text-foreground text-lg font-semibold" data-testid="text-product-count">{products?.length || 0} Products</h3>
             </div>
             <button
-              onClick={() => { resetForm(); setEditProduct(null); setShowForm(true); }}
+              onClick={() => { resetForm(); setEditProduct(null); saveMutation.reset(); setShowForm(true); }}
               className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-foreground transition-colors"
               data-testid="button-add-product"
             >
@@ -823,6 +824,11 @@ export default function AdminProducts() {
                 </button>
               </div>
 
+              {saveMutation.error && (
+                <p className="text-sm text-red-500 mt-2" data-testid="product-save-error">
+                  {saveMutation.error instanceof Error ? saveMutation.error.message.replace(/^\d+:\s*/, "") : String(saveMutation.error)}
+                </p>
+              )}
               <div className="flex gap-3 pt-4 border-t border-border">
                 <button type="submit" disabled={saveMutation.isPending}
                   className="flex-1 rounded-md bg-primary py-2.5 text-sm font-bold text-foreground disabled:opacity-50 transition-colors"
