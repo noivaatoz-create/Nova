@@ -19,8 +19,16 @@ import { useTheme } from "@/components/theme-provider";
 
 function AdminSidebar({ active }: { active: string }) {
   const [, setLocation] = useLocation();
+  const [loggingOut, setLoggingOut] = useState(false);
+
   const handleLogout = async () => {
-    await apiRequest("POST", "/api/admin/logout");
+    if (loggingOut) return;
+    setLoggingOut(true);
+    try {
+      await apiRequest("POST", "/api/admin/logout", undefined, { timeout: 10000 });
+    } catch {
+      // Still clear local state and redirect so user can log in again
+    }
     queryClient.invalidateQueries({ queryKey: ["/api/admin/session"] });
     setLocation("/admin/login");
   };
@@ -67,12 +75,14 @@ function AdminSidebar({ active }: { active: string }) {
         </div>
         <div className="p-3 border-t border-border">
           <button
+            type="button"
             onClick={handleLogout}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors"
+            disabled={loggingOut}
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors disabled:opacity-50 disabled:pointer-events-none"
             data-testid="button-admin-logout"
           >
             <LogOut className="h-4 w-4" />
-            Logout
+            {loggingOut ? "Logging out…" : "Logout"}
           </button>
         </div>
       </div>
