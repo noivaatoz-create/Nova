@@ -76,9 +76,9 @@ export default function AdminProducts() {
   const saveMutation = useMutation({
     mutationFn: async (data: any) => {
       if (editProduct) {
-        return apiRequest("PATCH", `/api/products/${editProduct.id}`, data);
+        return apiRequest("PATCH", `/api/products/${editProduct.id}`, data, { timeout: 20000 });
       }
-      return apiRequest("POST", "/api/products", data);
+      return apiRequest("POST", "/api/products", data, { timeout: 20000 });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/products"] });
@@ -87,8 +87,12 @@ export default function AdminProducts() {
       setEditProduct(null);
       resetForm();
     },
-    onError: () => {
-      toast({ title: "Error", description: "Failed to save product", variant: "destructive" });
+    onError: (error: unknown) => {
+      const description =
+        error instanceof Error && error.message
+          ? error.message.replace(/^\d+:\s*/, "")
+          : "Failed to save product";
+      toast({ title: "Error", description, variant: "destructive" });
     },
   });
 

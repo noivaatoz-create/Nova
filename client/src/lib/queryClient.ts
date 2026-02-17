@@ -3,7 +3,22 @@ import { QueryClient, QueryFunction } from "@tanstack/react-query";
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
     const text = (await res.text()) || res.statusText;
-    throw new Error(`${res.status}: ${text}`);
+    let message = text || res.statusText;
+
+    if (text) {
+      try {
+        const parsed = JSON.parse(text) as { error?: string; message?: string };
+        if (typeof parsed.error === "string" && parsed.error.trim()) {
+          message = parsed.error;
+        } else if (typeof parsed.message === "string" && parsed.message.trim()) {
+          message = parsed.message;
+        }
+      } catch {
+        // Keep the raw text when response body is not JSON.
+      }
+    }
+
+    throw new Error(`${res.status}: ${message}`);
   }
 }
 
@@ -14,7 +29,7 @@ export async function apiRequest(
   options?: { timeout?: number },
 ): Promise<Response> {
   const controller = new AbortController();
-  const timeout = options?.timeout ?? 0;
+  const timeout = options?.timeout ?? DEFAULT_MUTATION_TIMEOUT;
   const timeoutId = timeout > 0 ? setTimeout(() => controller.abort(), timeout) : null;
 
   try {
@@ -36,6 +51,7 @@ export async function apiRequest(
 
 type UnauthorizedBehavior = "returnNull" | "throw";
 const DEFAULT_QUERY_TIMEOUT = 15000;
+const DEFAULT_MUTATION_TIMEOUT = 20000;
 
 export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;
