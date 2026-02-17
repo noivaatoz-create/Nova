@@ -91,8 +91,13 @@ const initPromise = (async () => {
     return res.status(status).json({ message });
   });
 
+  const isVercel = Boolean(process.env.VERCEL);
   if (process.env.NODE_ENV === "production") {
-    serveStatic(app);
+    // On Vercel, static assets are served by the platform.
+    // Trying to mount local dist/public can fail in serverless runtime and block API responses.
+    if (!isVercel) {
+      serveStatic(app);
+    }
   } else {
     const { setupVite } = await import("./vite.js");
     await setupVite(httpServer, app);
