@@ -39,7 +39,7 @@ function requireAdmin(req: any, res: any, next: any) {
 
 // Keep under serverless limits; fail fast so "Saving..." doesn't hang. Override with env if needed.
 const SUPABASE_PRODUCTS_TIMEOUT_MS = Number.parseInt(process.env.SUPABASE_PRODUCTS_TIMEOUT_MS ?? "8000", 10);
-const STORAGE_PRODUCTS_TIMEOUT_MS = Number.parseInt(process.env.STORAGE_PRODUCTS_TIMEOUT_MS ?? "15000", 10);
+const STORAGE_PRODUCTS_TIMEOUT_MS = Number.parseInt(process.env.STORAGE_PRODUCTS_TIMEOUT_MS ?? "25000", 10);
 // Use Supabase REST for products only when explicitly enabled (e.g. products table lives in Supabase).
 // Default: use primary DB (storage) so product create works without a Supabase products table.
 const useDirectSupabaseProducts =

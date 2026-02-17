@@ -76,9 +76,9 @@ export default function AdminProducts() {
   const saveMutation = useMutation({
     mutationFn: async (data: any) => {
       if (editProduct) {
-        return apiRequest("PATCH", `/api/products/${editProduct.id}`, data, { timeout: 20000 });
+        return apiRequest("PATCH", `/api/products/${editProduct.id}`, data, { timeout: 45000 });
       }
-      return apiRequest("POST", "/api/products", data, { timeout: 20000 });
+      return apiRequest("POST", "/api/products", data, { timeout: 45000 });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/products"] });
