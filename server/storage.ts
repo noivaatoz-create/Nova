@@ -23,6 +23,7 @@ const supabase: SupabaseClient | null =
 const DB_CONNECTION_ERROR_PATTERN =
   /(password authentication failed|econnrefused|enotfound|ehostunreach|etimedout|timeout expired|connection terminated unexpectedly|no pg_hba\.conf entry|primary db timeout)/i;
 const PRIMARY_DB_TIMEOUT_MS = Number.parseInt(process.env.PRIMARY_DB_TIMEOUT_MS ?? "4000", 10);
+const PREFER_SUPABASE_IN_PROD = process.env.PREFER_SUPABASE_IN_PROD !== "false";
 
 function shouldUseSupabaseFallback(error: unknown): boolean {
   if (!supabase) {
@@ -40,6 +41,10 @@ function getSupabaseClient(): SupabaseClient {
 }
 
 async function withSupabaseFallback<T>(primary: () => Promise<T>, fallback: () => Promise<T>): Promise<T> {
+  if (supabase && process.env.NODE_ENV === "production" && PREFER_SUPABASE_IN_PROD) {
+    return fallback();
+  }
+
   try {
     return await new Promise<T>((resolve, reject) => {
       const timeoutId = setTimeout(() => {
